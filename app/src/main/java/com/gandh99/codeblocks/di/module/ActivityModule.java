@@ -1,7 +1,7 @@
 package com.gandh99.codeblocks.di.module;
 
-import com.gandh99.codeblocks.activity.HomeActivity;
-import com.gandh99.codeblocks.activity.MainActivity;
+import com.gandh99.codeblocks.homePage.activity.HomeActivity;
+import com.gandh99.codeblocks.authentication.activity.MainActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

@@ -1,4 +1,4 @@
-package com.gandh99.codeblocks;
+package com.gandh99.codeblocks.homePage;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

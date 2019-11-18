@@ -1,4 +1,4 @@
-package com.gandh99.codeblocks.activity;
+package com.gandh99.codeblocks.authentication.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.gandh99.codeblocks.authentication.fragment.LoginFragment;
+import com.gandh99.codeblocks.authentication.fragment.RegisterFragment;
 import com.gandh99.codeblocks.R;
-import com.gandh99.codeblocks.fragment.LoginFragment;
-import com.gandh99.codeblocks.fragment.RegisterFragment;
 
 public class MainActivity extends AppCompatActivity {
   private Button buttonLoginRegister;

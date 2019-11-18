@@ -1,4 +1,4 @@
-package com.gandh99.codeblocks.fragment;
+package com.gandh99.codeblocks.authentication.fragment;
 
 
 import android.content.Intent;
@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.gandh99.codeblocks.R;
-import com.gandh99.codeblocks.activity.HomeActivity;
+import com.gandh99.codeblocks.homePage.activity.HomeActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,6 +47,7 @@ public class LoginFragment extends Fragment {
     buttonLogin.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
+        //TODO
         Intent intent = new Intent(getContext(), HomeActivity.class);
         startActivity(intent);
       }

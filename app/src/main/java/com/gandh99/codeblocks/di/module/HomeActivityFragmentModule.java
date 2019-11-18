@@ -1,8 +1,6 @@
 package com.gandh99.codeblocks.di.module;
 
-import com.gandh99.codeblocks.DashboardFragment;
-import com.gandh99.codeblocks.fragment.LoginFragment;
-import com.gandh99.codeblocks.fragment.RegisterFragment;
+import com.gandh99.codeblocks.homePage.fragment.DashboardFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

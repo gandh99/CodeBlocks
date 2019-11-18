@@ -1,4 +1,4 @@
-package com.gandh99.codeblocks.fragment;
+package com.gandh99.codeblocks.authentication.fragment;
 
 
 import android.os.Bundle;

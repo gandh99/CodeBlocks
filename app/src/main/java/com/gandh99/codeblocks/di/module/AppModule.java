@@ -1,10 +1,8 @@
 package com.gandh99.codeblocks.di.module;
 
-import com.gandh99.codeblocks.api.LoginAPIService;
+import com.gandh99.codeblocks.authentication.api.LoginAPIService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
 
