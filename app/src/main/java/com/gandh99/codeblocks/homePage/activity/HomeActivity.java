@@ -12,13 +12,13 @@ import androidx.viewpager.widget.ViewPager;
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.homePage.fragment.DashboardFragment;
 import com.gandh99.codeblocks.homePage.TabsPagerAdapter;
+import com.gandh99.codeblocks.homePage.fragment.NotificationsFragment;
 import com.google.android.material.tabs.TabLayout;
 
 public class HomeActivity extends AppCompatActivity {
   private ViewPager viewPager;
   private TabsPagerAdapter tabsPagerAdapter;
   private TabLayout tabLayout;
-  private TextView tabDashboard;
 
   @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
   @Override
@@ -40,6 +40,7 @@ public class HomeActivity extends AppCompatActivity {
     // Setup adapter
     tabsPagerAdapter = new TabsPagerAdapter(getSupportFragmentManager());
     tabsPagerAdapter.addFragment(new DashboardFragment());
+    tabsPagerAdapter.addFragment(new NotificationsFragment());
 
     viewPager.setAdapter(tabsPagerAdapter);
     tabLayout.setupWithViewPager(viewPager);
@@ -48,11 +49,16 @@ public class HomeActivity extends AppCompatActivity {
   @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
   private void createTabs() {
     // Dashboard tab
-    tabDashboard = (TextView) LayoutInflater.from(this).inflate(R.layout.home_tab, null);
+    TextView tabDashboard = (TextView) LayoutInflater.from(this).inflate(R.layout.home_tab, null);
     tabDashboard.setText("DASHBOARD");
     tabDashboard.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.ic_dashboard_white, 0, 0);
     tabLayout.getTabAt(0).setCustomView(tabDashboard);
 
+    // Notification tab
+    TextView tabNotifications = (TextView) LayoutInflater.from(this).inflate(R.layout.home_tab, null);
+    tabNotifications.setText("NOTIFICATIONS");
+    tabNotifications.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.ic_notifications_white, 0, 0);
+    tabLayout.getTabAt(1).setCustomView(tabNotifications);
   }
 
 }
