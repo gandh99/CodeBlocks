@@ -5,7 +5,8 @@ import android.app.Application;
 import com.gandh99.codeblocks.App;
 import com.gandh99.codeblocks.di.module.ActivityModule;
 import com.gandh99.codeblocks.di.module.AppModule;
-import com.gandh99.codeblocks.di.module.FragmentModule;
+import com.gandh99.codeblocks.di.module.HomeActivityFragmentModule;
+import com.gandh99.codeblocks.di.module.MainActivityFragmentModule;
 
 import javax.inject.Singleton;
 
@@ -20,7 +21,8 @@ import dagger.android.support.AndroidSupportInjectionModule;
     ActivityModule.class,
     AndroidSupportInjectionModule.class,
     AppModule.class,
-    FragmentModule.class
+    MainActivityFragmentModule.class,
+    HomeActivityFragmentModule.class
   }
 )
 

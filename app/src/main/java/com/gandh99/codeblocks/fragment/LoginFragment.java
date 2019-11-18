@@ -1,6 +1,7 @@
 package com.gandh99.codeblocks.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,15 +10,18 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.gandh99.codeblocks.R;
+import com.gandh99.codeblocks.activity.HomeActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class LoginFragment extends Fragment {
   private EditText editTextUsername, editTextPassword;
+  private Button buttonLogin;
 
   public LoginFragment() {
     // Required empty public constructor
@@ -32,8 +36,21 @@ public class LoginFragment extends Fragment {
     editTextUsername = view.findViewById(R.id.editText_login_username);
     editTextPassword = view.findViewById(R.id.editText_login_password);
     editTextPassword.setTransformationMethod(new PasswordTransformationMethod());
+    buttonLogin = view.findViewById(R.id.button_login);
+
+    initLoginButton();
 
     return view;
+  }
+
+  private void initLoginButton() {
+    buttonLogin.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Intent intent = new Intent(getContext(), HomeActivity.class);
+        startActivity(intent);
+      }
+    });
   }
 
 }

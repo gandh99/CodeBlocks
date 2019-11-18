@@ -7,7 +7,7 @@ import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
 @Module
-public abstract class FragmentModule {
+public abstract class MainActivityFragmentModule {
   @ContributesAndroidInjector
   abstract LoginFragment contributeLoginFragment();
 
