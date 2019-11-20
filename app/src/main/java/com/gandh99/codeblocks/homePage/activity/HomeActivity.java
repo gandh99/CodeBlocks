@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.gandh99.codeblocks.R;
-import com.gandh99.codeblocks.homePage.fragment.DashboardFragment;
+import com.gandh99.codeblocks.dashboard.DashboardFragment;
 import com.gandh99.codeblocks.homePage.TabsPagerAdapter;
 import com.gandh99.codeblocks.homePage.fragment.NotificationsFragment;
 import com.google.android.material.tabs.TabLayout;
