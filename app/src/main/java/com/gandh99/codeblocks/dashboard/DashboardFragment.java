@@ -20,6 +20,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
  * A simple {@link Fragment} subclass.
  */
 public class DashboardFragment extends Fragment {
+  private static final int DIALOG_REQUEST_ADD_CODE = 1;
   private FloatingActionButton fab;
   private RecyclerView recyclerView;
   private DashboardListAdapter dashboardListAdapter = new DashboardListAdapter();
@@ -45,7 +46,9 @@ public class DashboardFragment extends Fragment {
     fab.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-
+        AddProjectDialog dialog = new AddProjectDialog();
+        dialog.setTargetFragment(DashboardFragment.this, DIALOG_REQUEST_ADD_CODE);
+        dialog.show(getActivity().getSupportFragmentManager(), "Create Project");
       }
     });
 

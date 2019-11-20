@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dialog_project"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="10dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="New Project"
+            style="@style/DialogHeader"
+            />
+
+        <EditText
+            android:id="@+id/dialog_project_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Project Title"
+            style="@style/DialogEditText"
+            />
+
+        <EditText
+            android:id="@+id/dialog_project_leader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Leader"
+            style="@style/DialogEditText"
+            />
+
+        <EditText
+            android:id="@+id/dialog_project_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:maxLines="5"
+            android:hint="Short Description"
+            style="@style/DialogEditText"
+            />
+
+        <Button
+            android:id="@+id/dialog_project_create"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="15dp"
+            android:text="Create Project"
+            style="@style/DialogButton"
+            />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

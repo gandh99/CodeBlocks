@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="0dp"
         android:maxLength="10"
-        style="@style/editTextCredentials"
+        style="@style/EditTextCredentials"
         />
 
     <TextView
@@ -53,14 +53,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="0dp"
         android:maxLength="15"
-        style="@style/editTextCredentials"
+        style="@style/EditTextCredentials"
         />
 
     <Button
         android:id="@+id/button_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/buttonCredentials"
+        style="@style/ButtonCredentials"
         android:layout_marginTop="20dp"
         android:text="Login"
         />

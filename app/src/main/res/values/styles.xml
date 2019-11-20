@@ -9,7 +9,7 @@
         <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
     </style>
 
-    <style name="editTextCredentials">
+    <style name="EditTextCredentials">
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:layout_marginHorizontal" tools:targetApi="o">20dp</item>
         <item name="android:layout_gravity">center</item>
@@ -18,7 +18,7 @@
         <item name="android:drawablePadding">10dp</item>
     </style>
 
-    <style name="buttonCredentials">
+    <style name="ButtonCredentials">
         <item name="android:textColor">#ffffff</item>
         <item name="android:layout_marginHorizontal" tools:targetApi="o">20dp</item>
         <item name="android:layout_gravity">center</item>
@@ -30,6 +30,25 @@
         <item name="android:layout_marginLeft">5dp</item>
         <item name="android:layout_marginRight">5dp</item>
         <item name="android:layout_marginTop">2.5dp</item>
+    </style>
+
+    <style name="DialogHeader">
+        <item name="android:textSize">20dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">20dp</item>
+        <item name="android:paddingBottom">20dp</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="DialogEditText" parent="EditTextCredentials">
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:layout_marginTop">15dp</item>
+    </style>
+
+    <style name="DialogButton" parent="ButtonCredentials">
     </style>
 
 </resources>
