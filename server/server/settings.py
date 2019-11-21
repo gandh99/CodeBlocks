@@ -25,7 +25,12 @@ SECRET_KEY = '560&or^kg^t!gwox!=bqepnh_za0$6ffyo&e93vo5^6sh5qe&p'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '192.168.86.125',
+    'localhost',
+    '127.0.0.1',
+    '0.0.0.0'
+]
 
 
 # Application definition
@@ -37,6 +42,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Django REST framework
+    'rest_framework',
+    'rest_framework.authtoken',
+
+    # Authentication application
+    'authentication.apps.AuthenticationConfig'
 ]
 
 MIDDLEWARE = [
@@ -118,3 +130,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Use Django-REST's authentication framework
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
