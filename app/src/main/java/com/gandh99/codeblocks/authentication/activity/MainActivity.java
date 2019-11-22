@@ -10,6 +10,8 @@ import com.gandh99.codeblocks.authentication.fragment.LoginFragment;
 import com.gandh99.codeblocks.authentication.fragment.RegisterFragment;
 import com.gandh99.codeblocks.R;
 
+import dagger.android.AndroidInjection;
+
 public class MainActivity extends AppCompatActivity {
   private Button buttonLoginRegister;
   private State currentState = State.LOGIN;
@@ -18,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+    AndroidInjection.inject(this);
 
     buttonLoginRegister = findViewById(R.id.button_login_register);
 

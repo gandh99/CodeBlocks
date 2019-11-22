@@ -1,8 +1,11 @@
 package com.gandh99.codeblocks.di.module;
 
-import com.gandh99.codeblocks.authentication.api.LoginAPIService;
+import com.gandh99.codeblocks.authentication.Authenticator;
+import com.gandh99.codeblocks.authentication.api.AuthAPIService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
 
@@ -25,14 +28,14 @@ public class AppModule {
 //    return new AuthenticationInterceptor();
 //  }
 
-//  @Provides
-//  OkHttpClient provideOkHttpClient(AuthenticationInterceptor interceptor) {
-//    return new OkHttpClient
-//      .Builder()
-//      .addInterceptor(interceptor)
-//      .connectTimeout(CONNECTION_TIMEOUT_SECONDS, TimeUnit.SECONDS)
-//      .build();
-//  }
+  @Provides
+  OkHttpClient provideOkHttpClient(/*AuthenticationInterceptor interceptor*/) {
+    return new OkHttpClient
+      .Builder()
+      //.addInterceptor(interceptor)
+      .connectTimeout(CONNECTION_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+      .build();
+  }
 
   @Provides
   Gson provideGson() {
@@ -51,7 +54,13 @@ public class AppModule {
 
   @Provides
   @Singleton
-  LoginAPIService provideUserAPIService(Retrofit retrofit){
-    return retrofit.create(LoginAPIService.class);
+  AuthAPIService provideAuthAPIService(Retrofit retrofit){
+    return retrofit.create(AuthAPIService.class);
+  }
+
+  @Provides
+  @Singleton
+  Authenticator provideAuthenticator(AuthAPIService authAPIService) {
+    return new Authenticator(authAPIService);
   }
 }
