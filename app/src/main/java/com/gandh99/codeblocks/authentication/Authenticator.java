@@ -1,5 +1,6 @@
 package com.gandh99.codeblocks.authentication;
 
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import com.gandh99.codeblocks.authentication.api.AuthAPIService;
 import com.gandh99.codeblocks.authentication.api.SessionToken;
 import com.gandh99.codeblocks.authentication.api.User;
+import com.gandh99.codeblocks.homePage.activity.HomeActivity;
 
 import javax.inject.Inject;
 
@@ -71,8 +73,9 @@ public class Authenticator {
       @Override
       public void onResponse(Call<SessionToken> call, Response<SessionToken> response) {
         if (response.isSuccessful()) {
-          Toast.makeText(fragment.getContext(), "Login successful",
-            Toast.LENGTH_SHORT).show();
+          // Start HomeActivity
+          Intent intent = new Intent(fragment.getContext(), HomeActivity.class);
+          fragment.startActivity(intent);
           return;
         }
 
