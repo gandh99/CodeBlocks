@@ -4,6 +4,7 @@ package com.gandh99.codeblocks.dashboard.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,8 +35,10 @@ public class DashboardFragment extends Fragment {
   private static final int DIALOG_REQUEST_ADD_CODE = 1;
   private FloatingActionButton fab;
   private RecyclerView recyclerView;
-  private DashboardListAdapter dashboardListAdapter = new DashboardListAdapter();
   private DashboardViewModel dashboardViewModel;
+
+  @Inject
+  DashboardListAdapter dashboardListAdapter;
 
   @Inject
   ViewModelProvider.Factory viewModelFactory;
@@ -50,9 +53,6 @@ public class DashboardFragment extends Fragment {
                            Bundle savedInstanceState) {
     // For Dagger injection
     configureDagger();
-
-    // Configure ViewModel
-    configureViewModel();
 
     // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
@@ -73,8 +73,8 @@ public class DashboardFragment extends Fragment {
       }
     });
 
-    // Get list of projects
-    List<Project> projectList = dashboardViewModel.getProjects();
+    // Configure ViewModel
+    configureViewModel();
 
     return view;
   }
@@ -85,6 +85,12 @@ public class DashboardFragment extends Fragment {
 
   private void configureViewModel() {
     dashboardViewModel = ViewModelProviders.of(this, viewModelFactory).get(DashboardViewModel.class);
+    dashboardViewModel.getProjects().observe(this, new Observer<List<Project>>() {
+      @Override
+      public void onChanged(List<Project> projects) {
+        dashboardListAdapter.submitList(projects);
+      }
+    });
   }
 
 }

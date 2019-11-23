@@ -1,5 +1,6 @@
 package com.gandh99.codeblocks.di.module;
 
+import com.gandh99.codeblocks.dashboard.DashboardListAdapter;
 import com.gandh99.codeblocks.dashboard.api.DashboardAPIService;
 import com.gandh99.codeblocks.dashboard.repository.DashboardRepository;
 
@@ -24,5 +25,11 @@ public class DashboardModule {
   @Singleton
   DashboardRepository provideDashboardRepository(DashboardAPIService dashboardAPIService) {
     return new DashboardRepository(dashboardAPIService);
+  }
+
+  @Provides
+  @Singleton
+  DashboardListAdapter provideDashboardListAdapter() {
+    return new DashboardListAdapter();
   }
 }

@@ -1,5 +1,6 @@
 package com.gandh99.codeblocks.dashboard.viewModel;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.gandh99.codeblocks.dashboard.api.Project;
@@ -17,7 +18,7 @@ public class DashboardViewModel extends ViewModel {
     this.repository = repository;
   }
 
-  public List<Project> getProjects() {
+  public MutableLiveData<List<Project>> getProjects() {
     return repository.getProjects();
   }
 }

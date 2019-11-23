@@ -3,9 +3,12 @@ package com.gandh99.codeblocks.dashboard.repository;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.gandh99.codeblocks.dashboard.api.DashboardAPIService;
 import com.gandh99.codeblocks.dashboard.api.Project;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -17,14 +20,14 @@ import retrofit2.Response;
 public class DashboardRepository {
   private static final String TAG = "DashboardRepository";
   private DashboardAPIService dashboardAPIService;
-  private List<Project> projectList;
+  private MutableLiveData<List<Project>> projectList = new MutableLiveData<>();
 
   @Inject
   public DashboardRepository(DashboardAPIService dashboardAPIService) {
     this.dashboardAPIService = dashboardAPIService;
   }
 
-  public List<Project> getProjects() {
+  public MutableLiveData<List<Project>> getProjects() {
     refreshProjectList();
     return projectList;
   }
@@ -35,7 +38,7 @@ public class DashboardRepository {
       public void onResponse(Call<List<Project>> call, Response<List<Project>> response) {
         if (response.isSuccessful()) {
           List<Project> projectList = response.body();
-          DashboardRepository.this.projectList = projectList;
+          DashboardRepository.this.projectList.postValue(projectList);
         }
       }
 

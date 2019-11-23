@@ -13,8 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.dashboard.api.Project;
 
+import javax.inject.Inject;
+
 public class DashboardListAdapter extends ListAdapter<Project, DashboardListAdapter.ProjectViewHolder> {
 
+  @Inject
   public DashboardListAdapter() {
     super(DIFF_CALLBACK);
   }
@@ -22,6 +25,7 @@ public class DashboardListAdapter extends ListAdapter<Project, DashboardListAdap
   private static final DiffUtil.ItemCallback<Project> DIFF_CALLBACK = new DiffUtil.ItemCallback<Project>() {
     @Override
     public boolean areItemsTheSame(@NonNull Project oldItem, @NonNull Project newItem) {
+      //TODO: Change this
       return oldItem.getTitle().equals(newItem.getTitle());
     }
 
@@ -55,7 +59,7 @@ public class DashboardListAdapter extends ListAdapter<Project, DashboardListAdap
   class ProjectViewHolder extends RecyclerView.ViewHolder {
     TextView textViewTitle, textViewLeader, textViewDescription;
 
-    public ProjectViewHolder(@NonNull View itemView) {
+    ProjectViewHolder(@NonNull View itemView) {
       super(itemView);
       textViewTitle = itemView.findViewById(R.id.list_item_project_title);
       textViewLeader = itemView.findViewById(R.id.list_item_project_leader);
