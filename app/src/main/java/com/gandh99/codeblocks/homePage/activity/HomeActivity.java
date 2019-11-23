@@ -8,12 +8,10 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
-import com.gandh99.codeblocks.FactoryViewModel;
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.authentication.AuthenticationInterceptor;
 import com.gandh99.codeblocks.authentication.Authenticator;
@@ -27,7 +25,6 @@ import com.google.android.material.tabs.TabLayout;
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
-import dagger.android.support.AndroidSupportInjection;
 
 public class HomeActivity extends AppCompatActivity {
   private ViewPager viewPager;
@@ -49,12 +46,10 @@ public class HomeActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_home);
 
-    // Setup Dagger injection
-    AndroidInjection.inject(this);
-
     viewPager = findViewById(R.id.home_viewPager);
     tabLayout = findViewById(R.id.home_tabLayout);
 
+    configureDagger();
     receiveSessionToken();
     setupAuthenticationInterceptor();
     configureViewModel();
@@ -64,6 +59,10 @@ public class HomeActivity extends AppCompatActivity {
 
     // Inflate the individual tabs in HomeActivity
     createTabs();
+  }
+
+  private void configureDagger() {
+    AndroidInjection.inject(this);
   }
 
   private void receiveSessionToken() {

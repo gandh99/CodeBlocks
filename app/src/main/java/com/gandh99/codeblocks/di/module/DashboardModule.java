@@ -1,6 +1,7 @@
 package com.gandh99.codeblocks.di.module;
 
 import com.gandh99.codeblocks.dashboard.api.DashboardAPIService;
+import com.gandh99.codeblocks.dashboard.repository.DashboardRepository;
 
 import javax.inject.Singleton;
 
@@ -17,5 +18,11 @@ public class DashboardModule {
   @Singleton
   DashboardAPIService provideDashboardAPIService(Retrofit retrofit) {
     return retrofit.create(DashboardAPIService.class);
+  }
+
+  @Provides
+  @Singleton
+  DashboardRepository provideDashboardRepository() {
+    return new DashboardRepository();
   }
 }

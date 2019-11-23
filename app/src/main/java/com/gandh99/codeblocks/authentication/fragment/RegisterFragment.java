@@ -39,8 +39,8 @@ public class RegisterFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    // Important!!
-    AndroidSupportInjection.inject(this);
+    // Configure Dagger
+    configureDagger();
 
     // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_register, container, false);
@@ -52,6 +52,10 @@ public class RegisterFragment extends Fragment {
     setupRegisterButton();
 
     return view;
+  }
+
+  private void configureDagger() {
+    AndroidSupportInjection.inject(this);
   }
 
   private void setupRegisterButton() {

@@ -4,6 +4,8 @@ package com.gandh99.codeblocks.dashboard.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,7 +16,10 @@ import android.view.ViewGroup;
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.dashboard.AddProjectDialog;
 import com.gandh99.codeblocks.dashboard.DashboardListAdapter;
+import com.gandh99.codeblocks.dashboard.viewModel.DashboardViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import javax.inject.Inject;
 
 import dagger.android.support.AndroidSupportInjection;
 
@@ -27,6 +32,10 @@ public class DashboardFragment extends Fragment {
   private FloatingActionButton fab;
   private RecyclerView recyclerView;
   private DashboardListAdapter dashboardListAdapter = new DashboardListAdapter();
+  private DashboardViewModel dashboardViewModel;
+
+  @Inject
+  ViewModelProvider.Factory viewModelFactory;
 
   public DashboardFragment() {
     // Required empty public constructor
@@ -37,7 +46,10 @@ public class DashboardFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     // For Dagger injection
-    AndroidSupportInjection.inject(this);
+    configureDagger();
+
+    // Configure ViewModel
+    configureViewModel();
 
     // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
@@ -59,6 +71,14 @@ public class DashboardFragment extends Fragment {
     });
 
     return view;
+  }
+
+  private void configureDagger() {
+    AndroidSupportInjection.inject(this);
+  }
+
+  private void configureViewModel() {
+    dashboardViewModel = ViewModelProviders.of(this, viewModelFactory).get(DashboardViewModel.class);
   }
 
 }

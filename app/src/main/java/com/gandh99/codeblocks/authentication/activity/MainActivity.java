@@ -20,12 +20,16 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    AndroidInjection.inject(this);
 
     buttonLoginRegister = findViewById(R.id.button_login_register);
 
+    configureDagger();
     initLoginRegisterButton();
     startLoginFragment();
+  }
+
+  private void configureDagger() {
+    AndroidInjection.inject(this);
   }
 
   private void initLoginRegisterButton() {
