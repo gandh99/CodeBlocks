@@ -1,5 +1,6 @@
 package com.gandh99.codeblocks.di.module;
 
+import com.gandh99.codeblocks.authentication.AuthenticationInterceptor;
 import com.gandh99.codeblocks.authentication.Authenticator;
 import com.gandh99.codeblocks.authentication.InputValidator;
 import com.gandh99.codeblocks.authentication.api.AuthAPIService;
@@ -23,17 +24,17 @@ public class AuthModule {
 
   // --- NETWORK INJECTION ---
 
-//  @Provides
-//  @Singleton
-//  AuthenticationInterceptor provideAuthenticationInterceptor() {
-//    return new AuthenticationInterceptor();
-//  }
+  @Provides
+  @Singleton
+  AuthenticationInterceptor provideAuthenticationInterceptor() {
+    return new AuthenticationInterceptor();
+  }
 
   @Provides
-  OkHttpClient provideOkHttpClient(/*AuthenticationInterceptor interceptor*/) {
+  OkHttpClient provideOkHttpClient(AuthenticationInterceptor interceptor) {
     return new OkHttpClient
       .Builder()
-      //.addInterceptor(interceptor)
+      .addInterceptor(interceptor)
       .connectTimeout(CONNECTION_TIMEOUT_SECONDS, TimeUnit.SECONDS)
       .build();
   }
