@@ -1,5 +1,5 @@
 """
-WSGI config for server project.
+WSGI config for server projectList.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

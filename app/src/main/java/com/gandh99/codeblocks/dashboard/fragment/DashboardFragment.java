@@ -16,8 +16,11 @@ import android.view.ViewGroup;
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.dashboard.AddProjectDialog;
 import com.gandh99.codeblocks.dashboard.DashboardListAdapter;
+import com.gandh99.codeblocks.dashboard.api.Project;
 import com.gandh99.codeblocks.dashboard.viewModel.DashboardViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -66,12 +69,12 @@ public class DashboardFragment extends Fragment {
       public void onClick(View view) {
         AddProjectDialog dialog = new AddProjectDialog();
         dialog.setTargetFragment(DashboardFragment.this, DIALOG_REQUEST_ADD_CODE);
-        dialog.show(getActivity().getSupportFragmentManager(), "Create Project");
+        dialog.show(getActivity().getSupportFragmentManager(), "Create ProjectList");
       }
     });
 
     // Get list of projects
-    dashboardViewModel.getProjects();
+    List<Project> projectList = dashboardViewModel.getProjects();
 
     return view;
   }

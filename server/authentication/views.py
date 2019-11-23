@@ -74,8 +74,7 @@ class Projects(ListAPIView):
         # Get list of projects
         projects = list(ProjectGroup.objects.filter(user_profile__username=username))
         json_data = list([ComplexEncoder().encode(proj) for proj in projects])
-        data = {"Projects": json_data}
-        return Response(data, status=HTTP_200_OK)
+        return Response(json_data, status=HTTP_200_OK)
 
 
 class ComplexEncoder(json.JSONEncoder):
