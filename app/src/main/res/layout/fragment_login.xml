@@ -33,6 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="0dp"
         android:maxLength="10"
+        android:maxLines="1"
         style="@style/EditTextCredentials"
         />
 
@@ -53,6 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="0dp"
         android:maxLength="15"
+        android:maxLines="1"
         style="@style/EditTextCredentials"
         />
 

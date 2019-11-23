@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.gandh99.codeblocks.App;
 import com.gandh99.codeblocks.di.module.ActivityModule;
-import com.gandh99.codeblocks.di.module.AppModule;
+import com.gandh99.codeblocks.di.module.AuthModule;
 import com.gandh99.codeblocks.di.module.HomeActivityFragmentModule;
 import com.gandh99.codeblocks.di.module.MainActivityFragmentModule;
 
@@ -20,7 +20,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
   modules = {
     ActivityModule.class,
     AndroidSupportInjectionModule.class,
-    AppModule.class,
+    AuthModule.class,
     MainActivityFragmentModule.class,
     HomeActivityFragmentModule.class
   }

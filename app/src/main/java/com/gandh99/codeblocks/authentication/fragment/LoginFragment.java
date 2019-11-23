@@ -14,7 +14,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.gandh99.codeblocks.R;
+import com.gandh99.codeblocks.authentication.Authenticator;
 import com.gandh99.codeblocks.homePage.activity.HomeActivity;
+
+import javax.inject.Inject;
+
+import dagger.android.support.AndroidSupportInjection;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,6 +27,9 @@ import com.gandh99.codeblocks.homePage.activity.HomeActivity;
 public class LoginFragment extends Fragment {
   private EditText editTextUsername, editTextPassword;
   private Button buttonLogin;
+
+  @Inject
+  Authenticator authenticator;
 
   public LoginFragment() {
     // Required empty public constructor
@@ -31,6 +39,9 @@ public class LoginFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
+    // Important!!
+    AndroidSupportInjection.inject(this);
+
     // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_login, container, false);
     editTextUsername = view.findViewById(R.id.editText_login_username);
@@ -47,9 +58,10 @@ public class LoginFragment extends Fragment {
     buttonLogin.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        //TODO
-        Intent intent = new Intent(getContext(), HomeActivity.class);
-        startActivity(intent);
+        final String username = editTextUsername.getText().toString();
+        final String password = editTextPassword.getText().toString();
+
+        authenticator.loginUser(LoginFragment.this, username, password);
       }
     });
   }

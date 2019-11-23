@@ -7,25 +7,23 @@ public class InputValidator {
   @Inject
   public InputValidator() {}
 
-  public boolean isValidUsername(String username) {
-    if (username.equals("")) {
-      return false;
-    } else if (username.length() < 3 || username.length() > 10) {
-      return false;
-    } else if (!username.matches("^[a-zA-Z0-9_-]*$")) {
-      return false;
-    }
-
-    return true;
+  public boolean isInvalidRegistrationUsername(String username) {
+    return isInvalidInput(username)
+      || username.length() < 3
+      || username.length() > 10
+      || !username.matches("^[a-zA-Z0-9_-]*$")
+      || username.matches("_{2,}")
+      || username.matches("-{2,}")
+      ;
   }
 
-  public boolean isValidPassword(String password) {
-    if (password.equals("")) {
-      return false;
-    } else if (password.length() < 3 || password.length() > 20) {
-      return false;
-    }
+  public boolean isInvalidRegistrationPassword(String password) {
+    return isInvalidInput(password)
+      || password.length() < 3
+      || password.length() > 20;
+  }
 
-    return true;
+  public boolean isInvalidInput(String input) {
+    return input.equals("");
   }
 }

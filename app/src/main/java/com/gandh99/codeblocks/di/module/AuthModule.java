@@ -17,7 +17,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
-public class AppModule {
+public class AuthModule {
   private static final String BASE_URL = "http://192.168.86.125:8000/";
   private static final int CONNECTION_TIMEOUT_SECONDS = 7;
 
