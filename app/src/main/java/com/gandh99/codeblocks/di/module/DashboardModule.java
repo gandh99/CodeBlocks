@@ -22,7 +22,7 @@ public class DashboardModule {
 
   @Provides
   @Singleton
-  DashboardRepository provideDashboardRepository() {
-    return new DashboardRepository();
+  DashboardRepository provideDashboardRepository(DashboardAPIService dashboardAPIService) {
+    return new DashboardRepository(dashboardAPIService);
   }
 }

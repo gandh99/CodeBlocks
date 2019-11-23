@@ -70,6 +70,9 @@ public class DashboardFragment extends Fragment {
       }
     });
 
+    // Get list of projects
+    dashboardViewModel.getProjects();
+
     return view;
   }
 

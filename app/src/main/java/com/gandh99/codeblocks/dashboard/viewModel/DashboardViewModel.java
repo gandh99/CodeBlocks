@@ -13,4 +13,8 @@ public class DashboardViewModel extends ViewModel {
   public DashboardViewModel(DashboardRepository repository) {
     this.repository = repository;
   }
+
+  public void getProjects() {
+    repository.getProjects();
+  }
 }
