@@ -18,7 +18,6 @@ import com.gandh99.codeblocks.authentication.Authenticator;
 
 import javax.inject.Inject;
 
-import dagger.android.AndroidInjection;
 import dagger.android.support.AndroidSupportInjection;
 
 
@@ -62,7 +61,7 @@ public class RegisterFragment extends Fragment {
         final String username = editTextUsername.getText().toString();
         final String password = editTextPassword.getText().toString();
 
-        authenticator.registerUser(username, password);
+        authenticator.registerUser(RegisterFragment.this, username, password);
       }
     });
   }

@@ -1,6 +1,7 @@
 package com.gandh99.codeblocks.di.module;
 
 import com.gandh99.codeblocks.authentication.Authenticator;
+import com.gandh99.codeblocks.authentication.InputValidator;
 import com.gandh99.codeblocks.authentication.api.AuthAPIService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -60,7 +61,13 @@ public class AppModule {
 
   @Provides
   @Singleton
-  Authenticator provideAuthenticator(AuthAPIService authAPIService) {
-    return new Authenticator(authAPIService);
+  InputValidator provideInputValidator() {
+    return new InputValidator();
+  }
+
+  @Provides
+  @Singleton
+  Authenticator provideAuthenticator(AuthAPIService authAPIService, InputValidator inputValidator) {
+    return new Authenticator(authAPIService, inputValidator);
   }
 }
