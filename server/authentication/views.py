@@ -12,8 +12,8 @@ from rest_framework.status import (
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from .token import expired_token_handler
-from .serializers import UserProfileSerializer
-from .models import UserProfile
+from .serializers import UserProfileSerializer, ProjectSerializer
+from .models import UserProfile, ProjectGroup
 
 
 @csrf_exempt
@@ -60,6 +60,20 @@ def login(request):
 
     return Response({"Token": token.key},
                     status=HTTP_200_OK)
+
+
+class Projects(ListAPIView):
+    serializer_class = ProjectSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def list(self, request, *args, **kwargs):
+        # Get header info
+        username = request.META.get('HTTP_USERNAME')
+
+        # Get list of projects
+        projects = list(ProjectGroup.objects.filter(user_profile__username=username))
+        data = {"No. of projects": len(projects)}
+        return Response(data, status=HTTP_200_OK)
 
 
 class UserProfileDetail(ListAPIView):
