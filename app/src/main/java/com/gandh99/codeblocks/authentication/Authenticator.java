@@ -19,6 +19,8 @@ import retrofit2.Response;
 
 public class Authenticator {
   private static final String TAG = "Authenticator";
+  public static final String INTENT_SESSION_TOKEN = "sessionToken";
+  public static final String INTENT_USERNAME = "username";
   private AuthAPIService authAPIService;
   private InputValidator inputValidator;
 
@@ -61,7 +63,7 @@ public class Authenticator {
     });
   }
 
-  public void loginUser(final Fragment fragment, String username, String password) {
+  public void loginUser(final Fragment fragment, final String username, final String password) {
     if (inputValidator.isInvalidInput(username)
       || inputValidator.isInvalidInput(password)) {
       Toast.makeText(fragment.getContext(), "Please enter a username and password",
@@ -73,8 +75,11 @@ public class Authenticator {
       @Override
       public void onResponse(Call<SessionToken> call, Response<SessionToken> response) {
         if (response.isSuccessful()) {
-          // Start HomeActivity
+          // Start HomeActivity and send token + username over
+          SessionToken token = response.body();
           Intent intent = new Intent(fragment.getContext(), HomeActivity.class);
+          intent.putExtra(INTENT_SESSION_TOKEN, token);
+          intent.putExtra(INTENT_USERNAME, username);
           fragment.startActivity(intent);
           return;
         }

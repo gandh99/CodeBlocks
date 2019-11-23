@@ -1,15 +1,20 @@
 package com.gandh99.codeblocks.homePage.activity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.gandh99.codeblocks.R;
+import com.gandh99.codeblocks.authentication.Authenticator;
+import com.gandh99.codeblocks.authentication.api.SessionToken;
 import com.gandh99.codeblocks.dashboard.DashboardFragment;
 import com.gandh99.codeblocks.homePage.TabsPagerAdapter;
 import com.gandh99.codeblocks.homePage.fragment.NotificationsFragment;
@@ -29,11 +34,19 @@ public class HomeActivity extends AppCompatActivity {
     viewPager = findViewById(R.id.home_viewPager);
     tabLayout = findViewById(R.id.home_tabLayout);
 
+    receiveSessionToken();
+
     // Setup adapter, viewpager and tab layout
     createTabLayout();
 
     // Inflate the individual tabs in HomeActivity
     createTabs();
+  }
+
+  private void receiveSessionToken() {
+    Intent intent = getIntent();
+    SessionToken token = (SessionToken) intent.getSerializableExtra(Authenticator.INTENT_SESSION_TOKEN);
+    String username = intent.getStringExtra(Authenticator.INTENT_USERNAME);
   }
 
   private void createTabLayout() {
