@@ -13,7 +13,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         ]
 
 
-class ProjectSerializer(serializers.ModelSerializer):
+class ProjectGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProjectGroup
         fields = [

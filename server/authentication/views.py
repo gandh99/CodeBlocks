@@ -11,8 +11,9 @@ from rest_framework.status import (
 )
 from rest_framework.response import Response
 from django.contrib.auth.models import User
+import json
 from .token import expired_token_handler
-from .serializers import UserProfileSerializer, ProjectSerializer
+from .serializers import UserProfileSerializer, ProjectGroupSerializer
 from .models import UserProfile, ProjectGroup
 
 
@@ -63,7 +64,7 @@ def login(request):
 
 
 class Projects(ListAPIView):
-    serializer_class = ProjectSerializer
+    serializer_class = ProjectGroupSerializer
     permission_classes = (IsAuthenticated,)
 
     def list(self, request, *args, **kwargs):
@@ -72,8 +73,21 @@ class Projects(ListAPIView):
 
         # Get list of projects
         projects = list(ProjectGroup.objects.filter(user_profile__username=username))
-        data = {"No. of projects": len(projects)}
+        json_data = list([ComplexEncoder().encode(proj) for proj in projects])
+        data = {"Projects": json_data}
         return Response(data, status=HTTP_200_OK)
+
+
+class ComplexEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, ProjectGroup):
+            d = {'title': o.title, 'leader': o.leader, 'description': o.description}
+            return d
+
+    def encode(self, o):
+        if isinstance(o, ProjectGroup):
+            d = {'title': o.title, 'leader': o.leader, 'description': o.description}
+            return d
 
 
 class UserProfileDetail(ListAPIView):
