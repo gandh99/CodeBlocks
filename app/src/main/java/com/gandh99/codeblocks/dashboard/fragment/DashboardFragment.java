@@ -1,4 +1,4 @@
-package com.gandh99.codeblocks.dashboard;
+package com.gandh99.codeblocks.dashboard.fragment;
 
 
 import android.os.Bundle;
@@ -12,8 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gandh99.codeblocks.R;
+import com.gandh99.codeblocks.dashboard.AddProjectDialog;
 import com.gandh99.codeblocks.dashboard.DashboardListAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import dagger.android.support.AndroidSupportInjection;
 
 
 /**
@@ -33,6 +36,9 @@ public class DashboardFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
+    // For Dagger injection
+    AndroidSupportInjection.inject(this);
+
     // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
     fab = view.findViewById(R.id.fab_dashboard);
@@ -42,7 +48,7 @@ public class DashboardFragment extends Fragment {
     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     recyclerView.setAdapter(dashboardListAdapter);
 
-    // Add project
+    // Add project button
     fab.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {

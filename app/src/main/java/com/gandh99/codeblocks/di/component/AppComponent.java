@@ -4,7 +4,8 @@ import android.app.Application;
 
 import com.gandh99.codeblocks.App;
 import com.gandh99.codeblocks.di.module.ActivityModule;
-import com.gandh99.codeblocks.di.module.AuthModule;
+import com.gandh99.codeblocks.di.module.AuthenticationModule;
+import com.gandh99.codeblocks.di.module.DashboardModule;
 import com.gandh99.codeblocks.di.module.HomeActivityFragmentModule;
 import com.gandh99.codeblocks.di.module.MainActivityFragmentModule;
 
@@ -20,7 +21,8 @@ import dagger.android.support.AndroidSupportInjectionModule;
   modules = {
     ActivityModule.class,
     AndroidSupportInjectionModule.class,
-    AuthModule.class,
+    AuthenticationModule.class,
+    DashboardModule.class,
     MainActivityFragmentModule.class,
     HomeActivityFragmentModule.class
   }

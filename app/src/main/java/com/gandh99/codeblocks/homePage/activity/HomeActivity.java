@@ -3,27 +3,45 @@ package com.gandh99.codeblocks.homePage.activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
+import com.gandh99.codeblocks.FactoryViewModel;
 import com.gandh99.codeblocks.R;
+import com.gandh99.codeblocks.authentication.AuthenticationInterceptor;
 import com.gandh99.codeblocks.authentication.Authenticator;
 import com.gandh99.codeblocks.authentication.api.SessionToken;
-import com.gandh99.codeblocks.dashboard.DashboardFragment;
+import com.gandh99.codeblocks.dashboard.fragment.DashboardFragment;
+import com.gandh99.codeblocks.dashboard.viewModel.DashboardViewModel;
 import com.gandh99.codeblocks.homePage.TabsPagerAdapter;
 import com.gandh99.codeblocks.homePage.fragment.NotificationsFragment;
 import com.google.android.material.tabs.TabLayout;
+
+import javax.inject.Inject;
+
+import dagger.android.AndroidInjection;
+import dagger.android.support.AndroidSupportInjection;
 
 public class HomeActivity extends AppCompatActivity {
   private ViewPager viewPager;
   private TabsPagerAdapter tabsPagerAdapter;
   private TabLayout tabLayout;
+  private SessionToken sessionToken;
+  private String username;
+  private DashboardViewModel dashboardViewModel;
+
+  @Inject
+  AuthenticationInterceptor authenticationInterceptor;
+
+  @Inject
+  ViewModelProvider.Factory viewModelFactory;
 
   @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
   @Override
@@ -31,10 +49,15 @@ public class HomeActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_home);
 
+    // Setup Dagger injection
+    AndroidInjection.inject(this);
+
     viewPager = findViewById(R.id.home_viewPager);
     tabLayout = findViewById(R.id.home_tabLayout);
 
     receiveSessionToken();
+    setupAuthenticationInterceptor();
+    configureViewModel();
 
     // Setup adapter, viewpager and tab layout
     createTabLayout();
@@ -45,8 +68,17 @@ public class HomeActivity extends AppCompatActivity {
 
   private void receiveSessionToken() {
     Intent intent = getIntent();
-    SessionToken token = (SessionToken) intent.getSerializableExtra(Authenticator.INTENT_SESSION_TOKEN);
-    String username = intent.getStringExtra(Authenticator.INTENT_USERNAME);
+    sessionToken = (SessionToken) intent.getSerializableExtra(Authenticator.INTENT_SESSION_TOKEN);
+    username = intent.getStringExtra(Authenticator.INTENT_USERNAME);
+  }
+
+  private void setupAuthenticationInterceptor() {
+    authenticationInterceptor.setSessionToken(sessionToken.getToken());
+    authenticationInterceptor.setUsername(username);
+  }
+
+  private void configureViewModel() {
+    dashboardViewModel = ViewModelProviders.of(this, viewModelFactory).get(DashboardViewModel.class);
   }
 
   private void createTabLayout() {
