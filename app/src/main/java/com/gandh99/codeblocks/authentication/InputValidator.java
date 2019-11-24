@@ -13,8 +13,7 @@ public class InputValidator {
       || username.length() > 10
       || !username.matches("^[a-zA-Z0-9_-]*$")
       || username.matches("_{2,}")
-      || username.matches("-{2,}")
-      ;
+      || username.matches("-{2,}");
   }
 
   public boolean isInvalidRegistrationPassword(String password) {

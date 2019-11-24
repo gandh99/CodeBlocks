@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.generics import ListAPIView, UpdateAPIView
+from rest_framework.generics import ListAPIView, UpdateAPIView, CreateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.status import (
     HTTP_400_BAD_REQUEST,
@@ -63,7 +63,7 @@ def login(request):
                     status=HTTP_200_OK)
 
 
-class Projects(ListAPIView):
+class Projects(ListAPIView, CreateAPIView):
     serializer_class = ProjectGroupSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -75,6 +75,24 @@ class Projects(ListAPIView):
         projects = list(ProjectGroup.objects.filter(user_profile__username=username))
         json_data = list([ComplexEncoder().encode(proj) for proj in projects])
         return Response(json_data, status=HTTP_200_OK)
+
+    def create(self, request, *args, **kwargs):
+        # Get header info
+        username = request.META.get('HTTP_USERNAME')
+
+        # Get project info
+        user_profile = UserProfile.objects.get(username=username)
+        title = request.data.get("title")
+        leader = request.data.get("leader")
+        description = request.data.get("description")
+
+        # Create a new project
+        project = ProjectGroup(title=title, leader=leader, description=description)
+        project.save()
+        project.user_profile.add(user_profile)
+
+        response = {"Response": "Success"}
+        return Response(response, status=HTTP_200_OK)
 
 
 class ComplexEncoder(json.JSONEncoder):

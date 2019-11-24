@@ -21,4 +21,8 @@ public class DashboardViewModel extends ViewModel {
   public MutableLiveData<List<Project>> getProjects() {
     return repository.getProjects();
   }
+
+  public void refreshProjectList() {
+    repository.refreshProjectList();
+  }
 }

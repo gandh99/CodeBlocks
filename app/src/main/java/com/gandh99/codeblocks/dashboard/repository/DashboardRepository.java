@@ -32,7 +32,7 @@ public class DashboardRepository {
     return projectList;
   }
 
-  private void refreshProjectList() {
+  public void refreshProjectList() {
     dashboardAPIService.getProjects().enqueue(new Callback<List<Project>>() {
       @Override
       public void onResponse(Call<List<Project>> call, Response<List<Project>> response) {
