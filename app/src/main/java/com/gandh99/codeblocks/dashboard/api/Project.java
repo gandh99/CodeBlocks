@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 @SuppressWarnings("all")
 public class Project {
+  @SerializedName("pk")
+  private final int id;
+
   @SerializedName("title")
   private final String title;
 
@@ -14,7 +17,8 @@ public class Project {
   @SerializedName("description")
   private final String description;
 
-  public Project(String title, String leader, String description) {
+  public Project(int id, String title, String leader, String description) {
+    this.id = id;
     this.title = title;
     this.leader = leader;
     this.description = description;
@@ -30,5 +34,9 @@ public class Project {
 
   public String getDescription() {
     return description;
+  }
+
+  public int getId() {
+    return id;
   }
 }

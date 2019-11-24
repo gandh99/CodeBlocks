@@ -1,6 +1,7 @@
 package com.gandh99.codeblocks.dashboard.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -19,6 +20,7 @@ import com.gandh99.codeblocks.dashboard.AddProjectDialog;
 import com.gandh99.codeblocks.dashboard.DashboardListAdapter;
 import com.gandh99.codeblocks.dashboard.api.Project;
 import com.gandh99.codeblocks.dashboard.viewModel.DashboardViewModel;
+import com.gandh99.codeblocks.projectPage.ProjectActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -74,7 +76,10 @@ public class DashboardFragment extends Fragment {
     });
 
     // Configure ViewModel
-    configureViewModel();
+    initViewModel();
+
+    // Setup project item click listener
+    initProjectItemClickListener();
 
     return view;
   }
@@ -83,12 +88,22 @@ public class DashboardFragment extends Fragment {
     AndroidSupportInjection.inject(this);
   }
 
-  private void configureViewModel() {
+  private void initViewModel() {
     dashboardViewModel = ViewModelProviders.of(this, viewModelFactory).get(DashboardViewModel.class);
     dashboardViewModel.getProjects().observe(this, new Observer<List<Project>>() {
       @Override
       public void onChanged(List<Project> projects) {
         dashboardListAdapter.submitList(projects);
+      }
+    });
+  }
+
+  private void initProjectItemClickListener() {
+    dashboardListAdapter.setOnProjectItemClickListener(new DashboardListAdapter.OnProjectItemClickListener() {
+      @Override
+      public void onProjectItemClick(Project project) {
+        Intent intent = new Intent(DashboardFragment.this.getContext(), ProjectActivity.class);
+        startActivity(intent);
       }
     });
   }

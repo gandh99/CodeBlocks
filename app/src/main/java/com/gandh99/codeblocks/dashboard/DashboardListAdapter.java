@@ -16,6 +16,7 @@ import com.gandh99.codeblocks.dashboard.api.Project;
 import javax.inject.Inject;
 
 public class DashboardListAdapter extends ListAdapter<Project, DashboardListAdapter.ProjectViewHolder> {
+  private OnProjectItemClickListener listener;
 
   @Inject
   public DashboardListAdapter() {
@@ -64,6 +65,24 @@ public class DashboardListAdapter extends ListAdapter<Project, DashboardListAdap
       textViewTitle = itemView.findViewById(R.id.list_item_project_title);
       textViewLeader = itemView.findViewById(R.id.list_item_project_leader);
       textViewDescription = itemView.findViewById(R.id.list_item_project_description);
+
+      itemView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+          int position = getAdapterPosition();
+          if (listener != null && position != RecyclerView.NO_POSITION) {
+            listener.onProjectItemClick(getItem(position));
+          }
+        }
+      });
     }
+  }
+
+  public interface OnProjectItemClickListener {
+    void onProjectItemClick(Project project);
+  }
+
+  public void setOnProjectItemClickListener(OnProjectItemClickListener listener) {
+    this.listener = listener;
   }
 }

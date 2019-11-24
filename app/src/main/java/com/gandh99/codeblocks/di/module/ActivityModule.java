@@ -2,6 +2,7 @@ package com.gandh99.codeblocks.di.module;
 
 import com.gandh99.codeblocks.homePage.activity.HomeActivity;
 import com.gandh99.codeblocks.authentication.activity.MainActivity;
+import com.gandh99.codeblocks.projectPage.ProjectActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -13,4 +14,7 @@ public abstract class ActivityModule {
 
   @ContributesAndroidInjector(modules = {HomeActivityFragmentModule.class})
   abstract HomeActivity contributeHomeActivity();
+
+  @ContributesAndroidInjector(modules = {ProjectActivityFragmentModule.class})
+  abstract ProjectActivity contributeProjectActivity();
 }

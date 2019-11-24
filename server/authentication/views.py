@@ -103,7 +103,7 @@ class ComplexEncoder(json.JSONEncoder):
 
     def encode(self, o):
         if isinstance(o, ProjectGroup):
-            d = {'title': o.title, 'leader': o.leader, 'description': o.description}
+            d = {'pk': o.pk, 'title': o.title, 'leader': o.leader, 'description': o.description}
             return d
 
 
