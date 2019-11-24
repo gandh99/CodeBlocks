@@ -45,6 +45,7 @@ public class HomeActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_home);
+    getSupportActionBar().hide();
 
     viewPager = findViewById(R.id.home_viewPager);
     tabLayout = findViewById(R.id.home_tabLayout);
@@ -94,14 +95,14 @@ public class HomeActivity extends AppCompatActivity {
   private void createTabs() {
     // Dashboard tab
     TextView tabDashboard = (TextView) LayoutInflater.from(this).inflate(R.layout.home_tab, null);
-    tabDashboard.setText("DASHBOARD");
     tabDashboard.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.ic_dashboard_white, 0, 0);
+    tabDashboard.setText("Dashboard");
     tabLayout.getTabAt(0).setCustomView(tabDashboard);
 
     // Notification tab
     TextView tabNotifications = (TextView) LayoutInflater.from(this).inflate(R.layout.home_tab, null);
-    tabNotifications.setText("NOTIFICATIONS");
     tabNotifications.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.ic_notifications_white, 0, 0);
+    tabNotifications.setText("Notifications");
     tabLayout.getTabAt(1).setCustomView(tabNotifications);
   }
 

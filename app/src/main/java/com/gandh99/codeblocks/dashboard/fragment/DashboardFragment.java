@@ -35,6 +35,7 @@ import dagger.android.support.AndroidSupportInjection;
  */
 public class DashboardFragment extends Fragment {
   private static final int DIALOG_REQUEST_ADD_CODE = 1;
+  public static final String INTENT_PROJECT_TITLE = "projectTitle";
   private FloatingActionButton fab;
   private RecyclerView recyclerView;
   private DashboardViewModel dashboardViewModel;
@@ -103,6 +104,7 @@ public class DashboardFragment extends Fragment {
       @Override
       public void onProjectItemClick(Project project) {
         Intent intent = new Intent(DashboardFragment.this.getContext(), ProjectActivity.class);
+        intent.putExtra(INTENT_PROJECT_TITLE, project.getTitle());
         startActivity(intent);
       }
     });
