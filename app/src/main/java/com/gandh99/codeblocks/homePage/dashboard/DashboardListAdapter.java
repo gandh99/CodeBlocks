@@ -1,4 +1,4 @@
-package com.gandh99.codeblocks.dashboard;
+package com.gandh99.codeblocks.homePage.dashboard;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gandh99.codeblocks.R;
-import com.gandh99.codeblocks.dashboard.api.Project;
+import com.gandh99.codeblocks.homePage.dashboard.api.Project;
 
 import javax.inject.Inject;
 

@@ -1,4 +1,4 @@
-package com.gandh99.codeblocks.dashboard.api;
+package com.gandh99.codeblocks.homePage.dashboard.api;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -1,10 +1,10 @@
-package com.gandh99.codeblocks.dashboard.viewModel;
+package com.gandh99.codeblocks.homePage.dashboard.viewModel;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.gandh99.codeblocks.dashboard.api.Project;
-import com.gandh99.codeblocks.dashboard.repository.DashboardRepository;
+import com.gandh99.codeblocks.homePage.dashboard.api.Project;
+import com.gandh99.codeblocks.homePage.dashboard.repository.DashboardRepository;
 
 import java.util.List;
 

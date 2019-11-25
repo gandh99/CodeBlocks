@@ -1,8 +1,8 @@
 package com.gandh99.codeblocks.di.module;
 
-import com.gandh99.codeblocks.dashboard.AddProjectDialog;
-import com.gandh99.codeblocks.dashboard.fragment.DashboardFragment;
-import com.gandh99.codeblocks.homePage.fragment.NotificationsFragment;
+import com.gandh99.codeblocks.homePage.dashboard.AddProjectDialog;
+import com.gandh99.codeblocks.homePage.dashboard.fragment.DashboardFragment;
+import com.gandh99.codeblocks.homePage.notifications.NotificationsFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

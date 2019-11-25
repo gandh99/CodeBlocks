@@ -1,4 +1,4 @@
-package com.gandh99.codeblocks.dashboard;
+package com.gandh99.codeblocks.homePage.dashboard;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -17,8 +17,8 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.authentication.InputValidator;
-import com.gandh99.codeblocks.dashboard.api.DashboardAPIService;
-import com.gandh99.codeblocks.dashboard.viewModel.DashboardViewModel;
+import com.gandh99.codeblocks.homePage.dashboard.api.DashboardAPIService;
+import com.gandh99.codeblocks.homePage.dashboard.viewModel.DashboardViewModel;
 
 import javax.inject.Inject;
 

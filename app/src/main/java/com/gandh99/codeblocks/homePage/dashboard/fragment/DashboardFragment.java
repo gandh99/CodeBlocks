@@ -1,4 +1,4 @@
-package com.gandh99.codeblocks.dashboard.fragment;
+package com.gandh99.codeblocks.homePage.dashboard.fragment;
 
 
 import android.content.Intent;
@@ -16,10 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gandh99.codeblocks.R;
-import com.gandh99.codeblocks.dashboard.AddProjectDialog;
-import com.gandh99.codeblocks.dashboard.DashboardListAdapter;
-import com.gandh99.codeblocks.dashboard.api.Project;
-import com.gandh99.codeblocks.dashboard.viewModel.DashboardViewModel;
+import com.gandh99.codeblocks.homePage.dashboard.AddProjectDialog;
+import com.gandh99.codeblocks.homePage.dashboard.DashboardListAdapter;
+import com.gandh99.codeblocks.homePage.dashboard.api.Project;
+import com.gandh99.codeblocks.homePage.dashboard.viewModel.DashboardViewModel;
 import com.gandh99.codeblocks.projectPage.ProjectActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

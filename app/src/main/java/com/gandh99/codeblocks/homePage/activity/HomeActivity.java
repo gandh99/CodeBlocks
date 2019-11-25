@@ -16,10 +16,10 @@ import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.authentication.AuthenticationInterceptor;
 import com.gandh99.codeblocks.authentication.Authenticator;
 import com.gandh99.codeblocks.authentication.api.SessionToken;
-import com.gandh99.codeblocks.dashboard.fragment.DashboardFragment;
-import com.gandh99.codeblocks.dashboard.viewModel.DashboardViewModel;
+import com.gandh99.codeblocks.homePage.dashboard.fragment.DashboardFragment;
+import com.gandh99.codeblocks.homePage.dashboard.viewModel.DashboardViewModel;
 import com.gandh99.codeblocks.homePage.TabsPagerAdapter;
-import com.gandh99.codeblocks.homePage.fragment.NotificationsFragment;
+import com.gandh99.codeblocks.homePage.notifications.NotificationsFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import javax.inject.Inject;
@@ -93,17 +93,17 @@ public class HomeActivity extends AppCompatActivity {
 
   @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
   private void createTabs() {
-    // Dashboard tab
-    TextView tabDashboard = (TextView) LayoutInflater.from(this).inflate(R.layout.home_tab, null);
-    tabDashboard.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.ic_dashboard_white, 0, 0);
-    tabDashboard.setText("Dashboard");
-    tabLayout.getTabAt(0).setCustomView(tabDashboard);
+    String[] tabNames = new String[] {"Dashboard", "Notifications"};
+    int[] tabIcons = new int[] {R.drawable.ic_dashboard_white, R.drawable.ic_notifications_white};
 
-    // Notification tab
-    TextView tabNotifications = (TextView) LayoutInflater.from(this).inflate(R.layout.home_tab, null);
-    tabNotifications.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.ic_notifications_white, 0, 0);
-    tabNotifications.setText("Notifications");
-    tabLayout.getTabAt(1).setCustomView(tabNotifications);
+    for (int i = 0; i < tabNames.length; i++) {
+      TextView textViewTab = (TextView) LayoutInflater.from(this).inflate(R.layout.home_tab, null);
+      textViewTab.setCompoundDrawablesRelativeWithIntrinsicBounds(
+        0, tabIcons[i], 0, 0
+      );
+      textViewTab.setText(tabNames[i]);
+      tabLayout.getTabAt(i).setCustomView(textViewTab);
+    }
   }
 
 }

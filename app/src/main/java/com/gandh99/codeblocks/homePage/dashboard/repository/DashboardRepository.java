@@ -1,14 +1,12 @@
-package com.gandh99.codeblocks.dashboard.repository;
+package com.gandh99.codeblocks.homePage.dashboard.repository;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.gandh99.codeblocks.dashboard.api.DashboardAPIService;
-import com.gandh99.codeblocks.dashboard.api.Project;
+import com.gandh99.codeblocks.homePage.dashboard.api.DashboardAPIService;
+import com.gandh99.codeblocks.homePage.dashboard.api.Project;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;

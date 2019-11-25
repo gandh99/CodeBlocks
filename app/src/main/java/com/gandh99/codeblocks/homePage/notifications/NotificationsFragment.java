@@ -1,4 +1,4 @@
-package com.gandh99.codeblocks.homePage.fragment;
+package com.gandh99.codeblocks.homePage.notifications;
 
 
 import android.os.Bundle;
