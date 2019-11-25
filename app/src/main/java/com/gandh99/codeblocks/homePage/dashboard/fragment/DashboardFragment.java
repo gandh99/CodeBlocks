@@ -67,14 +67,7 @@ public class DashboardFragment extends Fragment {
     recyclerView.setAdapter(dashboardListAdapter);
 
     // Add project button
-    fab.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        AddProjectDialog dialog = new AddProjectDialog();
-        dialog.setTargetFragment(DashboardFragment.this, DIALOG_REQUEST_ADD_CODE);
-        dialog.show(getActivity().getSupportFragmentManager(), "Create ProjectList");
-      }
-    });
+    initFloatingActionButton();
 
     // Configure ViewModel
     initViewModel();
@@ -87,6 +80,17 @@ public class DashboardFragment extends Fragment {
 
   private void configureDagger() {
     AndroidSupportInjection.inject(this);
+  }
+
+  private void initFloatingActionButton() {
+    fab.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        AddProjectDialog dialog = new AddProjectDialog();
+        dialog.setTargetFragment(DashboardFragment.this, DIALOG_REQUEST_ADD_CODE);
+        dialog.show(getActivity().getSupportFragmentManager(), "Create ProjectList");
+      }
+    });
   }
 
   private void initViewModel() {

@@ -25,6 +25,7 @@ public class ProjectActivity extends AppCompatActivity {
   private TabLayout tabLayout;
   private TabsPagerAdapter tabsPagerAdapter;
 
+  @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

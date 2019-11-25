@@ -26,8 +26,7 @@ public class DashboardListAdapter extends ListAdapter<Project, DashboardListAdap
   private static final DiffUtil.ItemCallback<Project> DIFF_CALLBACK = new DiffUtil.ItemCallback<Project>() {
     @Override
     public boolean areItemsTheSame(@NonNull Project oldItem, @NonNull Project newItem) {
-      //TODO: Change this
-      return oldItem.getTitle().equals(newItem.getTitle());
+      return oldItem.getId() == newItem.getId();
     }
 
     @Override
