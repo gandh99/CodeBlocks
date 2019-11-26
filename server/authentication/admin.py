@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import UserProfile, ProjectGroup
+from .models import UserProfile, ProjectGroup, Task
 
 
 # Register your models here.
@@ -22,5 +22,14 @@ class ProjectGroupAdmin(admin.ModelAdmin):
     ]
 
 
+class TaskAdmin(admin.ModelAdmin):
+    list_display = ('project_group', 'title', 'description', 'date_created', 'deadline')
+    fieldsets = [
+        (None,               {'fields': ['project_group']}),
+        ('Other information', {'fields': ['title', 'description', 'date_created', 'deadline'], 'classes': ['collapse']}),
+    ]
+
+
 admin.site.register(UserProfile, UserAdmin)
 admin.site.register(ProjectGroup, ProjectGroupAdmin)
+admin.site.register(Task, TaskAdmin)

@@ -1,13 +1,10 @@
 from django.urls import path
 
-from .views import register, login, UserProfileDetail, UserProfileUpdate, Projects
+from .views import register, login, Projects, Tasks
 
 urlpatterns = [
     path('register', register),
     path('login', login),
     path('projects', Projects.as_view()),
-
-    # Redundant
-    path('profile', UserProfileDetail.as_view()),
-    path('update', UserProfileUpdate.as_view())
+    path('tasks', Tasks.as_view())
 ]

@@ -13,7 +13,7 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 import json
 from .token import expired_token_handler
-from .serializers import UserProfileSerializer, ProjectGroupSerializer
+from .serializers import UserProfileSerializer, ProjectGroupSerializer, TaskSerializer
 from .models import UserProfile, ProjectGroup
 
 
@@ -93,6 +93,17 @@ class Projects(ListAPIView, CreateAPIView):
 
         response = {"Response": "Success"}
         return Response(response, status=HTTP_200_OK)
+
+
+class Tasks(ListAPIView, CreateAPIView):
+    serializer_class = TaskSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def list(self, request, *args, **kwargs):
+        pass
+
+    def create(self, request, *args, **kwargs):
+        pass
 
 
 class ComplexEncoder(json.JSONEncoder):
