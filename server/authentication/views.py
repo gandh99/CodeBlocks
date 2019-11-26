@@ -14,7 +14,7 @@ from django.contrib.auth.models import User
 import json
 from .token import expired_token_handler
 from .serializers import UserProfileSerializer, ProjectGroupSerializer, TaskSerializer
-from .models import UserProfile, ProjectGroup
+from .models import UserProfile, ProjectGroup, Task
 
 
 @csrf_exempt
@@ -100,10 +100,35 @@ class Tasks(ListAPIView, CreateAPIView):
     permission_classes = (IsAuthenticated,)
 
     def list(self, request, *args, **kwargs):
-        pass
+        # Get header info
+        username = request.META.get('HTTP_USERNAME')
+        project_id = request.META.get('HTTP_PROJECTID')
+
+        # Get list of tasks
+        tasks = list(Task.objects.filter(project_group__pk=project_id))
+        json_data = list([ComplexEncoder().encode(task) for task in tasks])
+
+        return Response(json_data, status=HTTP_200_OK)
 
     def create(self, request, *args, **kwargs):
-        pass
+        # Get header info
+        username = request.META.get('HTTP_USERNAME')
+        project_id = request.META.get('HTTP_PROJECTID')
+
+        # Get task info
+        project_group = ProjectGroup.objects.get(pk=project_id)
+        title = request.data.get("title")
+        description = request.data.get("description")
+        date_created = request.data.get("dateCreated")
+        deadline = request.data.get("deadline")
+
+        # Create a new task
+        task = Task(project_group=project_group, title=title, description=description,
+                    date_created=date_created, deadline=deadline)
+        task.save()
+
+        response = {"Response": "Success"}
+        return Response(response, status=HTTP_200_OK)
 
 
 class ComplexEncoder(json.JSONEncoder):
