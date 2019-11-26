@@ -22,30 +22,25 @@ public class TaskListAdapter extends ListAdapter<Task, TaskListAdapter.TaskViewH
   private static final DiffUtil.ItemCallback<Task> DIFF_CALLBACK = new DiffUtil.ItemCallback<Task>() {
     @Override
     public boolean areItemsTheSame(@NonNull Task oldItem, @NonNull Task newItem) {
-//      return oldItem.getId() == newItem.getId();
-      //TODO
-      return true;
+      return oldItem.getId() == newItem.getId();
     }
 
     @Override
     public boolean areContentsTheSame(@NonNull Task oldItem, @NonNull Task newItem) {
-      //TODO
-//      return (oldItem.getTitle().equals(newItem.getTitle())
-//        && oldItem.getLeader().equals(newItem.getLeader())
-//        && oldItem.getDescription().equals(newItem.getDescription()));
-
-      return true;
+      return (oldItem.getTitle().equals(newItem.getTitle())
+        && oldItem.getDescription().equals(newItem.getDescription())
+        && oldItem.getDateCreated().equals(newItem.getDateCreated())
+        && oldItem.getDeadline().equals(newItem.getDeadline()));
     }
   };
-  
+
   @NonNull
   @Override
   public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
     View view =
       LayoutInflater
-      .from(parent.getContext())
-        .inflate(R.layout.list_item_project, parent, false);
-    //TODO
+        .from(parent.getContext())
+        .inflate(R.layout.list_item_task, parent, false);
 
     return new TaskViewHolder(view);
   }
@@ -53,20 +48,22 @@ public class TaskListAdapter extends ListAdapter<Task, TaskListAdapter.TaskViewH
   @Override
   public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
     Task task = getItem(position);
-//    holder.textViewTitle.setText(project.getTitle());
-//    holder.textViewLeader.setText(project.getLeader());
-//    holder.textViewDescription.setText(project.getDescription());
+    holder.textViewTitle.setText(task.getTitle());
+    holder.textViewDescription.setText(task.getDescription());
+    holder.textViewDateCreated.setText(task.getDateCreated());
+    holder.textViewDeadline.setText(task.getDeadline());
   }
 
   class TaskViewHolder extends RecyclerView.ViewHolder {
-    TextView textViewTitle, textViewLeader, textViewDescription;
+    TextView textViewTitle, textViewDescription, textViewDateCreated, textViewDeadline;
 
     public TaskViewHolder(@NonNull View itemView) {
       super(itemView);
 
-      textViewTitle = itemView.findViewById(R.id.list_item_project_title);
-      textViewLeader = itemView.findViewById(R.id.list_item_project_leader);
-      textViewDescription = itemView.findViewById(R.id.list_item_project_description);
+      textViewTitle = itemView.findViewById(R.id.list_item_task_title);
+      textViewDescription = itemView.findViewById(R.id.list_item_task_description);
+      textViewDateCreated = itemView.findViewById(R.id.list_item_task_date_created);
+      textViewDescription = itemView.findViewById(R.id.list_item_task_deadline);
     }
   }
 }

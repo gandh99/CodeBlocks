@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gandh99.codeblocks.R;
+import com.gandh99.codeblocks.homePage.dashboard.AddProjectDialog;
+import com.gandh99.codeblocks.homePage.dashboard.fragment.DashboardFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import javax.inject.Inject;
@@ -24,6 +26,7 @@ import dagger.android.support.AndroidSupportInjection;
 public class TasksFragment extends Fragment {
   private RecyclerView recyclerView;
   private FloatingActionButton fab;
+  private static int DIALOG_REQUEST_ADD_CODE = 1;
 
   @Inject
   TaskListAdapter taskListAdapter;
@@ -62,7 +65,9 @@ public class TasksFragment extends Fragment {
     fab.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-
+        AddTaskDialog dialog = new AddTaskDialog();
+        dialog.setTargetFragment(TasksFragment.this, DIALOG_REQUEST_ADD_CODE);
+        dialog.show(getActivity().getSupportFragmentManager(), "Create Task");
       }
     });
   }
