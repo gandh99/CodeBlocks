@@ -1,4 +1,4 @@
-package com.gandh99.codeblocks.projectPage.tasks;
+package com.gandh99.codeblocks.projectPage.tasks.api;
 
 public class Task {
   private int id;

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,12 +14,26 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.gandh99.codeblocks.R;
+import com.gandh99.codeblocks.authentication.InputValidator;
+import com.gandh99.codeblocks.projectPage.tasks.api.TaskAPIService;
+
+import javax.inject.Inject;
 
 import dagger.android.support.AndroidSupportInjection;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AddTaskDialog extends DialogFragment {
   private EditText editTextTitle, editTextDescription, editTextDateCreated, editTextDeadline;
   private Button buttonCreateTask;
+
+  @Inject
+  InputValidator inputValidator;
+
+  @Inject
+  TaskAPIService taskAPIService;
 
   public AddTaskDialog() {
   }
@@ -50,7 +65,35 @@ public class AddTaskDialog extends DialogFragment {
     buttonCreateTask.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
+        String title = editTextTitle.getText().toString();
+        String description = editTextDescription.getText().toString();
+        String dateCreated = editTextDateCreated.getText().toString();
+        String deadline = editTextDeadline.getText().toString();
 
+        if (inputValidator.isInvalidInput(title)
+          || inputValidator.isInvalidInput(description)
+          || inputValidator.isInvalidInput(dateCreated)
+          || inputValidator.isInvalidInput(deadline)) {
+          Toast.makeText(getContext(), "Please fill in all the required information",
+            Toast.LENGTH_SHORT).show();
+          return;
+        }
+
+        taskAPIService.createTask(title, description, dateCreated, deadline).enqueue(new Callback<ResponseBody>() {
+          @Override
+          public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            if (response.isSuccessful()) {
+              Toast.makeText(getContext(), "Successfully created project", Toast.LENGTH_SHORT).show();
+              dismiss();
+              refreshTaskList();
+            }
+          }
+
+          @Override
+          public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+          }
+        });
       }
     });
   }

@@ -1,4 +1,4 @@
-package com.gandh99.codeblocks.projectPage.tasks;
+package com.gandh99.codeblocks.projectPage.tasks.fragment;
 
 
 import android.os.Bundle;
@@ -12,8 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gandh99.codeblocks.R;
-import com.gandh99.codeblocks.homePage.dashboard.AddProjectDialog;
-import com.gandh99.codeblocks.homePage.dashboard.fragment.DashboardFragment;
+import com.gandh99.codeblocks.projectPage.tasks.AddTaskDialog;
+import com.gandh99.codeblocks.projectPage.tasks.TaskListAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import javax.inject.Inject;
