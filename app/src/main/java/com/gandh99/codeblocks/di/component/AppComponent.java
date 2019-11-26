@@ -8,6 +8,8 @@ import com.gandh99.codeblocks.di.module.AuthenticationModule;
 import com.gandh99.codeblocks.di.module.DashboardModule;
 import com.gandh99.codeblocks.di.module.HomeActivityFragmentModule;
 import com.gandh99.codeblocks.di.module.MainActivityFragmentModule;
+import com.gandh99.codeblocks.di.module.ProjectActivityFragmentModule;
+import com.gandh99.codeblocks.di.module.TaskModule;
 
 import javax.inject.Singleton;
 
@@ -23,8 +25,10 @@ import dagger.android.support.AndroidSupportInjectionModule;
     AndroidSupportInjectionModule.class,
     AuthenticationModule.class,
     DashboardModule.class,
+    TaskModule.class,
     MainActivityFragmentModule.class,
-    HomeActivityFragmentModule.class
+    HomeActivityFragmentModule.class,
+    ProjectActivityFragmentModule.class
   }
 )
 
