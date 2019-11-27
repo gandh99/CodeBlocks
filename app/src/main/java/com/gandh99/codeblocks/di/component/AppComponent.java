@@ -21,11 +21,14 @@ import dagger.android.support.AndroidSupportInjectionModule;
 @Singleton
 @Component(
   modules = {
-    ActivityModule.class,
     AndroidSupportInjectionModule.class,
     AuthenticationModule.class,
+
+    ActivityModule.class,
+
     DashboardModule.class,
     TaskModule.class,
+
     MainActivityFragmentModule.class,
     HomeActivityFragmentModule.class,
     ProjectActivityFragmentModule.class

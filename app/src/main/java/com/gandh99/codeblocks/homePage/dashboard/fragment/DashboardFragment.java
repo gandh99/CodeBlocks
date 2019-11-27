@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gandh99.codeblocks.R;
+import com.gandh99.codeblocks.authentication.AuthenticationInterceptor;
 import com.gandh99.codeblocks.homePage.dashboard.AddProjectDialog;
 import com.gandh99.codeblocks.homePage.dashboard.DashboardListAdapter;
 import com.gandh99.codeblocks.homePage.dashboard.api.Project;
@@ -35,7 +36,7 @@ import dagger.android.support.AndroidSupportInjection;
  */
 public class DashboardFragment extends Fragment {
   private static final int DIALOG_REQUEST_ADD_CODE = 1;
-  public static final String INTENT_PROJECT_TITLE = "projectTitle";
+  public static final String INTENT_PROJECT = "project";
   private FloatingActionButton fab;
   private RecyclerView recyclerView;
   private DashboardViewModel dashboardViewModel;
@@ -108,7 +109,7 @@ public class DashboardFragment extends Fragment {
       @Override
       public void onProjectItemClick(Project project) {
         Intent intent = new Intent(DashboardFragment.this.getContext(), ProjectActivity.class);
-        intent.putExtra(INTENT_PROJECT_TITLE, project.getTitle());
+        intent.putExtra(INTENT_PROJECT, project);
         startActivity(intent);
       }
     });

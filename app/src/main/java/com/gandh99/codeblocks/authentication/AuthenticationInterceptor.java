@@ -16,6 +16,7 @@ public class AuthenticationInterceptor implements Interceptor {
   private String SESSION_TOKEN_PREFIX = "Token ";
   private String sessionToken = "";
   private String username = "";
+  private String projectID = "";
 
   @Inject
   public AuthenticationInterceptor() {}
@@ -28,6 +29,10 @@ public class AuthenticationInterceptor implements Interceptor {
     this.username = username;
   }
 
+  public void setProjectID(String projectID) {
+    this.projectID = projectID;
+  }
+
   @NotNull
   @Override
   public Response intercept(@NotNull Chain chain) throws IOException {
@@ -35,6 +40,7 @@ public class AuthenticationInterceptor implements Interceptor {
     Request.Builder requestBuilder = request.newBuilder();
     requestBuilder.addHeader("Authorization", sessionToken);
     requestBuilder.addHeader("username", username);
+    requestBuilder.addHeader("projectID", projectID);
 
     return chain.proceed(requestBuilder.build());
   }

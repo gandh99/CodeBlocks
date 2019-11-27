@@ -64,7 +64,7 @@ public class TaskListAdapter extends ListAdapter<Task, TaskListAdapter.TaskViewH
       textViewTitle = itemView.findViewById(R.id.list_item_task_title);
       textViewDescription = itemView.findViewById(R.id.list_item_task_description);
       textViewDateCreated = itemView.findViewById(R.id.list_item_task_date_created);
-      textViewDescription = itemView.findViewById(R.id.list_item_task_deadline);
+      textViewDeadline = itemView.findViewById(R.id.list_item_task_deadline);
     }
   }
 }

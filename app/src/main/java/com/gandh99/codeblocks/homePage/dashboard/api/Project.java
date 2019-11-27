@@ -2,9 +2,11 @@ package com.gandh99.codeblocks.homePage.dashboard.api;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 
 @SuppressWarnings("all")
-public class Project {
+public class Project implements Serializable {
   @SerializedName("pk")
   private final int id;
 

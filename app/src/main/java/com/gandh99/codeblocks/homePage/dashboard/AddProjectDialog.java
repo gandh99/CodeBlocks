@@ -60,11 +60,16 @@ public class AddProjectDialog extends DialogFragment {
     editTextDescription = view.findViewById(R.id.dialog_project_description);
     buttonCreateProject = view.findViewById(R.id.dialog_project_create);
 
+    initViewModel();
     setupCreateButton();
 
     return new AlertDialog.Builder(getActivity())
       .setView(view)
       .create();
+  }
+
+  private void initViewModel() {
+    dashboardViewModel = ViewModelProviders.of(this, viewModelFactory).get(DashboardViewModel.class);
   }
 
   private void setupCreateButton() {
@@ -103,7 +108,6 @@ public class AddProjectDialog extends DialogFragment {
   }
 
   private void refreshProjectList() {
-    dashboardViewModel = ViewModelProviders.of(this, viewModelFactory).get(DashboardViewModel.class);
     dashboardViewModel.refreshProjectList();
   }
 }

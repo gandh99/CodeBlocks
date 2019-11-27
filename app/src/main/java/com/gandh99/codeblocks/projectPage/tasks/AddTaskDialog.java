@@ -12,10 +12,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.authentication.InputValidator;
+import com.gandh99.codeblocks.homePage.dashboard.viewModel.DashboardViewModel;
 import com.gandh99.codeblocks.projectPage.tasks.api.TaskAPIService;
+import com.gandh99.codeblocks.projectPage.tasks.viewModel.TaskViewModel;
 
 import javax.inject.Inject;
 
@@ -28,6 +33,10 @@ import retrofit2.Response;
 public class AddTaskDialog extends DialogFragment {
   private EditText editTextTitle, editTextDescription, editTextDateCreated, editTextDeadline;
   private Button buttonCreateTask;
+  private TaskViewModel taskViewModel;
+
+  @Inject
+  ViewModelProvider.Factory viewModelFactory;
 
   @Inject
   InputValidator inputValidator;
@@ -54,11 +63,16 @@ public class AddTaskDialog extends DialogFragment {
     editTextDeadline = view.findViewById(R.id.dialog_task_deadline);
     buttonCreateTask = view.findViewById(R.id.dialog_task_create);
 
+    initViewModel();
     setupCreateButton();
 
     return new AlertDialog.Builder(getActivity())
       .setView(view)
       .create();
+  }
+
+  private void initViewModel() {
+    taskViewModel = ViewModelProviders.of(this, viewModelFactory).get(TaskViewModel.class);
   }
 
   private void setupCreateButton() {
@@ -99,6 +113,6 @@ public class AddTaskDialog extends DialogFragment {
   }
 
   private void refreshTaskList() {
-
+    taskViewModel.refreshTaskList();
   }
 }

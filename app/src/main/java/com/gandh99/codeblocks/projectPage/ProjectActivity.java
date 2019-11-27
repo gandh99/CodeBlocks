@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.widget.TextView;
 
 import com.gandh99.codeblocks.R;
+import com.gandh99.codeblocks.authentication.AuthenticationInterceptor;
+import com.gandh99.codeblocks.homePage.dashboard.api.Project;
 import com.gandh99.codeblocks.homePage.dashboard.fragment.DashboardFragment;
 import com.gandh99.codeblocks.homePage.TabsPagerAdapter;
 import com.gandh99.codeblocks.projectPage.issues.IssuesFragment;
@@ -18,12 +20,18 @@ import com.gandh99.codeblocks.projectPage.members.MembersFragment;
 import com.gandh99.codeblocks.projectPage.tasks.fragment.TasksFragment;
 import com.google.android.material.tabs.TabLayout;
 
+import javax.inject.Inject;
+
 import dagger.android.AndroidInjection;
 
 public class ProjectActivity extends AppCompatActivity {
   private ViewPager viewPager;
   private TabLayout tabLayout;
   private TabsPagerAdapter tabsPagerAdapter;
+  private Project project;
+
+  @Inject
+  AuthenticationInterceptor authenticationInterceptor;
 
   @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
   @Override
@@ -36,6 +44,7 @@ public class ProjectActivity extends AppCompatActivity {
 
     configureDagger();
     receiveProjectData();
+    initInterceptor();
     createTabLayout();
     createTabs();
   }
@@ -46,9 +55,14 @@ public class ProjectActivity extends AppCompatActivity {
 
   private void receiveProjectData() {
     Intent intent = getIntent();
-    String projectTitle = intent.getStringExtra(DashboardFragment.INTENT_PROJECT_TITLE);
+    project = (Project) intent.getSerializableExtra(DashboardFragment.INTENT_PROJECT);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    getSupportActionBar().setTitle(projectTitle);
+    getSupportActionBar().setTitle(project.getTitle());
+  }
+
+  private void initInterceptor() {
+    // This is needed to identify which tasks/issues to extract from the server
+    authenticationInterceptor.setProjectID(String.valueOf(project.getId()));
   }
 
   private void createTabLayout() {
