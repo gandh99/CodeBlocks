@@ -1,4 +1,4 @@
-package com.gandh99.codeblocks.di.module;
+package com.gandh99.codeblocks.di.module.common;
 
 import com.gandh99.codeblocks.authentication.AuthenticationInterceptor;
 import com.gandh99.codeblocks.authentication.Authenticator;

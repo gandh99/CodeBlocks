@@ -3,12 +3,12 @@ package com.gandh99.codeblocks.di.component;
 import android.app.Application;
 
 import com.gandh99.codeblocks.App;
-import com.gandh99.codeblocks.di.module.ActivityModule;
-import com.gandh99.codeblocks.di.module.AuthenticationModule;
+import com.gandh99.codeblocks.di.module.common.ActivityModule;
+import com.gandh99.codeblocks.di.module.common.AuthenticationModule;
 import com.gandh99.codeblocks.di.module.DashboardModule;
-import com.gandh99.codeblocks.di.module.HomeActivityFragmentModule;
-import com.gandh99.codeblocks.di.module.MainActivityFragmentModule;
-import com.gandh99.codeblocks.di.module.ProjectActivityFragmentModule;
+import com.gandh99.codeblocks.di.module.fragmentModule.HomeActivityFragmentModule;
+import com.gandh99.codeblocks.di.module.fragmentModule.MainActivityFragmentModule;
+import com.gandh99.codeblocks.di.module.fragmentModule.ProjectActivityFragmentModule;
 import com.gandh99.codeblocks.di.module.TaskModule;
 
 import javax.inject.Singleton;

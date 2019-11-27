@@ -15,7 +15,6 @@ import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 
 public class TaskListAdapter extends ListAdapter<Task, TaskListAdapter.TaskViewHolder> {
 
-
   public TaskListAdapter() {
     super(DIFF_CALLBACK);
   }

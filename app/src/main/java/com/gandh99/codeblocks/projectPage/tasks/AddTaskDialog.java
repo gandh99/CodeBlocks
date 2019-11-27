@@ -97,7 +97,7 @@ public class AddTaskDialog extends DialogFragment {
           @Override
           public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
             if (response.isSuccessful()) {
-              Toast.makeText(getContext(), "Successfully created project", Toast.LENGTH_SHORT).show();
+              Toast.makeText(getContext(), "Successfully created task", Toast.LENGTH_SHORT).show();
               dismiss();
               refreshTaskList();
             }

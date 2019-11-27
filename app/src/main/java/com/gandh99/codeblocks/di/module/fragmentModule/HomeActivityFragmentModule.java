@@ -1,4 +1,4 @@
-package com.gandh99.codeblocks.di.module;
+package com.gandh99.codeblocks.di.module.fragmentModule;
 
 import com.gandh99.codeblocks.homePage.dashboard.AddProjectDialog;
 import com.gandh99.codeblocks.homePage.dashboard.fragment.DashboardFragment;

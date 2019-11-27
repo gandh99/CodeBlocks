@@ -1,5 +1,8 @@
-package com.gandh99.codeblocks.di.module;
+package com.gandh99.codeblocks.di.module.common;
 
+import com.gandh99.codeblocks.di.module.fragmentModule.HomeActivityFragmentModule;
+import com.gandh99.codeblocks.di.module.fragmentModule.MainActivityFragmentModule;
+import com.gandh99.codeblocks.di.module.fragmentModule.ProjectActivityFragmentModule;
 import com.gandh99.codeblocks.homePage.activity.HomeActivity;
 import com.gandh99.codeblocks.authentication.activity.MainActivity;
 import com.gandh99.codeblocks.projectPage.ProjectActivity;

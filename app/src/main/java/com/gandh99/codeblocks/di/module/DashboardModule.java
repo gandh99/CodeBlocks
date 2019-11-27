@@ -1,5 +1,6 @@
 package com.gandh99.codeblocks.di.module;
 
+import com.gandh99.codeblocks.di.module.common.ViewModelModule;
 import com.gandh99.codeblocks.homePage.dashboard.DashboardListAdapter;
 import com.gandh99.codeblocks.homePage.dashboard.api.DashboardAPIService;
 import com.gandh99.codeblocks.homePage.dashboard.repository.DashboardRepository;

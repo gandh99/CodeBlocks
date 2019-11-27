@@ -1,5 +1,6 @@
 package com.gandh99.codeblocks.di.module;
 
+import com.gandh99.codeblocks.di.module.common.ViewModelModule;
 import com.gandh99.codeblocks.projectPage.tasks.api.TaskAPIService;
 import com.gandh99.codeblocks.projectPage.tasks.TaskListAdapter;
 import com.gandh99.codeblocks.projectPage.tasks.repository.TaskRepository;
