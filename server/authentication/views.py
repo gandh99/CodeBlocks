@@ -141,6 +141,10 @@ class ComplexEncoder(json.JSONEncoder):
         if isinstance(o, ProjectGroup):
             d = {'pk': o.pk, 'title': o.title, 'leader': o.leader, 'description': o.description}
             return d
+        elif isinstance(o, Task):
+            d = {'pk': o.pk, 'title': o.title, 'description': o.description, 'dateCreated': o.date_created,
+                 'deadline': o.deadline}
+            return d
 
 
 class UserProfileDetail(ListAPIView):
