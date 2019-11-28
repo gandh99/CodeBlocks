@@ -11,29 +11,24 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gandh99.codeblocks.R;
+import com.gandh99.codeblocks.projectPage.members.api.ProjectMember;
 
 public class MemberListAdapter extends ListAdapter<ProjectMember, MemberListAdapter.MemberViewHolder> {
 
-  protected MemberListAdapter() {
+  public MemberListAdapter() {
     super(DIFF_CALLBACK);
   }
 
   private static final DiffUtil.ItemCallback<ProjectMember> DIFF_CALLBACK = new DiffUtil.ItemCallback<ProjectMember>() {
     @Override
     public boolean areItemsTheSame(@NonNull ProjectMember oldItem, @NonNull ProjectMember newItem) {
-//      return oldItem.getId() == newItem.getId();
-      //TODO
-      return true;
+      return !(oldItem.getUsername().equals(newItem.getUsername()));
     }
 
     @Override
     public boolean areContentsTheSame(@NonNull ProjectMember oldItem, @NonNull ProjectMember newItem) {
-//      return (oldItem.getTitle().equals(newItem.getTitle())
-//        && oldItem.getDescription().equals(newItem.getDescription())
-//        && oldItem.getDateCreated().equals(newItem.getDateCreated())
-//        && oldItem.getDeadline().equals(newItem.getDeadline()));
-      //TODO
-      return true;
+      return (oldItem.getUsername().equals(newItem.getUsername())
+        && oldItem.getRank().equals(newItem.getRank()));
     }
   };
   

@@ -3,6 +3,7 @@ package com.gandh99.codeblocks.di.component;
 import android.app.Application;
 
 import com.gandh99.codeblocks.App;
+import com.gandh99.codeblocks.di.module.MemberModule;
 import com.gandh99.codeblocks.di.module.common.ActivityModule;
 import com.gandh99.codeblocks.di.module.common.AuthenticationModule;
 import com.gandh99.codeblocks.di.module.DashboardModule;
@@ -28,6 +29,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
 
     DashboardModule.class,
     TaskModule.class,
+    MemberModule.class,
 
     MainActivityFragmentModule.class,
     HomeActivityFragmentModule.class,

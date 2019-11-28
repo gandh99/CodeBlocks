@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.gandh99.codeblocks.FactoryViewModel;
 import com.gandh99.codeblocks.homePage.dashboard.viewModel.DashboardViewModel;
 import com.gandh99.codeblocks.di.key.ViewModelKey;
+import com.gandh99.codeblocks.projectPage.members.viewModel.MemberViewModel;
 import com.gandh99.codeblocks.projectPage.tasks.viewModel.TaskViewModel;
 
 import dagger.Binds;
@@ -23,6 +24,11 @@ public abstract class ViewModelModule {
   @IntoMap
   @ViewModelKey(TaskViewModel.class)
   abstract ViewModel bindTaskViewModel(TaskViewModel taskViewModel);
+
+  @Binds
+  @IntoMap
+  @ViewModelKey(MemberViewModel.class)
+  abstract ViewModel bindMemberViewModel(MemberViewModel memberViewModel);
 
   @Binds
   abstract ViewModelProvider.Factory bindViewModelFactory(FactoryViewModel factory);

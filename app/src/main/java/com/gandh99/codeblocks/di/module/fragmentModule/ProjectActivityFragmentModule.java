@@ -1,7 +1,7 @@
 package com.gandh99.codeblocks.di.module.fragmentModule;
 
 import com.gandh99.codeblocks.projectPage.issues.IssuesFragment;
-import com.gandh99.codeblocks.projectPage.members.MembersFragment;
+import com.gandh99.codeblocks.projectPage.members.fragment.MembersFragment;
 import com.gandh99.codeblocks.projectPage.tasks.AddTaskDialog;
 import com.gandh99.codeblocks.projectPage.tasks.fragment.TasksFragment;
 

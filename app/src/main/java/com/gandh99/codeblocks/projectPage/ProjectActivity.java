@@ -16,7 +16,7 @@ import com.gandh99.codeblocks.homePage.dashboard.api.Project;
 import com.gandh99.codeblocks.homePage.dashboard.fragment.DashboardFragment;
 import com.gandh99.codeblocks.homePage.TabsPagerAdapter;
 import com.gandh99.codeblocks.projectPage.issues.IssuesFragment;
-import com.gandh99.codeblocks.projectPage.members.MembersFragment;
+import com.gandh99.codeblocks.projectPage.members.fragment.MembersFragment;
 import com.gandh99.codeblocks.projectPage.tasks.fragment.TasksFragment;
 import com.google.android.material.tabs.TabLayout;
 

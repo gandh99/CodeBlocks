@@ -1,4 +1,4 @@
-package com.gandh99.codeblocks.projectPage.members;
+package com.gandh99.codeblocks.projectPage.members.api;
 
 public class ProjectMember {
   private String username;
