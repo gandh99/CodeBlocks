@@ -15,10 +15,10 @@ class UserAdmin(admin.ModelAdmin):
 
 
 class ProjectGroupAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'title', 'leader', 'description')
+    list_display = ('pk', 'title', 'leader', 'description', 'rank')
     fieldsets = [
         (None,               {'fields': ['user_profile']}),
-        ('Other information', {'fields': ['title', 'leader', 'description'], 'classes': ['collapse']}),
+        ('Other information', {'fields': ['title', 'leader', 'description', 'rank'], 'classes': ['collapse']}),
     ]
 
 

@@ -131,6 +131,22 @@ class Tasks(ListAPIView, CreateAPIView):
         return Response(response, status=HTTP_200_OK)
 
 
+class Members(ListAPIView):
+    serializer_class = ProjectGroupSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def list(self, request, *args, **kwargs):
+        # Get header info
+        username = request.META.get('HTTP_USERNAME')
+        project_id = request.META.get('HTTP_PROJECTID')
+
+        # Get list of members
+        members = list(ProjectGroup.objects.filter(pk=project_id))
+        json_data = list([MemberEncoder().encode(member) for member in members])
+
+        return Response(json_data, status=HTTP_200_OK)
+
+
 class ComplexEncoder(json.JSONEncoder):
     def default(self, o):
         if isinstance(o, ProjectGroup):
@@ -144,6 +160,14 @@ class ComplexEncoder(json.JSONEncoder):
         elif isinstance(o, Task):
             d = {'pk': o.pk, 'title': o.title, 'description': o.description, 'dateCreated': o.date_created,
                  'deadline': o.deadline}
+            return d
+
+
+class MemberEncoder(json.JSONEncoder):
+    def encode(self, o):
+        # Only for encoding members
+        if isinstance(o, ProjectGroup):
+            d = {'pk': o.pk, 'username': list(o.user_profile.all())[0].username, 'rank': o.rank}
             return d
 
 

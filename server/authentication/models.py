@@ -17,6 +17,15 @@ class ProjectGroup(models.Model):
     leader = models.CharField(max_length=20)
     description = models.CharField(max_length=150)
 
+    ADMIN = 'ADMIN'
+    MEMBER = 'MEMBER'
+    RANK_CHOICES = [
+        (ADMIN, 'admin'),
+        (MEMBER, 'member')
+    ]
+
+    rank = models.CharField(max_length=10, choices=RANK_CHOICES, default=MEMBER)
+
     def __str__(self):
         return self.title
 

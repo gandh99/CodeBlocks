@@ -21,7 +21,8 @@ class ProjectGroupSerializer(serializers.ModelSerializer):
             'user_profile',
             'title',
             'leader',
-            'description'
+            'description',
+            'rank'
         ]
 
 
