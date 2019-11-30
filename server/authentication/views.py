@@ -91,8 +91,28 @@ class Projects(ListAPIView, CreateAPIView):
         project.save()
         project.user_profile.add(user_profile)
 
+        # Create the first member of this new project, and this member will be an Admin
+        member = ProjectGroupMember(project_id=project, user_profile=user_profile, rank='ADMIN')
+        member.save()
+
         response = {"Response": "Success"}
         return Response(response, status=HTTP_200_OK)
+
+
+class Members(ListAPIView):
+    serializer_class = ProjectGroupMemberSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def list(self, request, *args, **kwargs):
+        # Get header info
+        username = request.META.get('HTTP_USERNAME')
+        project_id = request.META.get('HTTP_PROJECTID')
+
+        # Get list of members
+        members = list(ProjectGroupMember.objects.filter(project_id=project_id))
+        json_data = list([ComplexEncoder().encode(member) for member in members])
+
+        return Response(json_data, status=HTTP_200_OK)
 
 
 class Tasks(ListAPIView, CreateAPIView):
@@ -129,22 +149,6 @@ class Tasks(ListAPIView, CreateAPIView):
 
         response = {"Response": "Success"}
         return Response(response, status=HTTP_200_OK)
-
-
-class Members(ListAPIView):
-    serializer_class = ProjectGroupMemberSerializer
-    permission_classes = (IsAuthenticated,)
-
-    def list(self, request, *args, **kwargs):
-        # Get header info
-        username = request.META.get('HTTP_USERNAME')
-        project_id = request.META.get('HTTP_PROJECTID')
-
-        # Get list of members
-        members = list(ProjectGroupMember.objects.filter(project_id=project_id))
-        json_data = list([ComplexEncoder().encode(member) for member in members])
-
-        return Response(json_data, status=HTTP_200_OK)
 
 
 class ComplexEncoder(json.JSONEncoder):
