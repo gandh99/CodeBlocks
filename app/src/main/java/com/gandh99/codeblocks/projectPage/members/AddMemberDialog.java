@@ -29,7 +29,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AddMemberDialog extends DialogFragment {
-  private EditText editTextUsername;
+  private EditText editTextUsername, editTextRank;
   private Button buttonInviteUser;
   private MemberViewModel memberViewModel;
 
@@ -56,6 +56,7 @@ public class AddMemberDialog extends DialogFragment {
         .inflate(R.layout.dialog_member, null);
 
     editTextUsername = view.findViewById(R.id.dialog_member_username);
+    editTextRank = view.findViewById(R.id.dialog_member_rank);
     buttonInviteUser = view.findViewById(R.id.dialog_member_invite);
 
     initViewModel();
@@ -74,20 +75,25 @@ public class AddMemberDialog extends DialogFragment {
       @Override
       public void onClick(View view) {
         String username = editTextUsername.getText().toString();
+        String rank = editTextRank.getText().toString();
 
-        if (inputValidator.isInvalidInput(username)) {
+        if (inputValidator.isInvalidInput(username)
+          || inputValidator.isInvalidInput(rank)) {
           Toast.makeText(getContext(), "Please fill in all the required information",
             Toast.LENGTH_SHORT).show();
           return;
         }
 
-        memberAPIService.inviteMember(username).enqueue(new Callback<ResponseBody>() {
+        memberAPIService.inviteMember(username, rank).enqueue(new Callback<ResponseBody>() {
           @Override
           public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
             if (response.isSuccessful()) {
               Toast.makeText(getContext(), "Invitation sent", Toast.LENGTH_SHORT).show();
               dismiss();
+              return;
             }
+
+            Toast.makeText(getContext(), "Invitation could not be sent", Toast.LENGTH_SHORT).show();
           }
 
           @Override

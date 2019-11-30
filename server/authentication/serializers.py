@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import UserProfile, ProjectGroup, Task, ProjectGroupMember
+from .models import UserProfile, ProjectGroup, Task, ProjectGroupMember, Invitation
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -46,4 +46,15 @@ class TaskSerializer(serializers.ModelSerializer):
             'description',
             'date_created',
             'deadline'
+        ]
+
+
+class InviteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Invitation
+        fields = [
+            'project_group',
+            'inviter',
+            'invitee',
+            'invitee_rank'
         ]

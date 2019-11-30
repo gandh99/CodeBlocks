@@ -1,7 +1,5 @@
 package com.gandh99.codeblocks.projectPage.members.api;
 
-import com.gandh99.codeblocks.projectPage.tasks.api.Task;
-
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -16,8 +14,9 @@ public interface MemberAPIService {
   Call<List<ProjectMember>> getProjectMembers();
 
   @FormUrlEncoded
-  @POST("members")
+  @POST("invite")
   Call<ResponseBody> inviteMember(
-    @Field("username") String username
+    @Field("invitee") String invitee,
+    @Field("inviteeRank") String inviteeRank
   );
 }

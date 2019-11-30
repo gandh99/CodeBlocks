@@ -13,8 +13,9 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 import json
 from .token import expired_token_handler
-from .serializers import UserProfileSerializer, ProjectGroupSerializer, TaskSerializer, ProjectGroupMemberSerializer
-from .models import UserProfile, ProjectGroup, Task, ProjectGroupMember
+from .serializers import UserProfileSerializer, ProjectGroupSerializer, TaskSerializer, ProjectGroupMemberSerializer, \
+    InviteSerializer
+from .models import UserProfile, ProjectGroup, Task, ProjectGroupMember, Invitation
 
 
 @csrf_exempt
@@ -147,6 +148,34 @@ class Tasks(ListAPIView, CreateAPIView):
         task = Task(project_group=project_group, title=title, description=description,
                     date_created=date_created, deadline=deadline)
         task.save()
+
+        response = {"Response": "Success"}
+        return Response(response, status=HTTP_200_OK)
+
+
+class InviteMember(ListAPIView, CreateAPIView):
+    serializer_class = InviteSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def list(self, request, *args, **kwargs):
+        pass
+
+    def create(self, request, *args, **kwargs):
+        # Get header info
+        inviter = request.META.get('HTTP_USERNAME')
+        inviter_profile = UserProfile.objects.get(username=inviter)
+        project_id = request.META.get('HTTP_PROJECTID')
+        project_group = ProjectGroup.objects.get(pk=project_id)
+
+        # Get invitee info
+        invitee = request.data.get("invitee")
+        invitee_profile = UserProfile.objects.get(username=invitee)
+        invitee_rank = request.data.get("inviteeRank")
+
+        # Create a new invite
+        invite = Invitation(project_group=project_group, inviter=inviter_profile, invitee=invitee_profile,
+                            invitee_rank=invitee_rank)
+        invite.save()
 
         response = {"Response": "Success"}
         return Response(response, status=HTTP_200_OK)

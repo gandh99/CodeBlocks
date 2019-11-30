@@ -44,3 +44,11 @@ class Task(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Invitation(models.Model):
+    project_group = models.ForeignKey(ProjectGroup, on_delete=models.CASCADE)
+    inviter = models.ForeignKey(UserProfile, related_name="inviter", on_delete=models.CASCADE)
+    invitee = models.ForeignKey(UserProfile, related_name="invitee", on_delete=models.CASCADE)
+    invitee_rank = models.CharField(max_length=10, choices=ProjectGroupMember.RANK_CHOICES,
+                                    default=ProjectGroupMember.MEMBER)
