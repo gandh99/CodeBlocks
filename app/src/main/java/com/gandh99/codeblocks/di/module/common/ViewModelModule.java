@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.gandh99.codeblocks.FactoryViewModel;
 import com.gandh99.codeblocks.homePage.dashboard.viewModel.DashboardViewModel;
 import com.gandh99.codeblocks.di.key.ViewModelKey;
+import com.gandh99.codeblocks.homePage.invitations.InvitationsViewModel;
 import com.gandh99.codeblocks.projectPage.members.viewModel.MemberViewModel;
 import com.gandh99.codeblocks.projectPage.tasks.viewModel.TaskViewModel;
 
@@ -29,6 +30,11 @@ public abstract class ViewModelModule {
   @IntoMap
   @ViewModelKey(MemberViewModel.class)
   abstract ViewModel bindMemberViewModel(MemberViewModel memberViewModel);
+
+  @Binds
+  @IntoMap
+  @ViewModelKey(InvitationsViewModel.class)
+  abstract ViewModel bindInvitationsViewModel(InvitationsViewModel invitationsViewModel);
 
   @Binds
   abstract ViewModelProvider.Factory bindViewModelFactory(FactoryViewModel factory);

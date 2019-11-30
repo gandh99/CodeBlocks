@@ -19,7 +19,7 @@ import com.gandh99.codeblocks.authentication.api.SessionToken;
 import com.gandh99.codeblocks.homePage.dashboard.fragment.DashboardFragment;
 import com.gandh99.codeblocks.homePage.dashboard.viewModel.DashboardViewModel;
 import com.gandh99.codeblocks.homePage.TabsPagerAdapter;
-import com.gandh99.codeblocks.homePage.notifications.NotificationsFragment;
+import com.gandh99.codeblocks.homePage.invitations.InvitationsFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import javax.inject.Inject;
@@ -85,7 +85,7 @@ public class HomeActivity extends AppCompatActivity {
     // Setup adapter
     tabsPagerAdapter = new TabsPagerAdapter(getSupportFragmentManager());
     tabsPagerAdapter.addFragment(new DashboardFragment());
-    tabsPagerAdapter.addFragment(new NotificationsFragment());
+    tabsPagerAdapter.addFragment(new InvitationsFragment());
 
     viewPager.setAdapter(tabsPagerAdapter);
     tabLayout.setupWithViewPager(viewPager);
@@ -93,7 +93,7 @@ public class HomeActivity extends AppCompatActivity {
 
   @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
   private void createTabs() {
-    String[] tabNames = new String[] {"Dashboard", "Notifications"};
+    String[] tabNames = new String[] {"Dashboard", "Invitations"};
     int[] tabIcons = new int[] {R.drawable.ic_dashboard_white, R.drawable.ic_notifications_white};
 
     for (int i = 0; i < tabNames.length; i++) {

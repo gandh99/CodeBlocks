@@ -2,7 +2,7 @@ package com.gandh99.codeblocks.di.module.fragmentModule;
 
 import com.gandh99.codeblocks.homePage.dashboard.AddProjectDialog;
 import com.gandh99.codeblocks.homePage.dashboard.fragment.DashboardFragment;
-import com.gandh99.codeblocks.homePage.notifications.NotificationsFragment;
+import com.gandh99.codeblocks.homePage.invitations.InvitationsFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -13,7 +13,7 @@ public abstract class HomeActivityFragmentModule {
   abstract DashboardFragment contributeDashboardFragment();
 
   @ContributesAndroidInjector
-  abstract NotificationsFragment contributeNotificationsFragment();
+  abstract InvitationsFragment contributeInvitationsFragment();
 
   @ContributesAndroidInjector
   abstract AddProjectDialog contributeAddProjectDialog();
