@@ -3,12 +3,12 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK
 
-from authentication.CustomJSONEncoder import CustomJSONEncoder
+from authentication.JSONEncoder import JSONEncoder
 from authentication.models import Invitation, UserProfile, ProjectGroup
 from authentication.serializers import InviteSerializer
 
 
-class InvitationView(ListAPIView, CreateAPIView):
+class InvitationView(ListAPIView, CreateAPIView, JSONEncoder):
     serializer_class = InviteSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -19,7 +19,7 @@ class InvitationView(ListAPIView, CreateAPIView):
 
         # Get list of invitations for the above invitee
         invitations = list(Invitation.objects.filter(invitee=invitee_profile))
-        json_data = list([CustomJSONEncoder().encode(invitation) for invitation in invitations])
+        json_data = list([self.encode(invitation) for invitation in invitations])
 
         return Response(json_data, status=HTTP_200_OK)
 
@@ -42,3 +42,8 @@ class InvitationView(ListAPIView, CreateAPIView):
 
         response = {"Response": "Success"}
         return Response(response, status=HTTP_200_OK)
+
+    def encode(self, o):
+        d = {'id': o.pk, 'projectTitle': o.project_group.title, 'inviter': o.inviter.username,
+             'invitee': o.invitee.username}
+        return d

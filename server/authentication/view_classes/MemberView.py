@@ -3,12 +3,12 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK
 
-from authentication.CustomJSONEncoder import CustomJSONEncoder
+from authentication.JSONEncoder import JSONEncoder
 from authentication.models import ProjectGroup, ProjectGroupMember
 from authentication.serializers import ProjectGroupMemberSerializer
 
 
-class MemberView(ListAPIView):
+class MemberView(ListAPIView, JSONEncoder):
     serializer_class = ProjectGroupMemberSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -20,6 +20,10 @@ class MemberView(ListAPIView):
 
         # Get list of members
         members = list(ProjectGroupMember.objects.filter(project_group=project_group))
-        json_data = list([CustomJSONEncoder().encode(member) for member in members])
+        json_data = list([self.encode(member) for member in members])
 
         return Response(json_data, status=HTTP_200_OK)
+
+    def encode(self, o):
+        d = {'username': o.user_profile.username, 'rank': o.rank}
+        return d
