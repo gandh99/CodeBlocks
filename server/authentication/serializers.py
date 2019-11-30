@@ -9,7 +9,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'id',
             'username',
             'password',
-            'credits'
         ]
 
 
@@ -20,7 +19,6 @@ class ProjectGroupSerializer(serializers.ModelSerializer):
             'id',
             'user_profile',
             'title',
-            'leader',
             'description',
             'rank'
         ]

@@ -4,21 +4,21 @@ from .models import UserProfile, ProjectGroup, Task, ProjectGroupMember, Invitat
 
 # Register your models here.
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('owner', 'username', 'password', 'credits')
+    list_display = ('owner', 'username', 'password')
     # list_filter = ['pub_date']
     search_fields = ['username']
     fieldsets = [
         (None,               {'fields': ['username']}),
-        ('Other information', {'fields': ['password', 'credits'], 'classes': ['collapse']}),
+        ('Other information', {'fields': ['password'], 'classes': ['collapse']}),
     ]
     # inlines = [ChoiceInline]
 
 
 class ProjectGroupAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'leader', 'description')
+    list_display = ('id', 'title', 'description')
     fieldsets = [
         (None,               {'fields': ['user_profile']}),
-        ('Other information', {'fields': ['title', 'leader', 'description'], 'classes': ['collapse']}),
+        ('Other information', {'fields': ['title', 'description'], 'classes': ['collapse']}),
     ]
 
 

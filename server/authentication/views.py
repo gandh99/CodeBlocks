@@ -74,7 +74,7 @@ class ProjectView(ListAPIView, CreateAPIView):
 
         # Get list of projects
         projects = list(ProjectGroup.objects.filter(user_profile__username=username))
-        json_data = list([ComplexEncoder().encode(proj) for proj in projects])
+        json_data = list([ComplexEncoder().encode(project) for project in projects])
         return Response(json_data, status=HTTP_200_OK)
 
     def create(self, request, *args, **kwargs):
@@ -84,11 +84,10 @@ class ProjectView(ListAPIView, CreateAPIView):
         # Get project info
         user_profile = UserProfile.objects.get(username=username)
         title = request.data.get("title")
-        leader = request.data.get("leader")
         description = request.data.get("description")
 
         # Create a new project
-        project_group = ProjectGroup(title=title, leader=leader, description=description)
+        project_group = ProjectGroup(title=title, description=description)
         project_group.save()
         project_group.user_profile.add(user_profile)
 
@@ -226,12 +225,12 @@ class InvitationResponseView(CreateAPIView):
 class ComplexEncoder(json.JSONEncoder):
     def default(self, o):
         if isinstance(o, ProjectGroup):
-            d = {'title': o.title, 'leader': o.leader, 'description': o.description}
+            d = {'title': o.title, 'description': o.description}
             return d
 
     def encode(self, o):
         if isinstance(o, ProjectGroup):
-            d = {'pk': o.pk, 'title': o.title, 'leader': o.leader, 'description': o.description}
+            d = {'pk': o.pk, 'title': o.title, 'description': o.description}
             return d
         elif isinstance(o, Task):
             d = {'id': o.pk, 'title': o.title, 'description': o.description, 'dateCreated': o.date_created,
