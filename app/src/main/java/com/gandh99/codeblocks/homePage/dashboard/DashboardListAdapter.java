@@ -32,7 +32,6 @@ public class DashboardListAdapter extends ListAdapter<Project, DashboardListAdap
     @Override
     public boolean areContentsTheSame(@NonNull Project oldItem, @NonNull Project newItem) {
       return (oldItem.getTitle().equals(newItem.getTitle())
-        && oldItem.getLeader().equals(newItem.getLeader())
         && oldItem.getDescription().equals(newItem.getDescription()));
     }
   };
@@ -52,17 +51,15 @@ public class DashboardListAdapter extends ListAdapter<Project, DashboardListAdap
   public void onBindViewHolder(@NonNull ProjectViewHolder holder, int position) {
     Project project = getItem(position);
     holder.textViewTitle.setText(project.getTitle());
-    holder.textViewLeader.setText(project.getLeader());
     holder.textViewDescription.setText(project.getDescription());
   }
 
   class ProjectViewHolder extends RecyclerView.ViewHolder {
-    TextView textViewTitle, textViewLeader, textViewDescription;
+    TextView textViewTitle, textViewDescription;
 
     ProjectViewHolder(@NonNull View itemView) {
       super(itemView);
       textViewTitle = itemView.findViewById(R.id.list_item_project_title);
-      textViewLeader = itemView.findViewById(R.id.list_item_project_leader);
       textViewDescription = itemView.findViewById(R.id.list_item_project_description);
 
       itemView.setOnClickListener(new View.OnClickListener() {

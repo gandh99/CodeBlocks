@@ -13,25 +13,17 @@ public class Project implements Serializable {
   @SerializedName("title")
   private final String title;
 
-  @SerializedName("leader")
-  private final String leader;
-
   @SerializedName("description")
   private final String description;
 
-  public Project(int id, String title, String leader, String description) {
+  public Project(int id, String title, String description) {
     this.id = id;
     this.title = title;
-    this.leader = leader;
     this.description = description;
   }
 
   public String getTitle() {
     return title;
-  }
-
-  public String getLeader() {
-    return leader;
   }
 
   public String getDescription() {

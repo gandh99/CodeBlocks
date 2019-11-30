@@ -64,40 +64,40 @@ def login(request):
                     status=HTTP_200_OK)
 
 
-class ProjectView(ListAPIView, CreateAPIView):
-    serializer_class = ProjectGroupSerializer
-    permission_classes = (IsAuthenticated,)
-
-    def list(self, request, *args, **kwargs):
-        # Get header info
-        username = request.META.get('HTTP_USERNAME')
-
-        # Get list of projects
-        projects = list(ProjectGroup.objects.filter(user_profile__username=username))
-        json_data = list([ComplexEncoder().encode(project) for project in projects])
-        return Response(json_data, status=HTTP_200_OK)
-
-    def create(self, request, *args, **kwargs):
-        # Get header info
-        username = request.META.get('HTTP_USERNAME')
-
-        # Get project info
-        user_profile = UserProfile.objects.get(username=username)
-        title = request.data.get("title")
-        description = request.data.get("description")
-
-        # Create a new project
-        project_group = ProjectGroup(title=title, description=description)
-        project_group.save()
-        project_group.user_profile.add(user_profile)
-
-        # Create the first member of this new project, and this member will be an Admin
-        member = ProjectGroupMember(project_group=project_group, user_profile=user_profile,
-                                    rank=ProjectGroupMember.ADMIN)
-        member.save()
-
-        response = {"Response": "Success"}
-        return Response(response, status=HTTP_200_OK)
+# class ProjectView(ListAPIView, CreateAPIView):
+#     serializer_class = ProjectGroupSerializer
+#     permission_classes = (IsAuthenticated,)
+#
+#     def list(self, request, *args, **kwargs):
+#         # Get header info
+#         username = request.META.get('HTTP_USERNAME')
+#
+#         # Get list of projects
+#         projects = list(ProjectGroup.objects.filter(user_profile__username=username))
+#         json_data = list([CustomJSONEncoder().encode(project) for project in projects])
+#         return Response(json_data, status=HTTP_200_OK)
+#
+#     def create(self, request, *args, **kwargs):
+#         # Get header info
+#         username = request.META.get('HTTP_USERNAME')
+#
+#         # Get project info
+#         user_profile = UserProfile.objects.get(username=username)
+#         title = request.data.get("title")
+#         description = request.data.get("description")
+#
+#         # Create a new project
+#         project_group = ProjectGroup(title=title, description=description)
+#         project_group.save()
+#         project_group.user_profile.add(user_profile)
+#
+#         # Create the first member of this new project, and this member will be an Admin
+#         member = ProjectGroupMember(project_group=project_group, user_profile=user_profile,
+#                                     rank=ProjectGroupMember.ADMIN)
+#         member.save()
+#
+#         response = {"Response": "Success"}
+#         return Response(response, status=HTTP_200_OK)
 
 
 class MemberView(ListAPIView):
@@ -112,7 +112,7 @@ class MemberView(ListAPIView):
 
         # Get list of members
         members = list(ProjectGroupMember.objects.filter(project_group=project_group))
-        json_data = list([ComplexEncoder().encode(member) for member in members])
+        json_data = list([CustomJSONEncoder().encode(member) for member in members])
 
         return Response(json_data, status=HTTP_200_OK)
 
@@ -128,7 +128,7 @@ class TaskView(ListAPIView, CreateAPIView):
 
         # Get list of tasks
         tasks = list(Task.objects.filter(project_group__pk=project_id))
-        json_data = list([ComplexEncoder().encode(task) for task in tasks])
+        json_data = list([CustomJSONEncoder().encode(task) for task in tasks])
 
         return Response(json_data, status=HTTP_200_OK)
 
@@ -164,7 +164,7 @@ class InvitationView(ListAPIView, CreateAPIView, DestroyAPIView):
 
         # Get list of invitations for the above invitee
         invitations = list(Invitation.objects.filter(invitee=invitee_profile))
-        json_data = list([ComplexEncoder().encode(invitation) for invitation in invitations])
+        json_data = list([CustomJSONEncoder().encode(invitation) for invitation in invitations])
 
         return Response(json_data, status=HTTP_200_OK)
 
@@ -222,12 +222,7 @@ class InvitationResponseView(CreateAPIView):
         return Response(response, status=HTTP_200_OK)
 
 
-class ComplexEncoder(json.JSONEncoder):
-    def default(self, o):
-        if isinstance(o, ProjectGroup):
-            d = {'title': o.title, 'description': o.description}
-            return d
-
+class CustomJSONEncoder(json.JSONEncoder):
     def encode(self, o):
         if isinstance(o, ProjectGroup):
             d = {'pk': o.pk, 'title': o.title, 'description': o.description}
@@ -244,41 +239,6 @@ class ComplexEncoder(json.JSONEncoder):
                  'invitee': o.invitee.username}
             return d
 
-
-class UserProfileDetail(ListAPIView):
-    serializer_class = UserProfileSerializer
-    permission_classes = (IsAuthenticated,)
-
-    def list(self, request, *args, **kwargs):
-        # Get header info
-        username = request.META.get('HTTP_USERNAME')
-
-        # Get UserProfile data and retrieve the credits
-        user_profile = list(UserProfile.objects.filter(username=username))
-        result = user_profile[0].credits
-        data = {'credits': result}
-        return Response(data, status=HTTP_200_OK)
-
-
-class UserProfileUpdate(UpdateAPIView):
-    serializer_class = UserProfileSerializer
-    permission_classes = (IsAuthenticated,)
-
-    def update(self, request, *args, **kwargs):
-        # Get header info
-        username = request.META.get('HTTP_USERNAME')
-
-        # Get change in credits
-        credit_change = request.data.get("credits")
-
-        # Update UserProfile
-        user_profile = list(UserProfile.objects.filter(username=username))
-        user_profile[0].credits += int(credit_change)
-        user_profile[0].save()
-
-        result = user_profile[0].credits
-        data = {'credits': result}
-        return Response(data, status=HTTP_200_OK)
 
 # register
 # curl -X POST --data "username=john&password=smith" http://localhost:8000/register

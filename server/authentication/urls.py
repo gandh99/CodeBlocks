@@ -1,6 +1,7 @@
 from django.urls import path
 
-from .views import register, login, ProjectView, TaskView, MemberView, InvitationView, InvitationResponseView
+from authentication.ProjectView import ProjectView
+from .views import register, login, TaskView, MemberView, InvitationView, InvitationResponseView
 
 urlpatterns = [
     path('register', register),
