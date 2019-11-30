@@ -3,9 +3,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK
 
+from authentication.CustomJSONEncoder import CustomJSONEncoder
 from authentication.models import ProjectGroup, UserProfile, ProjectGroupMember
 from authentication.serializers import ProjectGroupSerializer
-from authentication.views import CustomJSONEncoder
 
 
 class ProjectView(ListAPIView, CreateAPIView):
