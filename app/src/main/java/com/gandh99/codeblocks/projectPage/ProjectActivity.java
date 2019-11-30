@@ -90,4 +90,10 @@ public class ProjectActivity extends AppCompatActivity {
       tabLayout.getTabAt(i).setCustomView(textViewTab);
     }
   }
+
+  @Override
+  public boolean onSupportNavigateUp() {
+    finish();
+    return true;
+  }
 }
