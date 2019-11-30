@@ -1,7 +1,10 @@
-package com.gandh99.codeblocks.homePage.invitations;
+package com.gandh99.codeblocks.homePage.invitations.viewModel;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.gandh99.codeblocks.homePage.invitations.api.Invitation;
+import com.gandh99.codeblocks.homePage.invitations.repository.InvitationsRepository;
 
 import java.util.List;
 

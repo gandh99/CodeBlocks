@@ -30,7 +30,7 @@ class ProjectGroupMemberSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProjectGroupMember
         fields = [
-            'project_id',
+            'project_group',
             'user_profile',
             'rank'
         ]

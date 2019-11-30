@@ -8,5 +8,5 @@ urlpatterns = [
     path('projects', Projects.as_view()),
     path('tasks', Tasks.as_view()),
     path('members', Members.as_view()),
-    path('invite', InviteMember.as_view())
+    path('invite', InviteMember.as_view()),
 ]

@@ -1,10 +1,9 @@
 package com.gandh99.codeblocks.di.module;
 
 import com.gandh99.codeblocks.di.module.common.ViewModelModule;
-import com.gandh99.codeblocks.homePage.invitations.Invitation;
-import com.gandh99.codeblocks.homePage.invitations.InvitationAPIService;
+import com.gandh99.codeblocks.homePage.invitations.api.InvitationAPIService;
 import com.gandh99.codeblocks.homePage.invitations.InvitationsAdapter;
-import com.gandh99.codeblocks.homePage.invitations.InvitationsRepository;
+import com.gandh99.codeblocks.homePage.invitations.repository.InvitationsRepository;
 
 import javax.inject.Singleton;
 

@@ -1,8 +1,11 @@
-package com.gandh99.codeblocks.homePage.invitations;
+package com.gandh99.codeblocks.homePage.invitations.repository;
 
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
+
+import com.gandh99.codeblocks.homePage.invitations.api.Invitation;
+import com.gandh99.codeblocks.homePage.invitations.api.InvitationAPIService;
 
 import java.util.List;
 
@@ -31,7 +34,10 @@ public class InvitationsRepository {
     invitationAPIService.getInvitations().enqueue(new Callback<List<Invitation>>() {
       @Override
       public void onResponse(Call<List<Invitation>> call, Response<List<Invitation>> response) {
-
+        if (response.isSuccessful()) {
+          List<Invitation> invitationList = response.body();
+          InvitationsRepository.this.invitationList.postValue(invitationList);
+        }
       }
 
       @Override

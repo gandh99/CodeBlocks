@@ -19,7 +19,7 @@ import com.gandh99.codeblocks.authentication.api.SessionToken;
 import com.gandh99.codeblocks.homePage.dashboard.fragment.DashboardFragment;
 import com.gandh99.codeblocks.homePage.dashboard.viewModel.DashboardViewModel;
 import com.gandh99.codeblocks.homePage.TabsPagerAdapter;
-import com.gandh99.codeblocks.homePage.invitations.InvitationsFragment;
+import com.gandh99.codeblocks.homePage.invitations.fragment.InvitationsFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import javax.inject.Inject;

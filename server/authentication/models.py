@@ -22,7 +22,7 @@ class ProjectGroup(models.Model):
 
 
 class ProjectGroupMember(models.Model):
-    project_id = models.ForeignKey(ProjectGroup, on_delete=models.CASCADE)
+    project_group = models.ForeignKey(ProjectGroup, on_delete=models.CASCADE)
     user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
 
     ADMIN = 'ADMIN'

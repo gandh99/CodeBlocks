@@ -1,4 +1,4 @@
-package com.gandh99.codeblocks.homePage.invitations;
+package com.gandh99.codeblocks.homePage.invitations.fragment;
 
 
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -14,6 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gandh99.codeblocks.R;
+import com.gandh99.codeblocks.homePage.invitations.InvitationsAdapter;
+import com.gandh99.codeblocks.homePage.invitations.api.Invitation;
+import com.gandh99.codeblocks.homePage.invitations.viewModel.InvitationsViewModel;
 
 import java.util.List;
 
@@ -48,6 +52,10 @@ public class InvitationsFragment extends Fragment {
     // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_notification, container, false);
     recyclerView = view.findViewById(R.id.recyclerView_invitations);
+
+    // Setup recyclerView
+    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    recyclerView.setAdapter(invitationsAdapter);
 
     // Init viewModel
     initViewModel();

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gandh99.codeblocks.R;
+import com.gandh99.codeblocks.homePage.invitations.api.Invitation;
 
 import javax.inject.Inject;
 
@@ -58,7 +59,7 @@ public class InvitationsAdapter extends ListAdapter<Invitation, InvitationsAdapt
 
     public InvitationsViewHolder(@NonNull View itemView) {
       super(itemView);
-      textViewProjectTitle = itemView.findViewById(R.id.list_item_project_title);
+      textViewProjectTitle = itemView.findViewById(R.id.list_item_invitation_project_title);
       textViewInviter = itemView.findViewById(R.id.list_item_invitation_inviter);
     }
   }

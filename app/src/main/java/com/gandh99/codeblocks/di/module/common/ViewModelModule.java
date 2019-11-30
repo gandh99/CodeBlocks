@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.gandh99.codeblocks.FactoryViewModel;
 import com.gandh99.codeblocks.homePage.dashboard.viewModel.DashboardViewModel;
 import com.gandh99.codeblocks.di.key.ViewModelKey;
-import com.gandh99.codeblocks.homePage.invitations.InvitationsViewModel;
+import com.gandh99.codeblocks.homePage.invitations.viewModel.InvitationsViewModel;
 import com.gandh99.codeblocks.projectPage.members.viewModel.MemberViewModel;
 import com.gandh99.codeblocks.projectPage.tasks.viewModel.TaskViewModel;
 

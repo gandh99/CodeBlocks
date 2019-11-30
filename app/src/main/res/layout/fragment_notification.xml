@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".homePage.invitations.InvitationsFragment">
+    tools:context=".homePage.invitations.fragment.InvitationsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

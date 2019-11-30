@@ -88,12 +88,12 @@ class Projects(ListAPIView, CreateAPIView):
         description = request.data.get("description")
 
         # Create a new project
-        project = ProjectGroup(title=title, leader=leader, description=description)
-        project.save()
-        project.user_profile.add(user_profile)
+        project_group = ProjectGroup(title=title, leader=leader, description=description)
+        project_group.save()
+        project_group.user_profile.add(user_profile)
 
         # Create the first member of this new project, and this member will be an Admin
-        member = ProjectGroupMember(project_id=project, user_profile=user_profile,
+        member = ProjectGroupMember(project_group=project_group, user_profile=user_profile,
                                     rank=ProjectGroupMember.ADMIN)
         member.save()
 
@@ -109,9 +109,10 @@ class Members(ListAPIView):
         # Get header info
         username = request.META.get('HTTP_USERNAME')
         project_id = request.META.get('HTTP_PROJECTID')
+        project_group = ProjectGroup.objects.get(id=project_id)
 
         # Get list of members
-        members = list(ProjectGroupMember.objects.filter(project_id=project_id))
+        members = list(ProjectGroupMember.objects.filter(project_group=project_group))
         json_data = list([ComplexEncoder().encode(member) for member in members])
 
         return Response(json_data, status=HTTP_200_OK)
@@ -138,7 +139,7 @@ class Tasks(ListAPIView, CreateAPIView):
         project_id = request.META.get('HTTP_PROJECTID')
 
         # Get task info
-        project_group = ProjectGroup.objects.get(pk=project_id)
+        project_group = ProjectGroup.objects.get(id=project_id)
         title = request.data.get("title")
         description = request.data.get("description")
         date_created = request.data.get("dateCreated")
@@ -158,14 +159,22 @@ class InviteMember(ListAPIView, CreateAPIView):
     permission_classes = (IsAuthenticated,)
 
     def list(self, request, *args, **kwargs):
-        pass
+        # Get header info
+        invitee = request.META.get('HTTP_USERNAME')
+        invitee_profile = UserProfile.objects.get(username=invitee)
+
+        # Get list of invitations for the above invitee
+        invitations = list(Invitation.objects.filter(invitee=invitee_profile))
+        json_data = list([ComplexEncoder().encode(invitation) for invitation in invitations])
+
+        return Response(json_data, status=HTTP_200_OK)
 
     def create(self, request, *args, **kwargs):
         # Get header info
         inviter = request.META.get('HTTP_USERNAME')
         inviter_profile = UserProfile.objects.get(username=inviter)
         project_id = request.META.get('HTTP_PROJECTID')
-        project_group = ProjectGroup.objects.get(pk=project_id)
+        project_group = ProjectGroup.objects.get(id=project_id)
 
         # Get invitee info
         invitee = request.data.get("invitee")
@@ -189,14 +198,17 @@ class ComplexEncoder(json.JSONEncoder):
 
     def encode(self, o):
         if isinstance(o, ProjectGroup):
-            d = {'pk': o.pk, 'title': o.title, 'leader': o.leader, 'description': o.description}
+            d = {'pk': o.id, 'title': o.title, 'leader': o.leader, 'description': o.description}
             return d
         elif isinstance(o, Task):
-            d = {'pk': o.pk, 'title': o.title, 'description': o.description, 'dateCreated': o.date_created,
+            d = {'id': o.id, 'title': o.title, 'description': o.description, 'dateCreated': o.date_created,
                  'deadline': o.deadline}
             return d
         elif isinstance(o, ProjectGroupMember):
             d = {'username': o.user_profile.username, 'rank': o.rank}
+            return d
+        elif isinstance(o, Invitation):
+            d = {'id': o.id, 'projectTitle': o.project_group.title, 'inviter': o.inviter.username, 'invitee': o.invitee.username}
             return d
 
 
