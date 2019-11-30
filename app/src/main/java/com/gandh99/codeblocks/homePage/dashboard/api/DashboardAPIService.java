@@ -18,7 +18,6 @@ public interface DashboardAPIService {
   @POST("projects")
   Call<ResponseBody> createProject(
     @Field("title") String title,
-    @Field("leader") String leader,
     @Field("description") String description
   );
 

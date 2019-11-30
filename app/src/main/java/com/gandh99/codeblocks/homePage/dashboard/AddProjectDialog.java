@@ -29,7 +29,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AddProjectDialog extends DialogFragment {
-  private EditText editTextTitle, editTextLeader, editTextDescription;
+  private EditText editTextTitle, editTextDescription;
   private Button buttonCreateProject;
   private DashboardViewModel dashboardViewModel;
 
@@ -56,7 +56,6 @@ public class AddProjectDialog extends DialogFragment {
         .inflate(R.layout.dialog_project, null);
 
     editTextTitle = view.findViewById(R.id.dialog_project_title);
-    editTextLeader = view.findViewById(R.id.dialog_project_leader);
     editTextDescription = view.findViewById(R.id.dialog_project_description);
     buttonCreateProject = view.findViewById(R.id.dialog_project_create);
 
@@ -77,18 +76,16 @@ public class AddProjectDialog extends DialogFragment {
       @Override
       public void onClick(View view) {
         String title = editTextTitle.getText().toString();
-        String leader = editTextLeader.getText().toString();
         String description = editTextDescription.getText().toString();
 
         if (inputValidator.isInvalidInput(title)
-          || inputValidator.isInvalidInput(leader)
           || inputValidator.isInvalidInput(description)) {
           Toast.makeText(getContext(), "Please fill in all the required information",
             Toast.LENGTH_SHORT).show();
           return;
         }
 
-        dashboardAPIService.createProject(title, leader, description).enqueue(new Callback<ResponseBody>() {
+        dashboardAPIService.createProject(title, description).enqueue(new Callback<ResponseBody>() {
           @Override
           public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
             if (response.isSuccessful()) {

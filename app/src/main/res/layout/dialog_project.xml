@@ -28,14 +28,6 @@
             />
 
         <EditText
-            android:id="@+id/dialog_project_leader"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Leader"
-            style="@style/DialogEditText"
-            />
-
-        <EditText
             android:id="@+id/dialog_project_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
