@@ -31,6 +31,32 @@
             style="@style/ListItem"
             />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            >
+
+            <Button
+                android:id="@+id/list_item_button_accept"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Accept"
+                style="@style/DialogButton"
+                />
+
+            <Button
+                android:id="@+id/list_item_button_decline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Decline"
+                style="@style/DialogButton"
+                />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

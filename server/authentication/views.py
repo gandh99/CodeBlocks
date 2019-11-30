@@ -64,7 +64,7 @@ def login(request):
                     status=HTTP_200_OK)
 
 
-class Projects(ListAPIView, CreateAPIView):
+class ProjectView(ListAPIView, CreateAPIView):
     serializer_class = ProjectGroupSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -101,7 +101,7 @@ class Projects(ListAPIView, CreateAPIView):
         return Response(response, status=HTTP_200_OK)
 
 
-class Members(ListAPIView):
+class MemberView(ListAPIView):
     serializer_class = ProjectGroupMemberSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -118,7 +118,7 @@ class Members(ListAPIView):
         return Response(json_data, status=HTTP_200_OK)
 
 
-class Tasks(ListAPIView, CreateAPIView):
+class TaskView(ListAPIView, CreateAPIView):
     serializer_class = TaskSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -154,7 +154,7 @@ class Tasks(ListAPIView, CreateAPIView):
         return Response(response, status=HTTP_200_OK)
 
 
-class InviteMember(ListAPIView, CreateAPIView):
+class InvitationView(ListAPIView, CreateAPIView):
     serializer_class = InviteSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -198,17 +198,18 @@ class ComplexEncoder(json.JSONEncoder):
 
     def encode(self, o):
         if isinstance(o, ProjectGroup):
-            d = {'pk': o.id, 'title': o.title, 'leader': o.leader, 'description': o.description}
+            d = {'pk': o.pk, 'title': o.title, 'leader': o.leader, 'description': o.description}
             return d
         elif isinstance(o, Task):
-            d = {'id': o.id, 'title': o.title, 'description': o.description, 'dateCreated': o.date_created,
+            d = {'id': o.pk, 'title': o.title, 'description': o.description, 'dateCreated': o.date_created,
                  'deadline': o.deadline}
             return d
         elif isinstance(o, ProjectGroupMember):
             d = {'username': o.user_profile.username, 'rank': o.rank}
             return d
         elif isinstance(o, Invitation):
-            d = {'id': o.id, 'projectTitle': o.project_group.title, 'inviter': o.inviter.username, 'invitee': o.invitee.username}
+            d = {'id': o.pk, 'projectTitle': o.project_group.title, 'inviter': o.inviter.username,
+                 'invitee': o.invitee.username}
             return d
 
 
@@ -247,7 +248,6 @@ class UserProfileUpdate(UpdateAPIView):
         data = {'credits': result}
         return Response(data, status=HTTP_200_OK)
 
-
 # register
 # curl -X POST --data "username=john&password=smith" http://localhost:8000/register
 
@@ -260,4 +260,3 @@ class UserProfileUpdate(UpdateAPIView):
 
 # update
 # curl -X PUT -H "Authorization: Token abc123" -H "username: john" -d "credits=100" http://localhost:8000/update
-

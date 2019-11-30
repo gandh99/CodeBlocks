@@ -1,12 +1,12 @@
 from django.urls import path
 
-from .views import register, login, Projects, Tasks, Members, InviteMember
+from .views import register, login, ProjectView, TaskView, MemberView, InvitationView
 
 urlpatterns = [
     path('register', register),
     path('login', login),
-    path('projects', Projects.as_view()),
-    path('tasks', Tasks.as_view()),
-    path('members', Members.as_view()),
-    path('invite', InviteMember.as_view()),
+    path('projects', ProjectView.as_view()),
+    path('tasks', TaskView.as_view()),
+    path('members', MemberView.as_view()),
+    path('invite', InvitationView.as_view()),
 ]
