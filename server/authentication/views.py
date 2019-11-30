@@ -92,7 +92,8 @@ class Projects(ListAPIView, CreateAPIView):
         project.user_profile.add(user_profile)
 
         # Create the first member of this new project, and this member will be an Admin
-        member = ProjectGroupMember(project_id=project, user_profile=user_profile, rank='ADMIN')
+        member = ProjectGroupMember(project_id=project, user_profile=user_profile,
+                                    rank=ProjectGroupMember.ADMIN)
         member.save()
 
         response = {"Response": "Success"}

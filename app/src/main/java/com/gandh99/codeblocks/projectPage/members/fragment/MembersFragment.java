@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gandh99.codeblocks.R;
+import com.gandh99.codeblocks.projectPage.members.AddMemberDialog;
 import com.gandh99.codeblocks.projectPage.members.MemberListAdapter;
 import com.gandh99.codeblocks.projectPage.members.api.ProjectMember;
 import com.gandh99.codeblocks.projectPage.members.viewModel.MemberViewModel;
@@ -30,6 +31,7 @@ import dagger.android.support.AndroidSupportInjection;
  * A simple {@link Fragment} subclass.
  */
 public class MembersFragment extends Fragment {
+  private static final int DIALOG_REQUEST_ADD_CODE = 1;
   private RecyclerView recyclerView;
   private FloatingActionButton fab;
   private MemberViewModel memberViewModel;
@@ -77,7 +79,9 @@ public class MembersFragment extends Fragment {
     fab.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        //TODO
+        AddMemberDialog dialog = new AddMemberDialog();
+        dialog.setTargetFragment(MembersFragment.this, DIALOG_REQUEST_ADD_CODE);
+        dialog.show(getActivity().getSupportFragmentManager(), "Invite Member");
       }
     });
   }
