@@ -1,9 +1,11 @@
 package com.gandh99.codeblocks.homePage.invitations.repository;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.gandh99.codeblocks.homePage.invitations.InvitationResponse;
 import com.gandh99.codeblocks.homePage.invitations.api.Invitation;
 import com.gandh99.codeblocks.homePage.invitations.api.InvitationAPIService;
 
@@ -11,6 +13,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,6 +45,21 @@ public class InvitationsRepository {
 
       @Override
       public void onFailure(Call<List<Invitation>> call, Throwable t) {
+        Log.d(TAG, "onFailure: " + t.getMessage());
+      }
+    });
+  }
+
+  public void sendInvitationResponse(Invitation invitation, InvitationResponse response) {
+    invitationAPIService.sendInvitationResponse(invitation.getId(), response.getResponse())
+      .enqueue(new Callback<ResponseBody>() {
+      @Override
+      public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+      }
+
+      @Override
+      public void onFailure(Call<ResponseBody> call, Throwable t) {
         Log.d(TAG, "onFailure: " + t.getMessage());
       }
     });

@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gandh99.codeblocks.R;
+import com.gandh99.codeblocks.homePage.invitations.InvitationResponse;
 import com.gandh99.codeblocks.homePage.invitations.InvitationsAdapter;
 import com.gandh99.codeblocks.homePage.invitations.api.Invitation;
 import com.gandh99.codeblocks.homePage.invitations.viewModel.InvitationsViewModel;
@@ -60,6 +61,9 @@ public class InvitationsFragment extends Fragment {
     // Init viewModel
     initViewModel();
 
+    // Setup listener for accept/decline buttons
+    initInvitationButtons();
+
     return view;
   }
 
@@ -73,6 +77,16 @@ public class InvitationsFragment extends Fragment {
       @Override
       public void onChanged(List<Invitation> invitations) {
         invitationsAdapter.submitList(invitations);
+      }
+    });
+  }
+
+  private void initInvitationButtons() {
+    invitationsAdapter.setOnButtonClickListener(new InvitationsAdapter.OnButtonClickListener() {
+      @Override
+      public void onButtonClick(Invitation invitation, InvitationResponse response) {
+        invitationsViewModel.sendInvitationResponse(invitation, response);
+        invitationsViewModel.refreshInvitations();
       }
     });
   }

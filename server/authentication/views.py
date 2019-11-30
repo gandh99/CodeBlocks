@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.generics import ListAPIView, UpdateAPIView, CreateAPIView
+from rest_framework.generics import ListAPIView, UpdateAPIView, CreateAPIView, DestroyAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.status import (
     HTTP_400_BAD_REQUEST,
@@ -154,7 +154,7 @@ class TaskView(ListAPIView, CreateAPIView):
         return Response(response, status=HTTP_200_OK)
 
 
-class InvitationView(ListAPIView, CreateAPIView):
+class InvitationView(ListAPIView, CreateAPIView, DestroyAPIView):
     serializer_class = InviteSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -185,6 +185,39 @@ class InvitationView(ListAPIView, CreateAPIView):
         invite = Invitation(project_group=project_group, inviter=inviter_profile, invitee=invitee_profile,
                             invitee_rank=invitee_rank)
         invite.save()
+
+        response = {"Response": "Success"}
+        return Response(response, status=HTTP_200_OK)
+
+
+class InvitationResponseView(CreateAPIView):
+    permission_classes = (IsAuthenticated,)
+
+    def create(self, request, *args, **kwargs):
+        # Get header info
+        invitee = request.META.get('HTTP_USERNAME')
+
+        # Get response to invitation
+        invitation_response = request.data.get("invitationResponse")
+
+        # Extract the relevant invitation
+        invitation_id = request.data.get("invitationID")
+        invitation = Invitation.objects.get(pk=invitation_id)
+
+        # Process response
+        if invitation_response == "accept":
+            project_group = invitation.project_group
+            invitee = invitation.invitee
+            rank = invitation.invitee_rank
+            new_member = ProjectGroupMember(project_group=project_group, user_profile=invitee, rank=rank)
+            new_member.save()
+            project_group.user_profile.add(invitee)
+
+        elif invitation_response == "decline":
+            pass
+
+        # Remove the invitation
+        invitation.delete()
 
         response = {"Response": "Success"}
         return Response(response, status=HTTP_200_OK)

@@ -3,6 +3,7 @@ package com.gandh99.codeblocks.homePage.invitations;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,7 +17,8 @@ import com.gandh99.codeblocks.homePage.invitations.api.Invitation;
 import javax.inject.Inject;
 
 public class InvitationsAdapter extends ListAdapter<Invitation, InvitationsAdapter.InvitationsViewHolder> {
-  
+  private OnButtonClickListener onButtonClickListener;
+
   @Inject
   public InvitationsAdapter() {
     super(DIFF_CALLBACK);
@@ -48,19 +50,44 @@ public class InvitationsAdapter extends ListAdapter<Invitation, InvitationsAdapt
 
   @Override
   public void onBindViewHolder(@NonNull InvitationsViewHolder holder, int position) {
-    Invitation invitation = getItem(position);
+    final Invitation invitation = getItem(position);
     holder.textViewProjectTitle.setText(invitation.getProjectTitle());
     holder.textViewInviter.setText(invitation.getInviter());
+
+    holder.buttonAccept.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        onButtonClickListener.onButtonClick(invitation, InvitationResponse.ACCEPT);
+      }
+    });
+
+    holder.buttonDecline.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        onButtonClickListener.onButtonClick(invitation, InvitationResponse.DECLINE);
+      }
+    });
   }
 
 
   class InvitationsViewHolder extends RecyclerView.ViewHolder {
     TextView textViewProjectTitle, textViewInviter;
+    Button buttonAccept, buttonDecline;
 
     public InvitationsViewHolder(@NonNull View itemView) {
       super(itemView);
       textViewProjectTitle = itemView.findViewById(R.id.list_item_invitation_project_title);
       textViewInviter = itemView.findViewById(R.id.list_item_invitation_inviter);
+      buttonAccept = itemView.findViewById(R.id.list_item_button_accept);
+      buttonDecline = itemView.findViewById(R.id.list_item_button_decline);
     }
+  }
+
+  public interface OnButtonClickListener {
+    void onButtonClick(Invitation invitation, InvitationResponse response);
+  }
+
+  public void setOnButtonClickListener(OnButtonClickListener onButtonClickListener) {
+    this.onButtonClickListener = onButtonClickListener;
   }
 }

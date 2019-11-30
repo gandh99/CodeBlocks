@@ -3,6 +3,7 @@ package com.gandh99.codeblocks.homePage.invitations.viewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.gandh99.codeblocks.homePage.invitations.InvitationResponse;
 import com.gandh99.codeblocks.homePage.invitations.api.Invitation;
 import com.gandh99.codeblocks.homePage.invitations.repository.InvitationsRepository;
 
@@ -24,5 +25,9 @@ public class InvitationsViewModel extends ViewModel {
 
   public void refreshInvitations() {
     repository.refreshInvitations();
+  }
+
+  public void sendInvitationResponse(Invitation invitation, InvitationResponse response) {
+    repository.sendInvitationResponse(invitation, response);
   }
 }
