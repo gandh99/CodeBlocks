@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import UserProfile, ProjectGroup, Task
+from .models import UserProfile, ProjectGroup, Task, ProjectGroupMember
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -22,6 +22,16 @@ class ProjectGroupSerializer(serializers.ModelSerializer):
             'title',
             'leader',
             'description',
+            'rank'
+        ]
+
+
+class ProjectGroupMemberSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProjectGroupMember
+        fields = [
+            'project_id',
+            'user_profile',
             'rank'
         ]
 

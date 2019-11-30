@@ -17,17 +17,22 @@ class ProjectGroup(models.Model):
     leader = models.CharField(max_length=20)
     description = models.CharField(max_length=150)
 
+    def __str__(self):
+        return self.title
+
+
+class ProjectGroupMember(models.Model):
+    project_id = models.ForeignKey(ProjectGroup, on_delete=models.CASCADE)
+    user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+
     ADMIN = 'ADMIN'
     MEMBER = 'MEMBER'
     RANK_CHOICES = [
-        (ADMIN, 'admin'),
-        (MEMBER, 'member')
+        (ADMIN, 'ADMIN'),
+        (MEMBER, 'MEMBER')
     ]
 
     rank = models.CharField(max_length=10, choices=RANK_CHOICES, default=MEMBER)
-
-    def __str__(self):
-        return self.title
 
 
 class Task(models.Model):

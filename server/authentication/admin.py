@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import UserProfile, ProjectGroup, Task
+from .models import UserProfile, ProjectGroup, Task, ProjectGroupMember
 
 
 # Register your models here.
@@ -15,10 +15,18 @@ class UserAdmin(admin.ModelAdmin):
 
 
 class ProjectGroupAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'title', 'leader', 'description', 'rank')
+    list_display = ('pk', 'title', 'leader', 'description')
     fieldsets = [
         (None,               {'fields': ['user_profile']}),
-        ('Other information', {'fields': ['title', 'leader', 'description', 'rank'], 'classes': ['collapse']}),
+        ('Other information', {'fields': ['title', 'leader', 'description'], 'classes': ['collapse']}),
+    ]
+
+
+class ProjectGroupMemberAdmin(admin.ModelAdmin):
+    list_display = ('project_id', 'user_profile', 'rank')
+    fieldsets = [
+        (None,               {'fields': ['project_id', 'user_profile']}),
+        ('Other information', {'fields': ['rank'], 'classes': ['collapse']}),
     ]
 
 
@@ -32,4 +40,5 @@ class TaskAdmin(admin.ModelAdmin):
 
 admin.site.register(UserProfile, UserAdmin)
 admin.site.register(ProjectGroup, ProjectGroupAdmin)
+admin.site.register(ProjectGroupMember, ProjectGroupMemberAdmin)
 admin.site.register(Task, TaskAdmin)

@@ -13,8 +13,8 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 import json
 from .token import expired_token_handler
-from .serializers import UserProfileSerializer, ProjectGroupSerializer, TaskSerializer
-from .models import UserProfile, ProjectGroup, Task
+from .serializers import UserProfileSerializer, ProjectGroupSerializer, TaskSerializer, ProjectGroupMemberSerializer
+from .models import UserProfile, ProjectGroup, Task, ProjectGroupMember
 
 
 @csrf_exempt
@@ -132,7 +132,7 @@ class Tasks(ListAPIView, CreateAPIView):
 
 
 class Members(ListAPIView):
-    serializer_class = ProjectGroupSerializer
+    serializer_class = ProjectGroupMemberSerializer
     permission_classes = (IsAuthenticated,)
 
     def list(self, request, *args, **kwargs):
@@ -141,8 +141,8 @@ class Members(ListAPIView):
         project_id = request.META.get('HTTP_PROJECTID')
 
         # Get list of members
-        members = list(ProjectGroup.objects.filter(pk=project_id))
-        json_data = list([MemberEncoder().encode(member) for member in members])
+        members = list(ProjectGroupMember.objects.filter(project_id=project_id))
+        json_data = list([ComplexEncoder().encode(member) for member in members])
 
         return Response(json_data, status=HTTP_200_OK)
 
@@ -161,13 +161,8 @@ class ComplexEncoder(json.JSONEncoder):
             d = {'pk': o.pk, 'title': o.title, 'description': o.description, 'dateCreated': o.date_created,
                  'deadline': o.deadline}
             return d
-
-
-class MemberEncoder(json.JSONEncoder):
-    def encode(self, o):
-        # Only for encoding members
-        if isinstance(o, ProjectGroup):
-            d = {'pk': o.pk, 'username': list(o.user_profile.all())[0].username, 'rank': o.rank}
+        elif isinstance(o, ProjectGroupMember):
+            d = {'username': o.user_profile.username, 'rank': o.rank}
             return d
 
 
