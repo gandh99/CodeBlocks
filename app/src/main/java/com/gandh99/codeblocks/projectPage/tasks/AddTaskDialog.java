@@ -1,24 +1,28 @@
 package com.gandh99.codeblocks.projectPage.tasks;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.authentication.InputValidator;
-import com.gandh99.codeblocks.homePage.dashboard.viewModel.DashboardViewModel;
 import com.gandh99.codeblocks.projectPage.tasks.api.TaskAPIService;
 import com.gandh99.codeblocks.projectPage.tasks.viewModel.TaskViewModel;
 
@@ -30,10 +34,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddTaskDialog extends DialogFragment {
-  private EditText editTextTitle, editTextDescription, editTextDateCreated, editTextDeadline;
+public class AddTaskDialog extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+  private EditText editTextTitle, editTextDescription, editTextDateCreated;
+  private TextView textViewSelectedDate;
   private Button buttonCreateTask;
+  private ImageView buttonDatePicker;
   private TaskViewModel taskViewModel;
+  private DatePickerDialog datePickerDialog;
 
   @Inject
   ViewModelProvider.Factory viewModelFactory;
@@ -60,8 +67,19 @@ public class AddTaskDialog extends DialogFragment {
     editTextTitle = view.findViewById(R.id.dialog_task_title);
     editTextDescription = view.findViewById(R.id.dialog_task_description);
     editTextDateCreated = view.findViewById(R.id.dialog_task_date_created);
-    editTextDeadline = view.findViewById(R.id.dialog_task_deadline);
+    textViewSelectedDate = view.findViewById(R.id.dialog_task_selected_date);
     buttonCreateTask = view.findViewById(R.id.dialog_task_create);
+    buttonDatePicker = view.findViewById(R.id.dialog_task_datePicker);
+
+    buttonDatePicker.setOnClickListener(new View.OnClickListener() {
+      @RequiresApi(api = Build.VERSION_CODES.N)
+      @Override
+      public void onClick(View view) {
+        datePickerDialog = new DatePickerDialog(getContext());
+        datePickerDialog.setOnDateSetListener(AddTaskDialog.this);
+        datePickerDialog.show();
+      }
+    });
 
     initViewModel();
     setupCreateButton();
@@ -82,7 +100,7 @@ public class AddTaskDialog extends DialogFragment {
         String title = editTextTitle.getText().toString();
         String description = editTextDescription.getText().toString();
         String dateCreated = editTextDateCreated.getText().toString();
-        String deadline = editTextDeadline.getText().toString();
+        String deadline = textViewSelectedDate.getText().toString();
 
         if (inputValidator.isInvalidInput(title)
           || inputValidator.isInvalidInput(description)
@@ -114,5 +132,11 @@ public class AddTaskDialog extends DialogFragment {
 
   private void refreshTaskList() {
     taskViewModel.refreshTaskList();
+  }
+
+  @Override
+  public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+    String date = year + "-" + (month + 1) + "-" + day;
+    textViewSelectedDate.setText(date);
   }
 }
