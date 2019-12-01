@@ -26,6 +26,10 @@ import com.gandh99.codeblocks.authentication.InputValidator;
 import com.gandh99.codeblocks.projectPage.tasks.api.TaskAPIService;
 import com.gandh99.codeblocks.projectPage.tasks.viewModel.TaskViewModel;
 
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import javax.inject.Inject;
 
 import dagger.android.support.AndroidSupportInjection;
@@ -35,7 +39,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AddTaskDialog extends DialogFragment implements DatePickerDialog.OnDateSetListener {
-  private EditText editTextTitle, editTextDescription, editTextDateCreated;
+  private EditText editTextTitle, editTextDescription;
   private TextView textViewSelectedDate;
   private Button buttonCreateTask;
   private ImageView buttonDatePicker;
@@ -66,7 +70,6 @@ public class AddTaskDialog extends DialogFragment implements DatePickerDialog.On
 
     editTextTitle = view.findViewById(R.id.dialog_task_title);
     editTextDescription = view.findViewById(R.id.dialog_task_description);
-    editTextDateCreated = view.findViewById(R.id.dialog_task_date_created);
     textViewSelectedDate = view.findViewById(R.id.dialog_task_selected_date);
     buttonCreateTask = view.findViewById(R.id.dialog_task_create);
     buttonDatePicker = view.findViewById(R.id.dialog_task_datePicker);
@@ -95,11 +98,12 @@ public class AddTaskDialog extends DialogFragment implements DatePickerDialog.On
 
   private void setupCreateButton() {
     buttonCreateTask.setOnClickListener(new View.OnClickListener() {
+      @RequiresApi(api = Build.VERSION_CODES.O)
       @Override
       public void onClick(View view) {
         String title = editTextTitle.getText().toString();
         String description = editTextDescription.getText().toString();
-        String dateCreated = editTextDateCreated.getText().toString();
+        String dateCreated = getCurrentDate();
         String deadline = textViewSelectedDate.getText().toString();
 
         if (inputValidator.isInvalidInput(title)
@@ -132,6 +136,12 @@ public class AddTaskDialog extends DialogFragment implements DatePickerDialog.On
 
   private void refreshTaskList() {
     taskViewModel.refreshTaskList();
+  }
+
+  @RequiresApi(api = Build.VERSION_CODES.O)
+  private String getCurrentDate() {
+    LocalDate localDate = LocalDate.now();
+    return localDate.getYear() + "-" + localDate.getMonth().getValue() + "-" + localDate.getDayOfMonth();
   }
 
   @Override

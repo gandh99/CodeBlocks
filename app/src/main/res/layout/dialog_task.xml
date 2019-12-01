@@ -37,22 +37,6 @@
             style="@style/DialogEditText"
             />
 
-        <EditText
-            android:id="@+id/dialog_task_date_created"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Date Created"
-            style="@style/DialogEditText"
-            />
-
-        <!--        <EditText-->
-        <!--            android:id="@+id/dialog_task_deadline"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:hint="Deadline"-->
-        <!--            style="@style/DialogEditText"-->
-        <!--            />-->
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
