@@ -15,6 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_margin="25dp"
+            android:gravity="center"
             android:orientation="vertical"
             >
 
@@ -24,7 +25,6 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textSize="24sp"
-                android:gravity="center"
                 android:text="DD"
                 style="@style/ListItem"
                 />
@@ -33,7 +33,6 @@
                 android:id="@+id/list_item_task_month_created"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:text="MTH"
                 style="@style/ListItem"
                 />

@@ -1,4 +1,4 @@
-package com.gandh99.codeblocks;
+package com.gandh99.codeblocks.common;
 
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;

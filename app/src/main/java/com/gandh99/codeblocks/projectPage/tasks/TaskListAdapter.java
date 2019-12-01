@@ -1,6 +1,8 @@
 package com.gandh99.codeblocks.projectPage.tasks;
 
+import android.nfc.FormatException;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +15,12 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gandh99.codeblocks.R;
+import com.gandh99.codeblocks.common.dateFormatting.CustomDateFormatter;
+import com.gandh99.codeblocks.common.dateFormatting.DatePortion;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 
 public class TaskListAdapter extends ListAdapter<Task, TaskListAdapter.TaskViewHolder> {
+  private static final String TAG = "TaskListAdapter";
 
   public TaskListAdapter() {
     super(DIFF_CALLBACK);
@@ -51,11 +56,23 @@ public class TaskListAdapter extends ListAdapter<Task, TaskListAdapter.TaskViewH
   @Override
   public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
     Task task = getItem(position);
+    String dayCreated, monthCreated, deadlineCountdown;
+
+    // Format some of the dates to be displayed
+    try {
+      dayCreated = CustomDateFormatter.getDatePortion(task.getDateCreated(), DatePortion.DAY);
+      monthCreated = CustomDateFormatter.getShortenedMonthName(task.getDateCreated());
+      deadlineCountdown = CustomDateFormatter.getRemainingTime(task.getDeadline());
+    } catch (FormatException e) {
+      Log.d(TAG, "onBindViewHolder: " + e.getMessage());
+      return;
+    }
+
     holder.textViewTitle.setText(task.getTitle());
     holder.textViewDescription.setText(task.getDescription());
-    holder.textViewDayCreated.setText(task.getDayCreated());
-    holder.textViewMonthCreated.setText(task.getMonthCreatedShortForm());
-    holder.textViewDeadlineCountdown.setText(task.getDeadlineCountdown());
+    holder.textViewDayCreated.setText(dayCreated);
+    holder.textViewMonthCreated.setText(monthCreated);
+    holder.textViewDeadlineCountdown.setText(deadlineCountdown);
   }
 
   class TaskViewHolder extends RecyclerView.ViewHolder {

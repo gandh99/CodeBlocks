@@ -3,7 +3,7 @@ package com.gandh99.codeblocks.di.module.common;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.gandh99.codeblocks.FactoryViewModel;
+import com.gandh99.codeblocks.common.FactoryViewModel;
 import com.gandh99.codeblocks.homePage.dashboard.viewModel.DashboardViewModel;
 import com.gandh99.codeblocks.di.key.ViewModelKey;
 import com.gandh99.codeblocks.homePage.invitations.viewModel.InvitationsViewModel;
