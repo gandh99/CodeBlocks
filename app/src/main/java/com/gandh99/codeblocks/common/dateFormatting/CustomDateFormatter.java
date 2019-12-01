@@ -49,24 +49,19 @@ public class CustomDateFormatter {
       Date date1 = new Date();
       Date date2 = myFormat.parse(endDate);
       long diff = date2.getTime() - date1.getTime();
-      long diffDays = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-      long diffHours = TimeUnit.HOURS.convert(diff, TimeUnit.MILLISECONDS);
       long diffMin = TimeUnit.MINUTES.convert(diff, TimeUnit.MILLISECONDS);
 
-      if (diffDays > 365) {
-        countdown = (diffDays / 365) + " yr";
-      } else if (diffDays > 30) {
-        countdown = (diffDays / 30) + " mth";
-      } else if (diffDays > 7) {
-        countdown = (diffDays / 7) + " wk";
-      } else if (diffDays > 0) {
-        countdown = (diffDays) + " day";
-      } else if (diffHours > 0){
-        countdown = diffHours + " hr";
-      } else if (diffMin > 0) {
-        countdown = diffMin + " min";
-      } else if (diff < 0) {
+      if (diff < 0) {
         countdown = "Over";
+        return countdown;
+      }
+
+      for (DateUnitContainer.DateUnitWrtMinutes unitWrtMinutes : DateUnitContainer.DateUnitWrtMinutes.values()) {
+        if (diffMin > unitWrtMinutes.getNumOfMinutesInUnit()) {
+          countdown = (diffMin / unitWrtMinutes.getNumOfMinutesInUnit())
+            + " " + unitWrtMinutes.getUnitShortForm();
+          break;
+        }
       }
 
     } catch (ParseException e) {
