@@ -1,11 +1,13 @@
 package com.gandh99.codeblocks.projectPage.tasks;
 
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,6 +47,7 @@ public class TaskListAdapter extends ListAdapter<Task, TaskListAdapter.TaskViewH
     return new TaskViewHolder(view);
   }
 
+  @RequiresApi(api = Build.VERSION_CODES.O)
   @Override
   public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
     Task task = getItem(position);
@@ -52,11 +55,11 @@ public class TaskListAdapter extends ListAdapter<Task, TaskListAdapter.TaskViewH
     holder.textViewDescription.setText(task.getDescription());
     holder.textViewDayCreated.setText(task.getDayCreated());
     holder.textViewMonthCreated.setText(task.getMonthCreatedShortForm());
-    holder.textViewDeadline.setText(task.getDeadline());
+    holder.textViewDeadlineCountdown.setText(task.getDeadlineCountdown());
   }
 
   class TaskViewHolder extends RecyclerView.ViewHolder {
-    TextView textViewTitle, textViewDescription, textViewDayCreated, textViewMonthCreated, textViewDeadline;
+    TextView textViewTitle, textViewDescription, textViewDayCreated, textViewMonthCreated, textViewDeadlineCountdown;
 
     public TaskViewHolder(@NonNull View itemView) {
       super(itemView);
@@ -65,7 +68,7 @@ public class TaskListAdapter extends ListAdapter<Task, TaskListAdapter.TaskViewH
       textViewDescription = itemView.findViewById(R.id.list_item_task_description);
       textViewDayCreated = itemView.findViewById(R.id.list_item_task_day_created);
       textViewMonthCreated = itemView.findViewById(R.id.list_item_task_month_created);
-      textViewDeadline = itemView.findViewById(R.id.list_item_task_deadline);
+      textViewDeadlineCountdown = itemView.findViewById(R.id.list_item_task_deadline_countdown);
     }
   }
 }
