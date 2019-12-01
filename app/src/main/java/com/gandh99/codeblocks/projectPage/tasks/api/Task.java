@@ -1,5 +1,7 @@
 package com.gandh99.codeblocks.projectPage.tasks.api;
 
+import java.text.DateFormatSymbols;
+
 public class Task {
   private int id;
   private String title;
@@ -25,5 +27,17 @@ public class Task {
 
   public String getDeadline() {
     return deadline;
+  }
+
+  public String getDayCreated() {
+    String[] datePieces = dateCreated.split("-");
+    return datePieces[2];
+  }
+
+  public String getMonthCreatedShortForm() {
+    String[] datePieces = dateCreated.split("-");
+    int monthValue = Integer.valueOf(datePieces[1]);
+    String month = new DateFormatSymbols().getMonths()[monthValue - 1];
+    return month.toUpperCase().substring(0, 3);
   }
 }

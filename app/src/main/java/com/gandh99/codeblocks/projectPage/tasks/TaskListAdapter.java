@@ -50,19 +50,21 @@ public class TaskListAdapter extends ListAdapter<Task, TaskListAdapter.TaskViewH
     Task task = getItem(position);
     holder.textViewTitle.setText(task.getTitle());
     holder.textViewDescription.setText(task.getDescription());
-    holder.textViewDateCreated.setText(task.getDateCreated());
+    holder.textViewDayCreated.setText(task.getDayCreated());
+    holder.textViewMonthCreated.setText(task.getMonthCreatedShortForm());
     holder.textViewDeadline.setText(task.getDeadline());
   }
 
   class TaskViewHolder extends RecyclerView.ViewHolder {
-    TextView textViewTitle, textViewDescription, textViewDateCreated, textViewDeadline;
+    TextView textViewTitle, textViewDescription, textViewDayCreated, textViewMonthCreated, textViewDeadline;
 
     public TaskViewHolder(@NonNull View itemView) {
       super(itemView);
 
       textViewTitle = itemView.findViewById(R.id.list_item_task_title);
       textViewDescription = itemView.findViewById(R.id.list_item_task_description);
-      textViewDateCreated = itemView.findViewById(R.id.list_item_task_date_created);
+      textViewDayCreated = itemView.findViewById(R.id.list_item_task_day_created);
+      textViewMonthCreated = itemView.findViewById(R.id.list_item_task_month_created);
       textViewDeadline = itemView.findViewById(R.id.list_item_task_deadline);
     }
   }

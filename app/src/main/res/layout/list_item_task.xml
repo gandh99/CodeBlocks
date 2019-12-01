@@ -4,51 +4,92 @@
     android:layout_height="wrap_content"
     android:layout_margin="10dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="10dp">
+        >
 
-        <TextView
-            android:id="@+id/list_item_task_title"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/layout_task_date"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Task Title"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            style="@style/ListItem"
+            android:layout_centerVertical="true"
+            android:layout_margin="25dp"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/list_item_task_day_created"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                android:gravity="center"
+                android:text="Day Created"
+                style="@style/ListItem"
+                />
+
+            <TextView
+                android:id="@+id/list_item_task_month_created"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Month Created"
+                style="@style/ListItem"
+                />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/vertical_line"
+            android:layout_width="1dp"
+            android:layout_height="80dp"
+            android:background="@color/colorGrey"
+            android:layout_marginVertical="20dp"
+            android:layout_toRightOf="@id/layout_task_date"
             />
 
-        <TextView
-            android:id="@+id/list_item_task_description"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/layout_task_info"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="2.5dp"
-            android:text="Description"
-            style="@style/ListItem"
-            />
+            android:layout_toRightOf="@+id/vertical_line"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="25dp"
+            android:orientation="vertical"
+            >
 
-        <TextView
-            android:id="@+id/list_item_task_date_created"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="Date Created"
-            style="@style/ListItem"
-            />
+            <TextView
+                android:id="@+id/list_item_task_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Task Title"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorGrey"
+                style="@style/ListItem"
+                />
 
-        <TextView
-            android:id="@+id/list_item_task_deadline"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="Deadline"
-            style="@style/ListItem"
-            />
+            <TextView
+                android:id="@+id/list_item_task_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="2.5dp"
+                android:text="Description"
+                style="@style/ListItem"
+                />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/list_item_task_deadline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Deadline"
+                style="@style/ListItem"
+                />
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </androidx.cardview.widget.CardView>
