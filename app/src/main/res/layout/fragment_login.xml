@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center"
     android:background="@drawable/shape_card"
@@ -12,61 +13,53 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:textColor="@color/colorPrimaryDark"
         android:textStyle="bold"
-        android:textSize="20dp"
-        android:text="LOGIN"
+        android:textSize="20sp"
+        android:text="@string/login"
         />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="25dp"
-        android:layout_gravity="start"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"
-        android:text="USERNAME"
-        />
-
-    <EditText
-        android:id="@+id/editText_login_username"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInput_login_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
-        android:maxLength="10"
-        android:maxLines="1"
-        style="@style/EditTextCredentials"
-        />
+        android:theme="@style/TextInputLayout"
+        style="@style/TextInputLayoutStyle"
+        >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="25dp"
-        android:layout_gravity="start"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"
-        android:text="PASSWORD"
-        />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editText_login_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/username"
+            style="@style/TextInputEditTextUsername"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/editText_login_password"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInput_login_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
-        android:maxLength="15"
-        android:maxLines="1"
-        style="@style/EditTextCredentials"
-        />
+        android:theme="@style/TextInputLayout"
+        style="@style/TextInputLayoutStyle"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editText_login_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            style="@style/TextInputEditTextPassword"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/button_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/ButtonCredentials"
-        android:layout_marginTop="20dp"
-        android:text="Login"
+        android:text="@string/login"
         />
 
 </LinearLayout>
