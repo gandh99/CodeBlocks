@@ -24,7 +24,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/blue_mountains_2"
+                android:src="@drawable/blue_mountains"
                 android:scaleType="centerCrop"
                 android:tint="#6F666666"
                 android:adjustViewBounds="true"
