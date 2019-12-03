@@ -10,4 +10,6 @@
     <string name="deadline">Deadline</string>
     <string name="description">Description</string>
     <string name="title">Title</string>
+    <string name="sort">Sort</string>
+    <string name="filter">Filter</string>
 </resources>
