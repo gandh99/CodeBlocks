@@ -41,13 +41,17 @@
         <item name="android:maxLength">10</item>
     </style>
 
+    <style name="TextInputEditTextCreate" parent="TextInputEditTextCredentials">
+        <item name="android:layout_marginHorizontal" tools:targetApi="o">0dp</item>
+    </style>
+
     <style name="ButtonCredentials">
         <item name="android:textColor">#ffffff</item>
         <item name="android:layout_marginHorizontal" tools:targetApi="o">20dp</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_marginTop">36dp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:background">@drawable/shape_button</item>
+        <item name="android:background">@drawable/shape_credentials_button</item>
     </style>
 
     <style name="ListItem">
@@ -73,6 +77,12 @@
     </style>
 
     <style name="DialogButton" parent="ButtonCredentials">
+    </style>
+
+    <style name="CreateButton">
+        <item name="android:background">@drawable/shape_create_button</item>
+        <item name="android:textColor">#ffff</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>

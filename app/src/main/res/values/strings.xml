@@ -7,4 +7,7 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="register">REGISTER</string>
+    <string name="deadline">Deadline</string>
+    <string name="description">Description</string>
+    <string name="title">Title</string>
 </resources>

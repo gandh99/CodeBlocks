@@ -1,6 +1,7 @@
 package com.gandh99.codeblocks.projectPage.tasks.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -18,6 +19,7 @@ import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.authentication.AuthenticationInterceptor;
 import com.gandh99.codeblocks.homePage.dashboard.viewModel.DashboardViewModel;
 import com.gandh99.codeblocks.projectPage.tasks.AddTaskDialog;
+import com.gandh99.codeblocks.projectPage.tasks.NewTaskActivity;
 import com.gandh99.codeblocks.projectPage.tasks.TaskListAdapter;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 import com.gandh99.codeblocks.projectPage.tasks.viewModel.TaskViewModel;
@@ -81,9 +83,12 @@ public class TasksFragment extends Fragment {
     fab.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        AddTaskDialog dialog = new AddTaskDialog();
-        dialog.setTargetFragment(TasksFragment.this, DIALOG_REQUEST_ADD_CODE);
-        dialog.show(getActivity().getSupportFragmentManager(), "Create Task");
+        Intent intent = new Intent(getContext(), NewTaskActivity.class);
+        startActivity(intent);
+
+//        AddTaskDialog dialog = new AddTaskDialog();
+//        dialog.setTargetFragment(TasksFragment.this, DIALOG_REQUEST_ADD_CODE);
+//        dialog.show(getActivity().getSupportFragmentManager(), "Create Task");
       }
     });
   }
