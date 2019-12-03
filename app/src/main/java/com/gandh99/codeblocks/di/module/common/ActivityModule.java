@@ -6,6 +6,7 @@ import com.gandh99.codeblocks.di.module.fragmentModule.ProjectActivityFragmentMo
 import com.gandh99.codeblocks.homePage.activity.HomeActivity;
 import com.gandh99.codeblocks.authentication.activity.MainActivity;
 import com.gandh99.codeblocks.projectPage.ProjectActivity;
+import com.gandh99.codeblocks.projectPage.tasks.NewTaskActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -20,4 +21,7 @@ public abstract class ActivityModule {
 
   @ContributesAndroidInjector(modules = {ProjectActivityFragmentModule.class})
   abstract ProjectActivity contributeProjectActivity();
+
+  @ContributesAndroidInjector
+  abstract NewTaskActivity contributeNewTaskActivity();
 }
