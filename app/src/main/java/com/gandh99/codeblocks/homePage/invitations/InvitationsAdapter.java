@@ -1,5 +1,9 @@
 package com.gandh99.codeblocks.homePage.invitations;
 
+import android.graphics.Typeface;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,8 +55,15 @@ public class InvitationsAdapter extends ListAdapter<Invitation, InvitationsAdapt
   @Override
   public void onBindViewHolder(@NonNull InvitationsViewHolder holder, int position) {
     final Invitation invitation = getItem(position);
-    holder.textViewProjectTitle.setText(invitation.getProjectTitle());
-    holder.textViewInviter.setText(invitation.getInviter());
+    String projectTitle = invitation.getProjectTitle();
+    String filler = " has invited you to join his project: ";
+    String inviter = invitation.getInviter();
+    SpannableString invitationMessage = new SpannableString(inviter + filler + projectTitle);
+    invitationMessage.setSpan(new StyleSpan(Typeface.BOLD), 0, inviter.length(),
+      Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+    invitationMessage.setSpan(new StyleSpan(Typeface.BOLD), inviter.length() + filler.length(),
+      inviter.length() + filler.length() + projectTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+    holder.textViewInvitationMessage.setText(invitationMessage);
 
     holder.buttonAccept.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -71,13 +82,12 @@ public class InvitationsAdapter extends ListAdapter<Invitation, InvitationsAdapt
 
 
   class InvitationsViewHolder extends RecyclerView.ViewHolder {
-    TextView textViewProjectTitle, textViewInviter;
+    TextView textViewInvitationMessage;
     Button buttonAccept, buttonDecline;
 
     public InvitationsViewHolder(@NonNull View itemView) {
       super(itemView);
-      textViewProjectTitle = itemView.findViewById(R.id.list_item_invitation_project_title);
-      textViewInviter = itemView.findViewById(R.id.list_item_invitation_inviter);
+      textViewInvitationMessage = itemView.findViewById(R.id.list_item_invitation_message);
       buttonAccept = itemView.findViewById(R.id.list_item_button_accept);
       buttonDecline = itemView.findViewById(R.id.list_item_button_decline);
     }

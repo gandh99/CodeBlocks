@@ -11,34 +11,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_margin="10dp">
+        android:layout_margin="16dp">
 
         <TextView
-            android:id="@+id/list_item_invitation_project_title"
+            android:id="@+id/list_item_invitation_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Project Title"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            style="@style/ListItem"
-            />
-
-        <TextView
-            android:id="@+id/list_item_invitation_inviter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="2.5dp"
-            android:text="Inviter"
-            style="@style/ListItem"
+            android:textSize="16sp"
+            android:textColor="@color/colorBlack"
+            android:text="Test"
             />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_gravity="center"
+            android:layout_gravity="right"
             android:orientation="horizontal"
             >
 
@@ -46,16 +34,20 @@
                 android:id="@+id/list_item_button_accept"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@null"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimaryDark"
                 android:text="Accept"
-                style="@style/DialogButton"
                 />
 
             <Button
                 android:id="@+id/list_item_button_decline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@null"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimaryDark"
                 android:text="Decline"
-                style="@style/DialogButton"
                 />
 
         </LinearLayout>
