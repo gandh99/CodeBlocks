@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.authentication.Authenticator;
+import com.gandh99.codeblocks.common.Encryptor;
 
 import javax.inject.Inject;
 
@@ -63,9 +64,9 @@ public class RegisterFragment extends Fragment {
       @Override
       public void onClick(View view) {
         final String username = editTextUsername.getText().toString();
-        final String password = editTextPassword.getText().toString();
+        String plaintextPassword = editTextPassword.getText().toString();
 
-        authenticator.registerUser(RegisterFragment.this, username, password);
+        authenticator.registerUser(RegisterFragment.this, username, plaintextPassword);
       }
     });
   }

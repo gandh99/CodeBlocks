@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import com.gandh99.codeblocks.authentication.api.AuthAPIService;
 import com.gandh99.codeblocks.authentication.api.SessionToken;
 import com.gandh99.codeblocks.authentication.api.User;
+import com.gandh99.codeblocks.common.Encryptor;
 import com.gandh99.codeblocks.homePage.activity.HomeActivity;
 
 import javax.inject.Inject;
@@ -41,7 +42,10 @@ public class Authenticator {
       return;
     }
 
-    authAPIService.registerUser(username, password).enqueue(new Callback<User>() {
+    // Encrypt password
+    String encryptedPassword = Encryptor.hash512(password);
+
+    authAPIService.registerUser(username, encryptedPassword).enqueue(new Callback<User>() {
       @Override
       public void onResponse(Call<User> call, Response<User> response) {
         if (response.isSuccessful()) {
