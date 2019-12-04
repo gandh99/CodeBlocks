@@ -4,6 +4,7 @@ import com.gandh99.codeblocks.projectPage.issues.IssuesFragment;
 import com.gandh99.codeblocks.projectPage.members.AddMemberDialog;
 import com.gandh99.codeblocks.projectPage.members.fragment.MembersFragment;
 import com.gandh99.codeblocks.projectPage.tasks.AddTaskDialog;
+import com.gandh99.codeblocks.projectPage.tasks.SortTaskDialog;
 import com.gandh99.codeblocks.projectPage.tasks.fragment.TasksFragment;
 
 import dagger.Module;
@@ -26,4 +27,7 @@ public abstract class ProjectActivityFragmentModule {
 
   @ContributesAndroidInjector
   abstract AddMemberDialog contributeAddMemberDialog();
+
+  @ContributesAndroidInjector
+  abstract SortTaskDialog contributeSortFilterTaskDialog();
 }

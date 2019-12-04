@@ -17,13 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.gandh99.codeblocks.R;
-import com.gandh99.codeblocks.authentication.AuthenticationInterceptor;
-import com.gandh99.codeblocks.homePage.dashboard.viewModel.DashboardViewModel;
-import com.gandh99.codeblocks.projectPage.tasks.AddTaskDialog;
 import com.gandh99.codeblocks.projectPage.tasks.NewTaskActivity;
+import com.gandh99.codeblocks.projectPage.tasks.SortTaskDialog;
 import com.gandh99.codeblocks.projectPage.tasks.TaskListAdapter;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 import com.gandh99.codeblocks.projectPage.tasks.api.TaskAPIService;
@@ -50,6 +49,7 @@ public class TasksFragment extends Fragment {
   private static int DIALOG_REQUEST_ADD_CODE = 1;
   private RecyclerView recyclerView;
   private FloatingActionButton fab;
+  private Button buttonSort, buttonFilter;
   private TaskViewModel taskViewModel;
 
   @Inject
@@ -76,12 +76,15 @@ public class TasksFragment extends Fragment {
     View view = inflater.inflate(R.layout.fragment_tasks, container, false);
     recyclerView = view.findViewById(R.id.recyclerView_tasks);
     fab = view.findViewById(R.id.fab_tasks);
+    buttonFilter = view.findViewById(R.id.button_filter);
+    buttonSort = view.findViewById(R.id.button_sort);
 
     // Setup recyclerView
     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     recyclerView.setAdapter(taskListAdapter);
 
     initFloatingActionButton();
+    initSortButton();
     initViewModel();
 
     return view;
@@ -97,10 +100,17 @@ public class TasksFragment extends Fragment {
       public void onClick(View view) {
         Intent intent = new Intent(getContext(), NewTaskActivity.class);
         startActivityForResult(intent, NewTaskActivity.NEW_TASK_REQUEST_CODE);
+      }
+    });
+  }
 
-//        AddTaskDialog dialog = new AddTaskDialog();
-//        dialog.setTargetFragment(TasksFragment.this, DIALOG_REQUEST_ADD_CODE);
-//        dialog.show(getActivity().getSupportFragmentManager(), "Create Task");
+  private void initSortButton() {
+    buttonSort.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        SortTaskDialog dialog = new SortTaskDialog();
+        dialog.setTargetFragment(TasksFragment.this, DIALOG_REQUEST_ADD_CODE);
+        dialog.show(getActivity().getSupportFragmentManager(), "Sort Task");
       }
     });
   }

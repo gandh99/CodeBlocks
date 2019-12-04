@@ -7,9 +7,17 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="register">REGISTER</string>
-    <string name="deadline">Deadline</string>
     <string name="description">Description</string>
     <string name="title">Title</string>
     <string name="sort">Sort</string>
     <string name="filter">Filter</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="descending">Descending</string>
+    <string name="ascending">Ascending</string>
+    <string name="order">Order:</string>
+    <string name="deadline">Deadline</string>
+    <string name="date_created">Date created</string>
+    <string name="sort_by">Sort by:</string>
+    <string name="sort_tasks">Sort Tasks</string>
 </resources>

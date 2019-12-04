@@ -20,6 +20,7 @@
         <item name="colorControlActivated">@color/colorPrimaryDark</item>
     </style>
 
+    <!-- TextInput fields -->
     <style name="TextInputLayoutStyle">
         <item name="android:layout_marginTop">12dp</item>
     </style>
@@ -60,6 +61,7 @@
         <item name="android:layout_marginTop">2.5dp</item>
     </style>
 
+    <!-- Custom dialogs -->
     <style name="DialogHeader">
         <item name="android:textSize">20dp</item>
         <item name="android:textStyle">bold</item>
@@ -83,6 +85,30 @@
         <item name="android:background">@drawable/shape_create_button</item>
         <item name="android:textColor">#ffff</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Sort and filter dialogs -->
+    <style name="SortDialog">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="SortTextView" parent="SortDialog">
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginBottom">12dp</item>
+    </style>
+
+    <style name="SortRadioGroup" parent="SortDialog">
+        <item name="android:layout_marginBottom">20dp</item>
+    </style>
+
+    <style name="SortRadioButton" parent="SortDialog">
+    </style>
+
+    <style name="SortButton" parent="SortDialog">
+        <item name="android:background">@null</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
 </resources>
