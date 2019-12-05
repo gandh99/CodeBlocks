@@ -23,12 +23,14 @@
         />
 
     <RadioGroup
+        android:id="@+id/radioGroup_sort_by"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/SortRadioGroup"
         >
 
         <RadioButton
+            android:id="@+id/radioButton_date_created"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/date_created"
@@ -36,6 +38,7 @@
             />
 
         <RadioButton
+            android:id="@+id/radioButton_deadline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/deadline"
@@ -52,12 +55,14 @@
         />
 
     <RadioGroup
+        android:id="@+id/radioGroup_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/SortRadioGroup"
         >
 
         <RadioButton
+            android:id="@+id/radioButton_ascending"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/SortRadioButton"
@@ -65,6 +70,7 @@
             />
 
         <RadioButton
+            android:id="@+id/radioButton_descending"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/SortRadioButton"
