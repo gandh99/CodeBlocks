@@ -2,11 +2,19 @@ package com.gandh99.codeblocks.projectPage.tasks.repository;
 
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.Transformations;
 
+import com.gandh99.codeblocks.projectPage.tasks.TaskListAdapter;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 import com.gandh99.codeblocks.projectPage.tasks.api.TaskAPIService;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -46,4 +54,8 @@ public class TaskRepository {
       }
     });
   }
+
+  public void updateTaskList(List<Task> tasks) {
+  }
+
 }

@@ -19,6 +19,9 @@ import com.gandh99.codeblocks.common.dateFormatting.CustomDateFormatter;
 import com.gandh99.codeblocks.common.dateFormatting.DatePortion;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TaskListAdapter extends ListAdapter<Task, TaskListAdapter.TaskViewHolder> {
   private static final String TAG = "TaskListAdapter";
 

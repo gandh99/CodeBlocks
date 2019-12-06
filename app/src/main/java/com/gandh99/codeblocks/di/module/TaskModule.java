@@ -1,9 +1,12 @@
 package com.gandh99.codeblocks.di.module;
 
 import com.gandh99.codeblocks.di.module.common.ViewModelModule;
+import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 import com.gandh99.codeblocks.projectPage.tasks.api.TaskAPIService;
 import com.gandh99.codeblocks.projectPage.tasks.TaskListAdapter;
 import com.gandh99.codeblocks.projectPage.tasks.repository.TaskRepository;
+
+import java.util.ArrayList;
 
 import javax.inject.Singleton;
 

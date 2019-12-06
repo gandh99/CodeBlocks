@@ -1,7 +1,9 @@
 package com.gandh99.codeblocks.projectPage.tasks.fragment;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -18,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.gandh99.codeblocks.R;
@@ -117,12 +120,7 @@ public class TasksFragment extends Fragment {
 
   private void initViewModel() {
     taskViewModel = ViewModelProviders.of(this, viewModelFactory).get(TaskViewModel.class);
-    taskViewModel.getTasks().observe(this, new Observer<List<Task>>() {
-      @Override
-      public void onChanged(List<Task> tasks) {
-        taskListAdapter.submitList(tasks);
-      }
-    });
+    taskViewModel.getTasks().observe(this, tasks -> taskListAdapter.submitList(tasks));
   }
 
   @RequiresApi(api = Build.VERSION_CODES.O)
