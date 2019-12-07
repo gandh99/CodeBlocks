@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
+import com.gandh99.codeblocks.projectPage.tasks.taskSorter.TaskSorter;
 
 import java.util.List;
 

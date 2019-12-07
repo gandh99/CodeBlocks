@@ -1,4 +1,4 @@
-package com.gandh99.codeblocks.projectPage.tasks;
+package com.gandh99.codeblocks.projectPage.tasks.taskSorter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -8,12 +8,12 @@ import android.widget.RadioGroup;
 
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
-import com.gandh99.codeblocks.projectPage.tasks.taskSorter.AscendingOrder;
-import com.gandh99.codeblocks.projectPage.tasks.taskSorter.DescendingOrder;
-import com.gandh99.codeblocks.projectPage.tasks.taskSorter.SorterByDateCreated;
-import com.gandh99.codeblocks.projectPage.tasks.taskSorter.SorterByDeadline;
-import com.gandh99.codeblocks.projectPage.tasks.taskSorter.TaskOrder;
-import com.gandh99.codeblocks.projectPage.tasks.taskSorter.TaskSortMethod;
+import com.gandh99.codeblocks.projectPage.tasks.taskSorter.method.SorterByDateCreated;
+import com.gandh99.codeblocks.projectPage.tasks.taskSorter.method.SorterByDeadline;
+import com.gandh99.codeblocks.projectPage.tasks.taskSorter.method.TaskSortMethod;
+import com.gandh99.codeblocks.projectPage.tasks.taskSorter.order.AscendingOrder;
+import com.gandh99.codeblocks.projectPage.tasks.taskSorter.order.DescendingOrder;
+import com.gandh99.codeblocks.projectPage.tasks.taskSorter.order.TaskOrder;
 
 import java.util.HashMap;
 import java.util.List;

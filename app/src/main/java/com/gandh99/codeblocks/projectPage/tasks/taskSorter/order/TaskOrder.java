@@ -1,4 +1,4 @@
-package com.gandh99.codeblocks.projectPage.tasks.taskSorter;
+package com.gandh99.codeblocks.projectPage.tasks.taskSorter.order;
 
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 

@@ -23,7 +23,7 @@ import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.projectPage.tasks.NewTaskActivity;
 import com.gandh99.codeblocks.projectPage.tasks.SortTaskDialog;
 import com.gandh99.codeblocks.projectPage.tasks.TaskAdapter;
-import com.gandh99.codeblocks.projectPage.tasks.TaskSorter;
+import com.gandh99.codeblocks.projectPage.tasks.taskSorter.TaskSorter;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 import com.gandh99.codeblocks.projectPage.tasks.api.TaskAPIService;
 import com.gandh99.codeblocks.projectPage.tasks.viewModel.TaskViewModel;

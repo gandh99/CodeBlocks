@@ -1,4 +1,4 @@
-package com.gandh99.codeblocks.projectPage.tasks.taskSorter;
+package com.gandh99.codeblocks.projectPage.tasks.taskSorter.order;
 
 import android.os.Build;
 
@@ -8,7 +8,7 @@ import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 
 import java.util.function.Function;
 
-public class AscendingOrder implements TaskOrder {
+public class DescendingOrder implements TaskOrder {
   private Function<Task, String> sortingCriteria;
 
   @Override
@@ -22,6 +22,6 @@ public class AscendingOrder implements TaskOrder {
     String firstCriteria = sortingCriteria.apply(firstTask);
     String secondCriteria = sortingCriteria.apply(secondTask);
 
-    return firstCriteria.compareTo(secondCriteria);
+    return secondCriteria.compareTo(firstCriteria);
   }
 }
