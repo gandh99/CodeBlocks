@@ -22,8 +22,16 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
+import com.gandh99.codeblocks.projectPage.tasks.taskSorter.AscendingOrder;
+import com.gandh99.codeblocks.projectPage.tasks.taskSorter.DescendingOrder;
+import com.gandh99.codeblocks.projectPage.tasks.taskSorter.SorterByDateCreated;
+import com.gandh99.codeblocks.projectPage.tasks.taskSorter.SorterByDeadline;
+import com.gandh99.codeblocks.projectPage.tasks.taskSorter.TaskOrder;
+import com.gandh99.codeblocks.projectPage.tasks.taskSorter.TaskSortMethod;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -40,6 +48,8 @@ public class SortTaskDialog extends DialogFragment {
   private RadioGroup radioGroupSortBy, radioGroupOrder;
   private int selectedSortById, selectedOrderId;
   private View dialogView;
+  private Map<RadioButton, TaskSortMethod> radioButtonTaskSortMethodMap = new HashMap<>();
+  private Map<RadioButton, TaskOrder> radioButtonTaskOrderMap = new HashMap<>();
 
   @Inject
   ViewModelProvider.Factory viewModelFactory;
@@ -87,6 +97,20 @@ public class SortTaskDialog extends DialogFragment {
       radioGroupOrder.check(selectedOrderId);
     } catch (NullPointerException e) {
     }
+
+    // Get the radio buttons
+    RadioButton dateCreated = dialogView.findViewById(R.id.radioButton_date_created);
+    RadioButton deadline = dialogView.findViewById(R.id.radioButton_deadline);
+    RadioButton orderAscending = dialogView.findViewById(R.id.radioButton_ascending);
+    RadioButton orderDescending = dialogView.findViewById(R.id.radioButton_descending);
+
+    // Map the radio buttons to their sorting functionality
+    radioButtonTaskSortMethodMap.put(dateCreated, new SorterByDateCreated());
+    radioButtonTaskSortMethodMap.put(deadline, new SorterByDeadline());
+
+    // Map the radio buttons to the order in which they should be sorted
+    radioButtonTaskOrderMap.put(orderAscending, new AscendingOrder());
+    radioButtonTaskOrderMap.put(orderDescending, new DescendingOrder());
   }
 
   private void initSaveButton() {
@@ -97,6 +121,7 @@ public class SortTaskDialog extends DialogFragment {
         selectedOrderId = radioGroupOrder.getCheckedRadioButtonId();
         
         saveRadioButtons();
+        sortTasks();
         dismiss();
       }
     });
@@ -109,17 +134,19 @@ public class SortTaskDialog extends DialogFragment {
     editor.putInt(SORT_BY_PREFERENCE, selectedSortById);
     editor.putInt(ORDER_PREFERENCE, selectedOrderId);
     editor.apply();
-    
-    // Sort the tasks
-    sortTasks();
   }
 
   private void sortTasks() {
-    String sortBy = ((RadioButton) (dialogView.findViewById(selectedSortById))).getText().toString();
-    String order = ((RadioButton) (dialogView.findViewById(selectedOrderId))).getText().toString();
+    // Get the selected radio buttons
+    RadioButton selectedSortingMethod = dialogView.findViewById(selectedSortById);
+    RadioButton selectedOrder = dialogView.findViewById(selectedOrderId);
 
+    // Sort the tasks based on the user's selection
     List<Task> tasks = taskAdapter.getTaskList();
-    taskAdapter.updateList(TaskSorter.sortTasks(this, tasks, sortBy, order));
+    TaskOrder order = radioButtonTaskOrderMap.get(selectedOrder);
+    TaskSortMethod taskSortMethod = radioButtonTaskSortMethodMap.get(selectedSortingMethod);
+    taskSortMethod.sortTasks(tasks, order);
+    taskAdapter.updateList(tasks);
   }
 
   private void initCancelButton() {

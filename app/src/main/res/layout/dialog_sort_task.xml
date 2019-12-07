@@ -26,6 +26,7 @@
         android:id="@+id/radioGroup_sort_by"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:checkedButton="@id/radioButton_date_created"
         style="@style/SortRadioGroup"
         >
 
@@ -58,6 +59,7 @@
         android:id="@+id/radioGroup_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:checkedButton="@id/radioButton_descending"
         style="@style/SortRadioGroup"
         >
 
