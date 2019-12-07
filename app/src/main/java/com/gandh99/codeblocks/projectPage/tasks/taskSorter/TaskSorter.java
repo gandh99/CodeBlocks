@@ -80,7 +80,10 @@ public class TaskSorter {
     // Sort the tasks based on the user's selection
     TaskOrder order = radioButtonTaskOrderMap.get(selectedOrder);
     TaskSortMethod taskSortMethod = radioButtonTaskSortMethodMap.get(selectedSortingMethod);
-    taskSortMethod.sortTasks(taskList, order);
+    try {
+      taskSortMethod.sortTasks(taskList, order);
+    } catch (NullPointerException ignored) {
+    }
     return taskList;
   }
 }
