@@ -11,8 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gandh99.codeblocks.R;
@@ -21,36 +19,13 @@ import com.gandh99.codeblocks.common.dateFormatting.DatePortion;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-//public class TaskListAdapter extends ListAdapter<Task, TaskListAdapter.TaskViewHolder> {
-
-public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskViewHolder> {
-  private static final String TAG = "TaskListAdapter";
+public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
+  private static final String TAG = "TaskAdapter";
   private List<Task> taskList = new ArrayList<>();
 
-//  public TaskListAdapter() {
-//    super(DIFF_CALLBACK);
-//  }
-
-  public TaskListAdapter() {}
-
-  private static final DiffUtil.ItemCallback<Task> DIFF_CALLBACK = new DiffUtil.ItemCallback<Task>() {
-    @Override
-    public boolean areItemsTheSame(@NonNull Task oldItem, @NonNull Task newItem) {
-      return oldItem.getId() == newItem.getId();
-    }
-
-    @Override
-    public boolean areContentsTheSame(@NonNull Task oldItem, @NonNull Task newItem) {
-      return (oldItem.getTitle().equals(newItem.getTitle())
-        && oldItem.getDescription().equals(newItem.getDescription())
-        && oldItem.getDateCreated().equals(newItem.getDateCreated())
-        && oldItem.getDeadline().equals(newItem.getDeadline()));
-    }
-  };
+  public TaskAdapter() {}
 
   @NonNull
   @Override
@@ -63,12 +38,9 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
     return new TaskViewHolder(view);
   }
 
-
-
   @RequiresApi(api = Build.VERSION_CODES.O)
   @Override
   public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
-//    Task task = getItem(position);
     Task task = taskList.get(position);
     String dayCreated, monthCreated, deadlineCountdown;
 
@@ -86,8 +58,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
     holder.textViewDescription.setText(task.getDescription());
     holder.textViewDayCreated.setText(dayCreated);
     holder.textViewMonthCreated.setText(monthCreated);
-//    holder.textViewDeadlineCountdown.setText(deadlineCountdown);
-    holder.textViewDeadlineCountdown.setText(task.getDeadline());
+    holder.textViewDeadlineCountdown.setText(deadlineCountdown);
   }
 
   @Override
@@ -95,10 +66,17 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
     return taskList.size();
   }
 
+  public void updateList(@Nullable List<Task> list) {
+    taskList = list;
+    notifyDataSetChanged();
+  }
+
+  public List<Task> getTaskList() { return taskList; }
+
   class TaskViewHolder extends RecyclerView.ViewHolder {
     TextView textViewTitle, textViewDescription, textViewDayCreated, textViewMonthCreated, textViewDeadlineCountdown;
 
-    public TaskViewHolder(@NonNull View itemView) {
+    TaskViewHolder(@NonNull View itemView) {
       super(itemView);
 
       textViewTitle = itemView.findViewById(R.id.list_item_task_title);
@@ -109,12 +87,4 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
     }
   }
 
-//  @Override
-  public void submitList(@Nullable List<Task> list) {
-    taskList = list;
-    notifyDataSetChanged();
-//    super.submitList(list);
-  }
-
-  public List<Task> getTaskList() { return taskList; }
 }

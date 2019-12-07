@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,21 +13,16 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
-import com.gandh99.codeblocks.projectPage.tasks.viewModel.TaskViewModel;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -43,7 +37,6 @@ public class SortTaskDialog extends DialogFragment {
 
   private SharedPreferences sharedPreferences;
   private Button buttonSave, buttonCancel;
-//  private TaskViewModel taskViewModel;
   private RadioGroup radioGroupSortBy, radioGroupOrder;
   private int selectedSortById, selectedOrderId;
   private View dialogView;
@@ -52,7 +45,7 @@ public class SortTaskDialog extends DialogFragment {
   ViewModelProvider.Factory viewModelFactory;
 
   @Inject
-  TaskListAdapter taskListAdapter;
+  TaskAdapter taskAdapter;
 
   public SortTaskDialog() {
   }
@@ -74,7 +67,6 @@ public class SortTaskDialog extends DialogFragment {
     buttonSave = view.findViewById(R.id.button_sort_task_save);
     buttonCancel = view.findViewById(R.id.button_sort_task_cancel);
 
-//    initViewModel();
     initRadioButtons();
     initSaveButton();
     initCancelButton();
@@ -83,10 +75,6 @@ public class SortTaskDialog extends DialogFragment {
       .setView(view)
       .create();
   }
-
-//  private void initViewModel() {
-//    taskViewModel = ViewModelProviders.of(this, viewModelFactory).get(TaskViewModel.class);
-//  }
 
   private void initRadioButtons() {
     try {
@@ -130,17 +118,12 @@ public class SortTaskDialog extends DialogFragment {
     String sortBy = ((RadioButton) (dialogView.findViewById(selectedSortById))).getText().toString();
     String order = ((RadioButton) (dialogView.findViewById(selectedOrderId))).getText().toString();
 
-    List<Task> tasks = taskListAdapter.getTaskList();
-    taskListAdapter.submitList(TaskSorter.sortTasks(this, tasks, sortBy, order));
+    List<Task> tasks = taskAdapter.getTaskList();
+    taskAdapter.updateList(TaskSorter.sortTasks(this, tasks, sortBy, order));
   }
 
   private void initCancelButton() {
-    buttonCancel.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        dismiss();
-      }
-    });
+    buttonCancel.setOnClickListener(view -> dismiss());
   }
 
   @Override

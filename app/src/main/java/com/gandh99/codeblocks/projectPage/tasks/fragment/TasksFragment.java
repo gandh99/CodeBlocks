@@ -1,16 +1,13 @@
 package com.gandh99.codeblocks.projectPage.tasks.fragment;
 
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,21 +17,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.projectPage.tasks.NewTaskActivity;
 import com.gandh99.codeblocks.projectPage.tasks.SortTaskDialog;
-import com.gandh99.codeblocks.projectPage.tasks.TaskListAdapter;
-import com.gandh99.codeblocks.projectPage.tasks.api.Task;
+import com.gandh99.codeblocks.projectPage.tasks.TaskAdapter;
 import com.gandh99.codeblocks.projectPage.tasks.api.TaskAPIService;
 import com.gandh99.codeblocks.projectPage.tasks.viewModel.TaskViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -57,7 +50,7 @@ public class TasksFragment extends Fragment {
   private TaskViewModel taskViewModel;
 
   @Inject
-  TaskListAdapter taskListAdapter;
+  TaskAdapter taskAdapter;
 
   @Inject
   ViewModelProvider.Factory viewModelFactory;
@@ -85,7 +78,7 @@ public class TasksFragment extends Fragment {
 
     // Setup recyclerView
     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    recyclerView.setAdapter(taskListAdapter);
+    recyclerView.setAdapter(taskAdapter);
 
     initFloatingActionButton();
     initSortButton();
@@ -122,7 +115,7 @@ public class TasksFragment extends Fragment {
   private void initViewModel() {
     taskViewModel = ViewModelProviders.of(this, viewModelFactory).get(TaskViewModel.class);
     taskViewModel.getTasks().observe(this, tasks -> {
-      taskListAdapter.submitList(tasks);
+      taskAdapter.updateList(tasks);
     });
   }
 
