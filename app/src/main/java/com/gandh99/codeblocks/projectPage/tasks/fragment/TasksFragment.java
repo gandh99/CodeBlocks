@@ -33,6 +33,7 @@ import com.gandh99.codeblocks.projectPage.tasks.viewModel.TaskViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -120,7 +121,9 @@ public class TasksFragment extends Fragment {
 
   private void initViewModel() {
     taskViewModel = ViewModelProviders.of(this, viewModelFactory).get(TaskViewModel.class);
-    taskViewModel.getTasks().observe(this, tasks -> taskListAdapter.submitList(tasks));
+    taskViewModel.getTasks().observe(this, tasks -> {
+      taskListAdapter.submitList(tasks);
+    });
   }
 
   @RequiresApi(api = Build.VERSION_CODES.O)

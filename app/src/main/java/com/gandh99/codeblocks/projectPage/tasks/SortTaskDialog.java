@@ -43,7 +43,7 @@ public class SortTaskDialog extends DialogFragment {
 
   private SharedPreferences sharedPreferences;
   private Button buttonSave, buttonCancel;
-  private TaskViewModel taskViewModel;
+//  private TaskViewModel taskViewModel;
   private RadioGroup radioGroupSortBy, radioGroupOrder;
   private int selectedSortById, selectedOrderId;
   private View dialogView;
@@ -74,7 +74,7 @@ public class SortTaskDialog extends DialogFragment {
     buttonSave = view.findViewById(R.id.button_sort_task_save);
     buttonCancel = view.findViewById(R.id.button_sort_task_cancel);
 
-    initViewModel();
+//    initViewModel();
     initRadioButtons();
     initSaveButton();
     initCancelButton();
@@ -84,9 +84,9 @@ public class SortTaskDialog extends DialogFragment {
       .create();
   }
 
-  private void initViewModel() {
-    taskViewModel = ViewModelProviders.of(this, viewModelFactory).get(TaskViewModel.class);
-  }
+//  private void initViewModel() {
+//    taskViewModel = ViewModelProviders.of(this, viewModelFactory).get(TaskViewModel.class);
+//  }
 
   private void initRadioButtons() {
     try {
@@ -126,38 +126,12 @@ public class SortTaskDialog extends DialogFragment {
     sortTasks();
   }
 
-  //TODO: Change
   private void sortTasks() {
     String sortBy = ((RadioButton) (dialogView.findViewById(selectedSortById))).getText().toString();
     String order = ((RadioButton) (dialogView.findViewById(selectedOrderId))).getText().toString();
 
-    List<Task> tasks = taskViewModel.getTasks().getValue();
-
-    if (sortBy.equals(getString(R.string.date_created))) {
-      Collections.sort(tasks, new SortByDateCreated());
-      taskViewModel.updateTaskList(tasks);
-    } else if (sortBy.equals(getString(R.string.deadline))) {
-      Collections.sort(tasks, new SortByDeadline());
-      taskViewModel.updateTaskList(tasks);
-    }
-  }
-
-  //TODO: Change
-  class SortByDateCreated implements Comparator<Task> {
-
-    @Override
-    public int compare(Task t1, Task t2) {
-      return t1.getDateCreated().compareTo(t2.getDateCreated());
-    }
-  }
-
-  //TODO: Change
-  class SortByDeadline implements Comparator<Task> {
-
-    @Override
-    public int compare(Task t1, Task t2) {
-      return t1.getDeadline().compareTo(t2.getDeadline());
-    }
+    List<Task> tasks = taskListAdapter.getTaskList();
+    taskListAdapter.submitList(TaskSorter.sortTasks(this, tasks, sortBy, order));
   }
 
   private void initCancelButton() {
@@ -183,7 +157,4 @@ public class SortTaskDialog extends DialogFragment {
     window.setLayout((int) (width * 0.75), WindowManager.LayoutParams.WRAP_CONTENT);
   }
 
-  private void refreshTaskList() {
-    taskViewModel.refreshTaskList();
-  }
 }

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
@@ -20,14 +21,21 @@ import com.gandh99.codeblocks.common.dateFormatting.DatePortion;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
-public class TaskListAdapter extends ListAdapter<Task, TaskListAdapter.TaskViewHolder> {
-  private static final String TAG = "TaskListAdapter";
+//public class TaskListAdapter extends ListAdapter<Task, TaskListAdapter.TaskViewHolder> {
 
-  public TaskListAdapter() {
-    super(DIFF_CALLBACK);
-  }
+public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskViewHolder> {
+  private static final String TAG = "TaskListAdapter";
+  private List<Task> taskList = new ArrayList<>();
+
+//  public TaskListAdapter() {
+//    super(DIFF_CALLBACK);
+//  }
+
+  public TaskListAdapter() {}
 
   private static final DiffUtil.ItemCallback<Task> DIFF_CALLBACK = new DiffUtil.ItemCallback<Task>() {
     @Override
@@ -55,10 +63,13 @@ public class TaskListAdapter extends ListAdapter<Task, TaskListAdapter.TaskViewH
     return new TaskViewHolder(view);
   }
 
+
+
   @RequiresApi(api = Build.VERSION_CODES.O)
   @Override
   public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
-    Task task = getItem(position);
+//    Task task = getItem(position);
+    Task task = taskList.get(position);
     String dayCreated, monthCreated, deadlineCountdown;
 
     // Format some of the dates to be displayed
@@ -75,7 +86,13 @@ public class TaskListAdapter extends ListAdapter<Task, TaskListAdapter.TaskViewH
     holder.textViewDescription.setText(task.getDescription());
     holder.textViewDayCreated.setText(dayCreated);
     holder.textViewMonthCreated.setText(monthCreated);
-    holder.textViewDeadlineCountdown.setText(deadlineCountdown);
+//    holder.textViewDeadlineCountdown.setText(deadlineCountdown);
+    holder.textViewDeadlineCountdown.setText(task.getDeadline());
+  }
+
+  @Override
+  public int getItemCount() {
+    return taskList.size();
   }
 
   class TaskViewHolder extends RecyclerView.ViewHolder {
@@ -91,4 +108,13 @@ public class TaskListAdapter extends ListAdapter<Task, TaskListAdapter.TaskViewH
       textViewDeadlineCountdown = itemView.findViewById(R.id.list_item_task_deadline_countdown);
     }
   }
+
+//  @Override
+  public void submitList(@Nullable List<Task> list) {
+    taskList = list;
+    notifyDataSetChanged();
+//    super.submitList(list);
+  }
+
+  public List<Task> getTaskList() { return taskList; }
 }
