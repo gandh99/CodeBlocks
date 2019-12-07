@@ -57,24 +57,23 @@ public class SortTaskDialog extends DialogFragment {
   public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
     AndroidSupportInjection.inject(this);
 
-    View view =
+    dialogView =
       LayoutInflater
       .from(getContext())
       .inflate(R.layout.dialog_sort_task, null);
-    dialogView = view;
 
     // Get the view items
-    radioGroupSortBy = view.findViewById(R.id.radioGroup_sort_by);
-    radioGroupOrder = view.findViewById(R.id.radioGroup_order);
-    buttonSave = view.findViewById(R.id.button_sort_task_save);
-    buttonCancel = view.findViewById(R.id.button_sort_task_cancel);
+    radioGroupSortBy = dialogView.findViewById(R.id.radioGroup_sort_by);
+    radioGroupOrder = dialogView.findViewById(R.id.radioGroup_order);
+    buttonSave = dialogView.findViewById(R.id.button_sort_task_save);
+    buttonCancel = dialogView.findViewById(R.id.button_sort_task_cancel);
 
     initRadioButtons();
     initSaveButton();
     initCancelButton();
 
     return new AlertDialog.Builder(getActivity())
-      .setView(view)
+      .setView(dialogView)
       .create();
   }
 

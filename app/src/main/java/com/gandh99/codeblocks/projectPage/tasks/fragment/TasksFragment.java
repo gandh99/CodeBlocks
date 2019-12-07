@@ -23,11 +23,14 @@ import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.projectPage.tasks.NewTaskActivity;
 import com.gandh99.codeblocks.projectPage.tasks.SortTaskDialog;
 import com.gandh99.codeblocks.projectPage.tasks.TaskAdapter;
+import com.gandh99.codeblocks.projectPage.tasks.TaskSorter;
+import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 import com.gandh99.codeblocks.projectPage.tasks.api.TaskAPIService;
 import com.gandh99.codeblocks.projectPage.tasks.viewModel.TaskViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -48,6 +51,7 @@ public class TasksFragment extends Fragment {
   private FloatingActionButton fab;
   private Button buttonSort, buttonFilter;
   private TaskViewModel taskViewModel;
+  private View dialogView;
 
   @Inject
   TaskAdapter taskAdapter;
@@ -57,6 +61,9 @@ public class TasksFragment extends Fragment {
 
   @Inject
   TaskAPIService taskAPIService;
+
+  @Inject
+  TaskSorter taskSorter;
 
   public TasksFragment() {
     // Required empty public constructor
@@ -75,6 +82,12 @@ public class TasksFragment extends Fragment {
     fab = view.findViewById(R.id.fab_tasks);
     buttonFilter = view.findViewById(R.id.button_filter);
     buttonSort = view.findViewById(R.id.button_sort);
+
+    // Inflate the SortTaskDialog view so that we can sort the task list later
+    dialogView =
+      LayoutInflater
+        .from(getContext())
+        .inflate(R.layout.dialog_sort_task, null);
 
     // Setup recyclerView
     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -115,7 +128,8 @@ public class TasksFragment extends Fragment {
   private void initViewModel() {
     taskViewModel = ViewModelProviders.of(this, viewModelFactory).get(TaskViewModel.class);
     taskViewModel.getTasks().observe(this, tasks -> {
-      taskAdapter.updateList(tasks);
+      List<Task> sortedTaskList = taskSorter.sortTasks(TasksFragment.this.getContext(), dialogView, tasks);
+      taskAdapter.updateList(sortedTaskList);
     });
   }
 
