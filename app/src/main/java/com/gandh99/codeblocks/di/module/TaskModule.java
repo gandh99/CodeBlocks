@@ -2,6 +2,7 @@ package com.gandh99.codeblocks.di.module;
 
 import com.gandh99.codeblocks.di.module.common.ViewModelModule;
 import com.gandh99.codeblocks.projectPage.tasks.TaskAdapter;
+import com.gandh99.codeblocks.projectPage.tasks.TaskSorter;
 import com.gandh99.codeblocks.projectPage.tasks.api.TaskAPIService;
 import com.gandh99.codeblocks.projectPage.tasks.repository.TaskRepository;
 
@@ -31,4 +32,8 @@ public class TaskModule {
   TaskAdapter provideTaskListAdapter() {
     return new TaskAdapter();
   }
+
+  @Provides
+  @Singleton
+  TaskSorter provideTaskSorter() { return new TaskSorter(); }
 }
