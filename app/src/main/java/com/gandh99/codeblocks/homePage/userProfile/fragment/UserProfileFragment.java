@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,15 @@ import android.widget.TextView;
 
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.homePage.userProfile.activity.EditUserProfileActivity;
+import com.gandh99.codeblocks.homePage.userProfile.api.UserProfile;
+import com.gandh99.codeblocks.homePage.userProfile.api.UserProfileAPIService;
+
+import javax.inject.Inject;
 
 import dagger.android.support.AndroidSupportInjection;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.gandh99.codeblocks.homePage.userProfile.activity.EditUserProfileActivity.COMPANY_INTENT;
 import static com.gandh99.codeblocks.homePage.userProfile.activity.EditUserProfileActivity.EDIT_PROFILE_REQUEST_CODE;
@@ -30,9 +38,13 @@ import static com.gandh99.codeblocks.homePage.userProfile.activity.EditUserProfi
  * A simple {@link Fragment} subclass.
  */
 public class UserProfileFragment extends Fragment {
+  private static final String TAG = "UserProfileFragment";
   private TextView textViewLocation, textViewCompany, textViewJobTitle, textViewEmail,
     textViewWebsite, textViewPersonalMessage;
   private Button buttonEditProfile;
+
+  @Inject
+  UserProfileAPIService userProfileAPIService;
 
   public UserProfileFragment() {
     // Required empty public constructor
@@ -66,7 +78,33 @@ public class UserProfileFragment extends Fragment {
   }
 
   private void loadProfile() {
-    // TODO
+    userProfileAPIService.getUserProfile().enqueue(new Callback<UserProfile>() {
+      @Override
+      public void onResponse(Call<UserProfile> call, Response<UserProfile> response) {
+        if (response.isSuccessful()) {
+          UserProfile userProfile = response.body();
+          String location = userProfile.getLocation().equals("") ? "Location" : userProfile.getLocation();
+          String company = userProfile.getCompany().equals("") ? "Company" : userProfile.getCompany();
+          String jobTitle = userProfile.getJobTitle().equals("") ? "Job Title" : userProfile.getJobTitle();
+          String email = userProfile.getEmail().equals("") ? "Email" : userProfile.getEmail();
+          String website = userProfile.getWebsite().equals("") ? "Website" : userProfile.getWebsite();
+          String personalMessage = userProfile.getPersonalMessage().equals("")
+            ? "Personal Message" : userProfile.getPersonalMessage();
+
+          textViewLocation.setText(location);
+          textViewCompany.setText(company);
+          textViewJobTitle.setText(jobTitle);
+          textViewEmail.setText(email);
+          textViewWebsite.setText(website);
+          textViewPersonalMessage.setText(personalMessage);
+        }
+      }
+
+      @Override
+      public void onFailure(Call<UserProfile> call, Throwable t) {
+        Log.d(TAG, "onFailure: " + t.getMessage());
+      }
+    });
   }
 
   private void initEditProfileButton() {
