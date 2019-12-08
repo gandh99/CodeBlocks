@@ -25,6 +25,10 @@ public class AuthenticationInterceptor implements Interceptor {
     this.sessionToken = SESSION_TOKEN_PREFIX + sessionToken;
   }
 
+  public String getUsername() {
+    return username;
+  }
+
   public void setUsername(String username) {
     this.username = username;
   }

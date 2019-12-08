@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gandh99.codeblocks.R;
+import com.gandh99.codeblocks.authentication.AuthenticationInterceptor;
 import com.gandh99.codeblocks.common.Base64EncoderDecoder;
 import com.gandh99.codeblocks.homePage.userProfile.activity.EditUserProfileActivity;
 import com.gandh99.codeblocks.homePage.userProfile.api.UserProfile;
@@ -51,12 +52,15 @@ import static com.gandh99.codeblocks.homePage.userProfile.activity.EditUserProfi
 public class UserProfileFragment extends Fragment {
   private static final String TAG = "UserProfileFragment";
   private ImageView imageViewProfilePicture;
-  private TextView textViewLocation, textViewCompany, textViewJobTitle, textViewEmail,
+  private TextView textViewUsername, textViewLocation, textViewCompany, textViewJobTitle, textViewEmail,
     textViewWebsite, textViewPersonalMessage;
   private Button buttonEditProfile;
 
   @Inject
   UserProfileAPIService userProfileAPIService;
+
+  @Inject
+  AuthenticationInterceptor authenticationInterceptor;
 
   public UserProfileFragment() {
     // Required empty public constructor
@@ -72,6 +76,7 @@ public class UserProfileFragment extends Fragment {
     // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
     imageViewProfilePicture = view.findViewById(R.id.imageView_profile_picture);
+    textViewUsername = view.findViewById(R.id.textView_username);
     textViewLocation = view.findViewById(R.id.textView_location);
     textViewCompany = view.findViewById(R.id.textView_company);
     textViewJobTitle = view.findViewById(R.id.textView_job_title);
@@ -79,6 +84,8 @@ public class UserProfileFragment extends Fragment {
     textViewWebsite = view.findViewById(R.id.textView_website);
     textViewPersonalMessage = view.findViewById(R.id.textView_personal_message);
     buttonEditProfile = view.findViewById(R.id.button_edit_profile);
+
+    textViewUsername.setText(authenticationInterceptor.getUsername());
 
     loadProfile();
     initEditProfileButton();
