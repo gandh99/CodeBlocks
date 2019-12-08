@@ -3,13 +3,15 @@ from .models import UserProfile, ProjectGroup, Task, ProjectGroupMember, Invitat
 
 
 # Register your models here.
-class UserAdmin(admin.ModelAdmin):
-    list_display = ('owner', 'username', 'password')
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('owner', 'username', 'password', 'location', 'company', 'job_title', 'email', 'website',
+                    'personal_message')
     # list_filter = ['pub_date']
     search_fields = ['username']
     fieldsets = [
         (None,               {'fields': ['username']}),
-        ('Other information', {'fields': ['password'], 'classes': ['collapse']}),
+        ('Other information', {'fields': ['password', 'location', 'company', 'job_title', 'email', 'website',
+                                          'personal_message'], 'classes': ['collapse']}),
     ]
     # inlines = [ChoiceInline]
 
@@ -46,7 +48,7 @@ class InvitationAdmin(admin.ModelAdmin):
     ]
 
 
-admin.site.register(UserProfile, UserAdmin)
+admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(ProjectGroup, ProjectGroupAdmin)
 admin.site.register(ProjectGroupMember, ProjectGroupMemberAdmin)
 admin.site.register(Task, TaskAdmin)

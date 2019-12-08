@@ -9,6 +9,12 @@ class UserProfileSerializer(serializers.ModelSerializer):
             'id',
             'username',
             'password',
+            'location',
+            'company',
+            'job_title',
+            'email',
+            'website',
+            'personal_message'
         ]
 
 
