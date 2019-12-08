@@ -15,6 +15,7 @@ public interface UserProfileAPIService {
   @FormUrlEncoded
   @PUT("user_profile")
   Call<ResponseBody> updateUserProfile(
+    @Field("profilePicture") String profilePicture,
     @Field("location") String location,
     @Field("company") String company,
     @Field("jobTitle") String jobTitle,

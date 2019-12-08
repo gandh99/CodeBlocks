@@ -7,6 +7,9 @@ public class UserProfile {
   @SerializedName("pk")
   private final int pk;
 
+  @SerializedName("profilePicture")
+  private final String profilePicture;
+
   @SerializedName("location")
   private final String location;
 
@@ -25,9 +28,10 @@ public class UserProfile {
   @SerializedName("personalMessage")
   private final String personalMessage;
 
-  public UserProfile(int pk, String location, String company, String jobTitle, String email,
+  public UserProfile(int pk, String profilePicture, String location, String company, String jobTitle, String email,
                      String website, String personalMessage) {
     this.pk = pk;
+    this.profilePicture = profilePicture;
     this.location = location;
     this.company = company;
     this.jobTitle = jobTitle;
@@ -38,6 +42,10 @@ public class UserProfile {
 
   public int getPk() {
     return pk;
+  }
+
+  public String getProfilePicture() {
+    return profilePicture;
   }
 
   public String getLocation() {

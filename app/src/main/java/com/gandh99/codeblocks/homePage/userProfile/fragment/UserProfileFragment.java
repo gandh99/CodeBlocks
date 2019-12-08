@@ -3,6 +3,7 @@ package com.gandh99.codeblocks.homePage.userProfile.fragment;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 
@@ -11,6 +12,7 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.fragment.app.Fragment;
 
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -93,6 +95,7 @@ public class UserProfileFragment extends Fragment {
       public void onResponse(Call<UserProfile> call, Response<UserProfile> response) {
         if (response.isSuccessful()) {
           UserProfile userProfile = response.body();
+          String profilePictureString = userProfile.getProfilePicture();
           String location = userProfile.getLocation().equals("") ? "Location" : userProfile.getLocation();
           String company = userProfile.getCompany().equals("") ? "Company" : userProfile.getCompany();
           String jobTitle = userProfile.getJobTitle().equals("") ? "Job Title" : userProfile.getJobTitle();
@@ -101,8 +104,15 @@ public class UserProfileFragment extends Fragment {
           String personalMessage = userProfile.getPersonalMessage().equals("")
             ? "Personal Message" : userProfile.getPersonalMessage();
 
-          // TODO: Set bitmap from the profile picture
+          // Decode the base64 string into a bitmap. Then, convert the bitmap into a RoundedBitmapDrawable
+          byte[] decodedString = Base64.decode(profilePictureString, Base64.DEFAULT);
+          Bitmap profilePicture = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+          RoundedBitmapDrawable roundedBitmapDrawable =
+            RoundedBitmapDrawableFactory.create(getResources(), profilePicture);
+          roundedBitmapDrawable.setCircular(true);
+          roundedBitmapDrawable.setAntiAlias(true);
 
+          imageViewProfilePicture.setImageDrawable(roundedBitmapDrawable);
           textViewLocation.setText(location);
           textViewCompany.setText(company);
           textViewJobTitle.setText(jobTitle);
@@ -123,12 +133,12 @@ public class UserProfileFragment extends Fragment {
     buttonEditProfile.setOnClickListener(view -> {
       Intent intent = new Intent(getContext(), EditUserProfileActivity.class);
 
-      // Convert imageView into a bitmap
-//      RoundedBitmapDrawable drawable = (RoundedBitmapDrawable) imageViewProfilePicture.getDrawable();
-//      Bitmap bitmapProfilePicture = drawable.getBitmap();
+      // Convert RoundedBitmapDrawable from ImageView into a bitmap
+      RoundedBitmapDrawable drawable = (RoundedBitmapDrawable) imageViewProfilePicture.getDrawable();
+      Bitmap bitmapProfilePicture = drawable.getBitmap();
 
       // Set the intent and start the activity
-//      intent.putExtra(PROFILE_PICTURE_INTENT, bitmapProfilePicture);
+      intent.putExtra(PROFILE_PICTURE_INTENT, bitmapProfilePicture);
       intent.putExtra(LOCATION_INTENT, textViewLocation.getText().toString());
       intent.putExtra(COMPANY_INTENT, textViewCompany.getText().toString());
       intent.putExtra(JOB_TITLE_INTENT, textViewJobTitle.getText().toString());

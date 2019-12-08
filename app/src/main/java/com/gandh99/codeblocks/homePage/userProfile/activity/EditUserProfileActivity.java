@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +28,7 @@ import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.authentication.InputValidator;
 import com.gandh99.codeblocks.homePage.userProfile.api.UserProfileAPIService;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -164,9 +166,13 @@ public class EditUserProfileActivity extends AppCompatActivity {
 
   private void initSaveProfileButton() {
     buttonSaveProfile.setOnClickListener(view -> {
-      // Get bitmap from image view
+      // Get bitmap from image view. Then, convert the bitmap into a base64 string
       RoundedBitmapDrawable drawable = (RoundedBitmapDrawable) imageViewProfilePicture.getDrawable();
       bitmapProfilePicture = drawable.getBitmap();
+      ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+      bitmapProfilePicture.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+      byte[] imgByte = byteArrayOutputStream.toByteArray();
+      String bitmapString = Base64.encodeToString(imgByte,Base64.DEFAULT);
 
       // Get the rest of the data from the edit text
       location = editTextLocation.getText().toString();
@@ -188,7 +194,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
       }
 
       // Save the profile on the server and exit the activity
-      userProfileAPIService.updateUserProfile(location, company, jobTitle, email, website,
+      userProfileAPIService.updateUserProfile(bitmapString, location, company, jobTitle, email, website,
         personalMessage).enqueue(new Callback<ResponseBody>() {
         @Override
         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

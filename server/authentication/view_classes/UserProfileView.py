@@ -1,3 +1,6 @@
+import base64
+
+from django.core.files.base import ContentFile
 from rest_framework import status
 from rest_framework.generics import ListAPIView, UpdateAPIView
 from rest_framework.permissions import IsAuthenticated
@@ -28,6 +31,12 @@ class UserProfileView(ListAPIView, UpdateAPIView, JSONEncoder):
 
         # Get the user profile and update it
         user_profile = UserProfile.objects.get(username=username)
+
+        # Decode the base64 string so that it can be set as the profile picture
+        image_b64 = request.data.get('profilePicture')
+        profile_picture = ContentFile(base64.b64decode(image_b64), name=username + ".png")
+
+        user_profile.profile_picture = profile_picture
         user_profile.location = request.data.get("location")
         user_profile.company = request.data.get("company")
         user_profile.job_title = request.data.get("jobTitle")
@@ -41,6 +50,9 @@ class UserProfileView(ListAPIView, UpdateAPIView, JSONEncoder):
         return Response(response, status=HTTP_200_OK)
 
     def encode(self, o):
-        d = {'pk': o.pk, 'location': o.location, 'company': o.company, 'jobTitle': o.job_title, 'email': o.email,
-             'website': o.website, 'personalMessage': o.personal_message}
+        # Encode the image file as a base64 string
+        image_base64 = base64.b64encode(o.profile_picture.read())
+
+        d = {'pk': o.pk, 'profilePicture': image_base64, 'location': o.location, 'company': o.company,
+             'jobTitle': o.job_title, 'email': o.email, 'website': o.website, 'personalMessage': o.personal_message}
         return d
