@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.homePage.userProfile.activity.EditUserProfileActivity;
@@ -26,6 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.app.Activity.RESULT_OK;
 import static com.gandh99.codeblocks.homePage.userProfile.activity.EditUserProfileActivity.COMPANY_INTENT;
 import static com.gandh99.codeblocks.homePage.userProfile.activity.EditUserProfileActivity.EDIT_PROFILE_REQUEST_CODE;
 import static com.gandh99.codeblocks.homePage.userProfile.activity.EditUserProfileActivity.EMAIL_INTENT;
@@ -122,6 +124,25 @@ public class UserProfileFragment extends Fragment {
 
   @Override
   public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
+    if (requestCode == EDIT_PROFILE_REQUEST_CODE) {
+      if (resultCode == RESULT_OK) {
+        Intent intent = data;
+        String location = intent.getStringExtra(LOCATION_INTENT);
+        String company = intent.getStringExtra(COMPANY_INTENT);
+        String jobTitle = intent.getStringExtra(JOB_TITLE_INTENT);
+        String email = intent.getStringExtra(EMAIL_INTENT);
+        String website = intent.getStringExtra(WEBSITE_INTENT);
+        String personalMessage = intent.getStringExtra(PERSONAL_MESSAGE_INTENT);
+
+        textViewLocation.setText(location);
+        textViewCompany.setText(company);
+        textViewJobTitle.setText(jobTitle);
+        textViewEmail.setText(email);
+        textViewWebsite.setText(website);
+        textViewPersonalMessage.setText(personalMessage);
+
+        Toast.makeText(getContext(), "Successfully updated profile", Toast.LENGTH_SHORT).show();
+      }
+    }
   }
 }

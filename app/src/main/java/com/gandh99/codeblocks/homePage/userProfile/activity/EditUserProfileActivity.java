@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,8 +16,13 @@ import com.gandh99.codeblocks.homePage.userProfile.api.UserProfileAPIService;
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class EditUserProfileActivity extends AppCompatActivity {
+  private static final String TAG = "EditUserProfileActivity";
   public static final String LOCATION_INTENT = "location";
   public static final String COMPANY_INTENT = "company";
   public static final String JOB_TITLE_INTENT = "jobTitle";
@@ -93,6 +99,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
       website = editTextWebsite.getText().toString();
       personalMessage = editTextPersonalMessage.getText().toString();
 
+      // Ensure that none of the input fields are blank
       if (inputValidator.isInvalidInput(location)
         || inputValidator.isInvalidInput(company)
         || inputValidator.isInvalidInput(jobTitle)
@@ -103,17 +110,29 @@ public class EditUserProfileActivity extends AppCompatActivity {
         return;
       }
 
-      // TODO: Make API call
+      // Save the profile on the server and exit the activity
+      userProfileAPIService.updateUserProfile(location, company, jobTitle, email, website,
+        personalMessage).enqueue(new Callback<ResponseBody>() {
+        @Override
+        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+          if (response.isSuccessful()) {
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra(LOCATION_INTENT, location);
+            returnIntent.putExtra(COMPANY_INTENT, company);
+            returnIntent.putExtra(JOB_TITLE_INTENT, jobTitle);
+            returnIntent.putExtra(EMAIL_INTENT, email);
+            returnIntent.putExtra(WEBSITE_INTENT, website);
+            returnIntent.putExtra(PERSONAL_MESSAGE_INTENT, personalMessage);
+            setResult(RESULT_OK, returnIntent);
+            finish();
+          }
+        }
 
-      Intent returnIntent = new Intent();
-      returnIntent.putExtra(LOCATION_INTENT, location);
-      returnIntent.putExtra(COMPANY_INTENT, company);
-      returnIntent.putExtra(JOB_TITLE_INTENT, jobTitle);
-      returnIntent.putExtra(EMAIL_INTENT, email);
-      returnIntent.putExtra(WEBSITE_INTENT, website);
-      returnIntent.putExtra(PERSONAL_MESSAGE_INTENT, personalMessage);
-      setResult(RESULT_OK, returnIntent);
-      finish();
+        @Override
+        public void onFailure(Call<ResponseBody> call, Throwable t) {
+          Log.d(TAG, "onFailure: " + t.getMessage());
+        }
+      });
     });
   }
 
