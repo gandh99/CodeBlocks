@@ -5,6 +5,12 @@ class UserProfile(models.Model):
     owner = models.OneToOneField('auth.User', related_name='UserProfile', on_delete=models.CASCADE)
     username = models.CharField(max_length=10, blank=False, default='')
     password = models.CharField(max_length=251, blank=False)
+    location = models.CharField(max_length=50, default='')
+    company = models.CharField(max_length=50, default='')
+    job_title = models.CharField(max_length=50, default='')
+    email = models.CharField(max_length=50, default='')
+    website = models.CharField(max_length=50, default='')
+    personal_message = models.CharField(max_length=50, default='')
 
     def __str__(self):
         return self.username

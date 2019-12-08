@@ -14,17 +14,17 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.gandh99.codeblocks.R;
-import com.gandh99.codeblocks.homePage.userProfile.activity.EditProfileActivity;
+import com.gandh99.codeblocks.homePage.userProfile.activity.EditUserProfileActivity;
 
 import dagger.android.support.AndroidSupportInjection;
 
-import static com.gandh99.codeblocks.homePage.userProfile.activity.EditProfileActivity.COMPANY_INTENT;
-import static com.gandh99.codeblocks.homePage.userProfile.activity.EditProfileActivity.EDIT_PROFILE_REQUEST_CODE;
-import static com.gandh99.codeblocks.homePage.userProfile.activity.EditProfileActivity.EMAIL_INTENT;
-import static com.gandh99.codeblocks.homePage.userProfile.activity.EditProfileActivity.JOB_TITLE_INTENT;
-import static com.gandh99.codeblocks.homePage.userProfile.activity.EditProfileActivity.LOCATION_INTENT;
-import static com.gandh99.codeblocks.homePage.userProfile.activity.EditProfileActivity.PERSONAL_MESSAGE_INTENT;
-import static com.gandh99.codeblocks.homePage.userProfile.activity.EditProfileActivity.WEBSITE_INTENT;
+import static com.gandh99.codeblocks.homePage.userProfile.activity.EditUserProfileActivity.COMPANY_INTENT;
+import static com.gandh99.codeblocks.homePage.userProfile.activity.EditUserProfileActivity.EDIT_PROFILE_REQUEST_CODE;
+import static com.gandh99.codeblocks.homePage.userProfile.activity.EditUserProfileActivity.EMAIL_INTENT;
+import static com.gandh99.codeblocks.homePage.userProfile.activity.EditUserProfileActivity.JOB_TITLE_INTENT;
+import static com.gandh99.codeblocks.homePage.userProfile.activity.EditUserProfileActivity.LOCATION_INTENT;
+import static com.gandh99.codeblocks.homePage.userProfile.activity.EditUserProfileActivity.PERSONAL_MESSAGE_INTENT;
+import static com.gandh99.codeblocks.homePage.userProfile.activity.EditUserProfileActivity.WEBSITE_INTENT;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,6 +55,7 @@ public class UserProfileFragment extends Fragment {
     textViewPersonalMessage = view.findViewById(R.id.textView_personal_message);
     buttonEditProfile = view.findViewById(R.id.button_edit_profile);
 
+    loadProfile();
     initEditProfileButton();
 
     return view;
@@ -64,9 +65,13 @@ public class UserProfileFragment extends Fragment {
     AndroidSupportInjection.inject(this);
   }
 
+  private void loadProfile() {
+    // TODO
+  }
+
   private void initEditProfileButton() {
     buttonEditProfile.setOnClickListener(view -> {
-      Intent intent = new Intent(getContext(), EditProfileActivity.class);
+      Intent intent = new Intent(getContext(), EditUserProfileActivity.class);
       intent.putExtra(LOCATION_INTENT, textViewLocation.getText().toString());
       intent.putExtra(COMPANY_INTENT, textViewCompany.getText().toString());
       intent.putExtra(JOB_TITLE_INTENT, textViewJobTitle.getText().toString());

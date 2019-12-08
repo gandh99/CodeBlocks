@@ -1,5 +1,6 @@
 from django.urls import path
 
+from authentication.view_classes.UserProfileView import UserProfileView
 from authentication.view_classes.InvitationResponseView import InvitationResponseView
 from authentication.view_classes.InvitationView import InvitationView
 from authentication.view_classes.MemberView import MemberView
@@ -10,6 +11,7 @@ from .views import register, login
 urlpatterns = [
     path('register', register),
     path('login', login),
+    path('user_profile', UserProfileView.as_view()),
     path('projects', ProjectView.as_view()),
     path('tasks', TaskView.as_view()),
     path('members', MemberView.as_view()),

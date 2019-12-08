@@ -10,13 +10,13 @@ import android.widget.Toast;
 
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.authentication.InputValidator;
+import com.gandh99.codeblocks.homePage.userProfile.api.UserProfileAPIService;
 
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
-import dagger.android.support.AndroidSupportInjection;
 
-public class EditProfileActivity extends AppCompatActivity {
+public class EditUserProfileActivity extends AppCompatActivity {
   public static final String LOCATION_INTENT = "location";
   public static final String COMPANY_INTENT = "company";
   public static final String JOB_TITLE_INTENT = "jobTitle";
@@ -33,10 +33,13 @@ public class EditProfileActivity extends AppCompatActivity {
   @Inject
   InputValidator inputValidator;
 
+  @Inject
+  UserProfileAPIService userProfileAPIService;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_edit_profile);
+    setContentView(R.layout.activity_edit_user_profile);
 
     initDagger();
     initToolbar();
@@ -99,6 +102,8 @@ public class EditProfileActivity extends AppCompatActivity {
         Toast.makeText(this, "Please enter all fields", Toast.LENGTH_SHORT).show();
         return;
       }
+
+      // TODO: Make API call
 
       Intent returnIntent = new Intent();
       returnIntent.putExtra(LOCATION_INTENT, location);

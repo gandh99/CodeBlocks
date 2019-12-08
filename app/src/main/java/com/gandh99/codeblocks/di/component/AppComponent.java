@@ -5,6 +5,7 @@ import android.app.Application;
 import com.gandh99.codeblocks.App;
 import com.gandh99.codeblocks.di.module.InvitationsModule;
 import com.gandh99.codeblocks.di.module.MemberModule;
+import com.gandh99.codeblocks.di.module.UserProfileModule;
 import com.gandh99.codeblocks.di.module.common.ActivityModule;
 import com.gandh99.codeblocks.di.module.common.AuthenticationModule;
 import com.gandh99.codeblocks.di.module.DashboardModule;
@@ -32,6 +33,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
     TaskModule.class,
     MemberModule.class,
     InvitationsModule.class,
+    UserProfileModule.class,
 
     MainActivityFragmentModule.class,
     HomeActivityFragmentModule.class,
