@@ -152,38 +152,14 @@ public class UserProfileFragment extends Fragment {
   @Override
   public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
     /*
-    * It is possible to simply replace this by making a call to loadProfile()
-    * However, that would put an unnecessary workload on the server, which is why it was left to
-    * the client to update the text views in the profile page
-    * */
-    if (requestCode == EDIT_PROFILE_REQUEST_CODE) {
-      if (resultCode == RESULT_OK) {
-        Intent intent = data;
-        Bitmap bitmapProfilePicture = intent.getParcelableExtra(PROFILE_PICTURE_INTENT);
-        String location = intent.getStringExtra(LOCATION_INTENT);
-        String company = intent.getStringExtra(COMPANY_INTENT);
-        String jobTitle = intent.getStringExtra(JOB_TITLE_INTENT);
-        String email = intent.getStringExtra(EMAIL_INTENT);
-        String website = intent.getStringExtra(WEBSITE_INTENT);
-        String personalMessage = intent.getStringExtra(PERSONAL_MESSAGE_INTENT);
-
-        // Round the bitmap and set the image view
-        RoundedBitmapDrawable roundedBitmapDrawable =
-          RoundedBitmapDrawableFactory.create(getResources(), bitmapProfilePicture);
-        roundedBitmapDrawable.setCircular(true);
-        roundedBitmapDrawable.setAntiAlias(true);
-        imageViewProfilePicture.setImageDrawable(roundedBitmapDrawable);
-
-        // Set the text views
-        textViewLocation.setText(location);
-        textViewCompany.setText(company);
-        textViewJobTitle.setText(jobTitle);
-        textViewEmail.setText(email);
-        textViewWebsite.setText(website);
-        textViewPersonalMessage.setText(personalMessage);
-
-        Toast.makeText(getContext(), "Successfully updated profile", Toast.LENGTH_SHORT).show();
-      }
+     * It is possible to simply replace this by making a call to loadProfile()
+     * However, that would put an unnecessary workload on the server, which is why it was left to
+     * the client to update the text views in the profile page
+     * */
+    if (requestCode == EDIT_PROFILE_REQUEST_CODE && resultCode == RESULT_OK) {
+      loadProfile();
+      Toast.makeText(getContext(), "Successfully updated profile", Toast.LENGTH_SHORT).show();
     }
   }
+
 }

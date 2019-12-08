@@ -200,13 +200,6 @@ public class EditUserProfileActivity extends AppCompatActivity {
         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
           if (response.isSuccessful()) {
             Intent returnIntent = new Intent();
-            returnIntent.putExtra(PROFILE_PICTURE_INTENT, bitmapProfilePicture);
-            returnIntent.putExtra(LOCATION_INTENT, location);
-            returnIntent.putExtra(COMPANY_INTENT, company);
-            returnIntent.putExtra(JOB_TITLE_INTENT, jobTitle);
-            returnIntent.putExtra(EMAIL_INTENT, email);
-            returnIntent.putExtra(WEBSITE_INTENT, website);
-            returnIntent.putExtra(PERSONAL_MESSAGE_INTENT, personalMessage);
             setResult(RESULT_OK, returnIntent);
             finish();
           }
