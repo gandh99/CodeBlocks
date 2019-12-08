@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:isScrollContainer="false"
     android:fillViewport="false"
-    tools:context=".homePage.userProfile.UserProfileFragment">
+    tools:context=".homePage.userProfile.fragment.UserProfileFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,58 +35,65 @@
             />
 
         <TextView
+            android:id="@+id/textView_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_location_city_blue"
-            android:text="Location"
+            android:text="@string/location"
             style="@style/UserProfileCompoundDrawable"
             />
 
         <TextView
+            android:id="@+id/textView_company"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_business_blue"
-            android:text="Company"
+            android:text="@string/company"
             style="@style/UserProfileCompoundDrawable"
             />
 
         <TextView
+            android:id="@+id/textView_job_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_work_blue"
-            android:text="Job Title"
+            android:text="@string/job_title"
             style="@style/UserProfileCompoundDrawable"
             />
 
         <TextView
+            android:id="@+id/textView_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_email_blue"
-            android:text="example_mail@hotmail.com"
+            android:text="@string/email"
             style="@style/UserProfileCompoundDrawable"
             />
 
         <TextView
+            android:id="@+id/textView_website"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_web_blue"
-            android:text="www.github.com/usersname"
+            android:text="@string/github_personal_website"
             style="@style/UserProfileCompoundDrawable"
             />
 
         <TextView
+            android:id="@+id/textView_personal_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_message_blue"
-            android:text="Personal message. Hello, I am a passionate developer! I am proficient in many languages"
+            android:text="@string/personal_message"
             style="@style/UserProfileCompoundDrawable"
             />
 
         <Button
+            android:id="@+id/button_edit_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
-            android:text="Edit Profile"
+            android:text="@string/edit_profile"
             style="@style/CreateButton"
             />
 

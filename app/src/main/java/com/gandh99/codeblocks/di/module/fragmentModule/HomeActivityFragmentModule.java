@@ -3,7 +3,7 @@ package com.gandh99.codeblocks.di.module.fragmentModule;
 import com.gandh99.codeblocks.homePage.dashboard.AddProjectDialog;
 import com.gandh99.codeblocks.homePage.dashboard.fragment.DashboardFragment;
 import com.gandh99.codeblocks.homePage.invitations.fragment.InvitationsFragment;
-import com.gandh99.codeblocks.homePage.userProfile.UserProfileFragment;
+import com.gandh99.codeblocks.homePage.userProfile.fragment.UserProfileFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

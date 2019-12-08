@@ -5,6 +5,7 @@ import com.gandh99.codeblocks.di.module.fragmentModule.MainActivityFragmentModul
 import com.gandh99.codeblocks.di.module.fragmentModule.ProjectActivityFragmentModule;
 import com.gandh99.codeblocks.homePage.activity.HomeActivity;
 import com.gandh99.codeblocks.authentication.activity.MainActivity;
+import com.gandh99.codeblocks.homePage.userProfile.activity.EditProfileActivity;
 import com.gandh99.codeblocks.projectPage.ProjectActivity;
 import com.gandh99.codeblocks.projectPage.tasks.NewTaskActivity;
 
@@ -24,4 +25,7 @@ public abstract class ActivityModule {
 
   @ContributesAndroidInjector
   abstract NewTaskActivity contributeNewTaskActivity();
+
+  @ContributesAndroidInjector
+  abstract EditProfileActivity contributeEditProfileActivity();
 }

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:isScrollContainer="false"
+    android:fillViewport="false"
+    tools:context=".homePage.userProfile.activity.EditProfileActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginVertical="32dp"
+        android:layout_marginHorizontal="32dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        >
+
+        <ImageView
+            android:id="@+id/imageView_profile_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_account_circle_blue"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="@string/username"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInput_profile_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/TextInputLayout"
+            style="@style/TextInputLayoutStyle"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText_profile_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="0dp"
+                android:maxLines="1"
+                android:hint="@string/location"
+                style="@style/TextInputEditTextCreate"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInput_profile_company"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/TextInputLayout"
+            style="@style/TextInputLayoutStyle"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText_profile_company"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="0dp"
+                android:maxLines="3"
+                android:hint="@string/company"
+                style="@style/TextInputEditTextCreate"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInput_profile_job_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/TextInputLayout"
+            style="@style/TextInputLayoutStyle"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText_profile_job_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="0dp"
+                android:maxLines="3"
+                android:hint="@string/job_title"
+                style="@style/TextInputEditTextCreate"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInput_profile_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/TextInputLayout"
+            style="@style/TextInputLayoutStyle"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText_profile_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="0dp"
+                android:maxLines="3"
+                android:hint="@string/email"
+                style="@style/TextInputEditTextCreate"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInput_profile_website"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/TextInputLayout"
+            style="@style/TextInputLayoutStyle"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText_profile_website"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="0dp"
+                android:maxLines="3"
+                android:hint="@string/github_personal_website"
+                style="@style/TextInputEditTextCreate"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInput_profile_personal_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/TextInputLayout"
+            style="@style/TextInputLayoutStyle"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editText_profile_personal_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="0dp"
+                android:maxLines="3"
+                android:hint="@string/personal_message"
+                style="@style/TextInputEditTextCreate"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/button_save_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:text="@string/save_profile"
+            style="@style/CreateButton"
+            />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
+
+
