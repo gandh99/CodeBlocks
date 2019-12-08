@@ -25,13 +25,16 @@
             />
 
         <TextView
+            android:id="@+id/textView_edit_picture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold"
-            android:text="@string/username"
+            android:textColor="@color/colorPrimary"
+            android:drawablePadding="4dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/change_picture"
+            android:drawableLeft="@drawable/ic_create_blue_24dp"
             />
 
         <com.google.android.material.textfield.TextInputLayout

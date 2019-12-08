@@ -2,9 +2,13 @@ package com.gandh99.codeblocks.homePage.userProfile.fragment;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -12,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +39,7 @@ import static com.gandh99.codeblocks.homePage.userProfile.activity.EditUserProfi
 import static com.gandh99.codeblocks.homePage.userProfile.activity.EditUserProfileActivity.JOB_TITLE_INTENT;
 import static com.gandh99.codeblocks.homePage.userProfile.activity.EditUserProfileActivity.LOCATION_INTENT;
 import static com.gandh99.codeblocks.homePage.userProfile.activity.EditUserProfileActivity.PERSONAL_MESSAGE_INTENT;
+import static com.gandh99.codeblocks.homePage.userProfile.activity.EditUserProfileActivity.PROFILE_PICTURE_INTENT;
 import static com.gandh99.codeblocks.homePage.userProfile.activity.EditUserProfileActivity.WEBSITE_INTENT;
 
 /**
@@ -41,6 +47,7 @@ import static com.gandh99.codeblocks.homePage.userProfile.activity.EditUserProfi
  */
 public class UserProfileFragment extends Fragment {
   private static final String TAG = "UserProfileFragment";
+  private ImageView imageViewProfilePicture;
   private TextView textViewLocation, textViewCompany, textViewJobTitle, textViewEmail,
     textViewWebsite, textViewPersonalMessage;
   private Button buttonEditProfile;
@@ -61,6 +68,7 @@ public class UserProfileFragment extends Fragment {
 
     // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
+    imageViewProfilePicture = view.findViewById(R.id.imageView_profile_picture);
     textViewLocation = view.findViewById(R.id.textView_location);
     textViewCompany = view.findViewById(R.id.textView_company);
     textViewJobTitle = view.findViewById(R.id.textView_job_title);
@@ -93,6 +101,8 @@ public class UserProfileFragment extends Fragment {
           String personalMessage = userProfile.getPersonalMessage().equals("")
             ? "Personal Message" : userProfile.getPersonalMessage();
 
+          // TODO: Set bitmap from the profile picture
+
           textViewLocation.setText(location);
           textViewCompany.setText(company);
           textViewJobTitle.setText(jobTitle);
@@ -112,6 +122,13 @@ public class UserProfileFragment extends Fragment {
   private void initEditProfileButton() {
     buttonEditProfile.setOnClickListener(view -> {
       Intent intent = new Intent(getContext(), EditUserProfileActivity.class);
+
+      // Convert imageView into a bitmap
+//      RoundedBitmapDrawable drawable = (RoundedBitmapDrawable) imageViewProfilePicture.getDrawable();
+//      Bitmap bitmapProfilePicture = drawable.getBitmap();
+
+      // Set the intent and start the activity
+//      intent.putExtra(PROFILE_PICTURE_INTENT, bitmapProfilePicture);
       intent.putExtra(LOCATION_INTENT, textViewLocation.getText().toString());
       intent.putExtra(COMPANY_INTENT, textViewCompany.getText().toString());
       intent.putExtra(JOB_TITLE_INTENT, textViewJobTitle.getText().toString());
@@ -124,9 +141,15 @@ public class UserProfileFragment extends Fragment {
 
   @Override
   public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    /*
+    * It is possible to simply replace this by making a call to loadProfile()
+    * However, that would put an unnecessary workload on the server, which is why it was left to
+    * the client to update the text views in the profile page
+    * */
     if (requestCode == EDIT_PROFILE_REQUEST_CODE) {
       if (resultCode == RESULT_OK) {
         Intent intent = data;
+        Bitmap bitmapProfilePicture = intent.getParcelableExtra(PROFILE_PICTURE_INTENT);
         String location = intent.getStringExtra(LOCATION_INTENT);
         String company = intent.getStringExtra(COMPANY_INTENT);
         String jobTitle = intent.getStringExtra(JOB_TITLE_INTENT);
@@ -134,6 +157,14 @@ public class UserProfileFragment extends Fragment {
         String website = intent.getStringExtra(WEBSITE_INTENT);
         String personalMessage = intent.getStringExtra(PERSONAL_MESSAGE_INTENT);
 
+        // Round the bitmap and set the image view
+        RoundedBitmapDrawable roundedBitmapDrawable =
+          RoundedBitmapDrawableFactory.create(getResources(), bitmapProfilePicture);
+        roundedBitmapDrawable.setCircular(true);
+        roundedBitmapDrawable.setAntiAlias(true);
+        imageViewProfilePicture.setImageDrawable(roundedBitmapDrawable);
+
+        // Set the text views
         textViewLocation.setText(location);
         textViewCompany.setText(company);
         textViewJobTitle.setText(jobTitle);
