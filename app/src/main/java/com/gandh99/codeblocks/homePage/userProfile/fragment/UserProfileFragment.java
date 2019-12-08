@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gandh99.codeblocks.R;
+import com.gandh99.codeblocks.common.Base64EncoderDecoder;
 import com.gandh99.codeblocks.homePage.userProfile.activity.EditUserProfileActivity;
 import com.gandh99.codeblocks.homePage.userProfile.api.UserProfile;
 import com.gandh99.codeblocks.homePage.userProfile.api.UserProfileAPIService;
@@ -105,12 +106,8 @@ public class UserProfileFragment extends Fragment {
             ? "Personal Message" : userProfile.getPersonalMessage();
 
           // Decode the base64 string into a bitmap. Then, convert the bitmap into a RoundedBitmapDrawable
-          byte[] decodedString = Base64.decode(profilePictureString, Base64.DEFAULT);
-          Bitmap profilePicture = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
           RoundedBitmapDrawable roundedBitmapDrawable =
-            RoundedBitmapDrawableFactory.create(getResources(), profilePicture);
-          roundedBitmapDrawable.setCircular(true);
-          roundedBitmapDrawable.setAntiAlias(true);
+            Base64EncoderDecoder.toRoundedBitmapDrawable(getResources(), profilePictureString);
 
           imageViewProfilePicture.setImageDrawable(roundedBitmapDrawable);
           textViewLocation.setText(location);

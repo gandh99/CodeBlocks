@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.authentication.InputValidator;
+import com.gandh99.codeblocks.common.Base64EncoderDecoder;
 import com.gandh99.codeblocks.homePage.userProfile.api.UserProfileAPIService;
 
 import java.io.ByteArrayOutputStream;
@@ -169,10 +170,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
       // Get bitmap from image view. Then, convert the bitmap into a base64 string
       RoundedBitmapDrawable drawable = (RoundedBitmapDrawable) imageViewProfilePicture.getDrawable();
       bitmapProfilePicture = drawable.getBitmap();
-      ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-      bitmapProfilePicture.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-      byte[] imgByte = byteArrayOutputStream.toByteArray();
-      String bitmapString = Base64.encodeToString(imgByte,Base64.DEFAULT);
+      String bitmapString = Base64EncoderDecoder.toBase64String(bitmapProfilePicture);
 
       // Get the rest of the data from the edit text
       location = editTextLocation.getText().toString();
