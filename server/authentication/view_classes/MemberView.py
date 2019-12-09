@@ -1,3 +1,5 @@
+import base64
+
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -25,5 +27,12 @@ class MemberView(ListAPIView, JSONEncoder):
         return Response(json_data, status=HTTP_200_OK)
 
     def encode(self, o):
-        d = {'username': o.user_profile.username, 'rank': o.rank}
-        return d
+        try:
+            png_profile_picture = o.user_profile.profile_picture
+            picture_image_base64 = base64.b64encode(png_profile_picture.read())
+        except ValueError:
+            picture_image_base64 = ""
+        finally:
+            # Encode the image file as a base64 string
+            d = {'username': o.user_profile.username, 'profilePicture': picture_image_base64, 'rank': o.rank}
+            return d

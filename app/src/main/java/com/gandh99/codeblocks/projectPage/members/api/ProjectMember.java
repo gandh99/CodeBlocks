@@ -10,12 +10,16 @@ public class ProjectMember {
   @SerializedName("username")
   private final String username;
 
+  @SerializedName("profilePicture")
+  private final String profilePicture;
+
   @SerializedName("rank")
   private final String rank;
 
-  public ProjectMember(int pk, String username, String rank) {
+  public ProjectMember(int pk, String username, String profilePicture, String rank) {
     this.pk = pk;
     this.username = username;
+    this.profilePicture = profilePicture;
     this.rank = rank;
   }
 
@@ -25,6 +29,10 @@ public class ProjectMember {
 
   public String getUsername() {
     return username;
+  }
+
+  public String getProfilePicture() {
+    return profilePicture;
   }
 
   public String getRank() {

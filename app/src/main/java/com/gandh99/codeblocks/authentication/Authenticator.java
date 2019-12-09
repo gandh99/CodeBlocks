@@ -42,10 +42,11 @@ public class Authenticator {
       return;
     }
 
+    // TODO: Reinstate this
     // Encrypt password
-    String encryptedPassword = Encryptor.hash512(password);
+//    String encryptedPassword = Encryptor.hash512(password);
 
-    authAPIService.registerUser(username, encryptedPassword).enqueue(new Callback<User>() {
+    authAPIService.registerUser(username, password).enqueue(new Callback<User>() {
       @Override
       public void onResponse(Call<User> call, Response<User> response) {
         if (response.isSuccessful()) {
@@ -74,6 +75,9 @@ public class Authenticator {
         Toast.LENGTH_SHORT).show();
       return;
     }
+
+    //TODO: Reinstate encryption
+//    String encryptedPassword = Encryptor.hash512(password);
 
     authAPIService.loginUser(username, password).enqueue(new Callback<SessionToken>() {
       @Override

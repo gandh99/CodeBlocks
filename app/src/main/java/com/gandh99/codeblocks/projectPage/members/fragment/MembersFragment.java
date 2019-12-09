@@ -62,6 +62,9 @@ public class MembersFragment extends Fragment {
     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     recyclerView.setAdapter(memberListAdapter);
 
+    // Give the adapter the resources so that it can help set the profile picture of the user
+    memberListAdapter.setResources(getResources());
+
     // Add member button
     initFloatingActionButton();
 
