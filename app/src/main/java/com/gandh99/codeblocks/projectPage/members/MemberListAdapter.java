@@ -56,9 +56,13 @@ public class MemberListAdapter extends ListAdapter<ProjectMember, MemberListAdap
 
     // Set the profile picture of each member
     String base64String = projectMember.getProfilePicture();
-    RoundedBitmapDrawable drawable =
-      Base64EncoderDecoder.toRoundedBitmapDrawable(resources, base64String);
-    holder.imageViewProfilePicture.setImageDrawable(drawable);
+    if (base64String.equals("")) {
+      holder.imageViewProfilePicture.setImageResource(R.drawable.ic_account_circle_blue_60dp);
+    } else {
+      RoundedBitmapDrawable drawable =
+        Base64EncoderDecoder.toRoundedBitmapDrawable(resources, base64String);
+      holder.imageViewProfilePicture.setImageDrawable(drawable);
+    }
   }
 
   class MemberViewHolder extends RecyclerView.ViewHolder {
