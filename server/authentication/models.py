@@ -47,6 +47,19 @@ class Task(models.Model):
     date_created = models.DateField(auto_now=False, auto_created=True)
     deadline = models.DateField(auto_now=False, auto_created=True)
 
+    NONE = 'NONE'
+    LOW = 'LOW'
+    MEDIUM = 'MEDIUM'
+    HIGH = 'HIGH'
+    PRIORITY_CHOICES = [
+        (NONE, 'NONE'),
+        (LOW, 'LOW'),
+        (MEDIUM, 'MEDIUM'),
+        (HIGH, 'HIGH'),
+    ]
+
+    priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default=NONE)
+
     def __str__(self):
         return self.title
 

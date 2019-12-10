@@ -34,10 +34,11 @@ class TaskView(ListAPIView, CreateAPIView, JSONEncoder):
         description = request.data.get("description")
         date_created = request.data.get("dateCreated")
         deadline = request.data.get("deadline")
+        priority = request.data.get("priority")
 
-        # Create a new task
+    # Create a new task
         task = Task(project_group=project_group, title=title, description=description,
-                    date_created=date_created, deadline=deadline)
+                    date_created=date_created, deadline=deadline, priority=priority)
         task.save()
 
         response = {"Response": "Success"}
@@ -45,5 +46,5 @@ class TaskView(ListAPIView, CreateAPIView, JSONEncoder):
 
     def encode(self, o):
         d = {'id': o.pk, 'title': o.title, 'description': o.description, 'dateCreated': o.date_created,
-             'deadline': o.deadline}
+             'deadline': o.deadline, 'priority': o.priority}
         return d

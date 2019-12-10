@@ -70,9 +70,10 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
   }
 
   private void initPrioritySpinner() {
-    String[] priority = prioritySpinnerAdapter.getPriorities();
     prioritySpinnerAdapter = new PrioritySpinnerAdapter(getApplicationContext());
     prioritySpinner.setAdapter(prioritySpinnerAdapter);
+
+    String[] priority = prioritySpinnerAdapter.getPriorities();
     prioritySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
       @Override
       public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {

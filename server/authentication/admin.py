@@ -33,10 +33,11 @@ class ProjectGroupMemberAdmin(admin.ModelAdmin):
 
 
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ('project_group', 'title', 'description', 'date_created', 'deadline')
+    list_display = ('project_group', 'title', 'description', 'date_created', 'deadline', 'priority')
     fieldsets = [
         (None,               {'fields': ['project_group']}),
-        ('Other information', {'fields': ['title', 'description', 'date_created', 'deadline'], 'classes': ['collapse']}),
+        ('Other information', {'fields': ['title', 'description', 'date_created', 'deadline', 'priority'],
+                               'classes': ['collapse']}),
     ]
 
 

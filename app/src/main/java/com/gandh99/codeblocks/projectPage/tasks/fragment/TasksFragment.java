@@ -142,9 +142,9 @@ public class TasksFragment extends Fragment {
         String taskDescription = data.getStringExtra(NewTaskActivity.INTENT_TASK_DESCRIPTION);
         String taskDateCreated = getCurrentDate();
         String taskDeadline = data.getStringExtra(NewTaskActivity.INTENT_TASK_DEADLINE);
-        String priority = data.getStringExtra(NewTaskActivity.INTENT_TASK_PRIORITY);
+        String taskPriority = data.getStringExtra(NewTaskActivity.INTENT_TASK_PRIORITY);
 
-        taskAPIService.createTask(taskTitle, taskDescription, taskDateCreated, taskDeadline, priority)
+        taskAPIService.createTask(taskTitle, taskDescription, taskDateCreated, taskDeadline, taskPriority)
           .enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
