@@ -37,4 +37,11 @@
         <item>ADMIN</item>
         <item>MEMBER</item>
     </string-array>
+
+    <string-array name="priority">
+        <item>NONE</item>
+        <item>LOW</item>
+        <item>MEDIUM</item>
+        <item>HIGH</item>
+    </string-array>
 </resources>

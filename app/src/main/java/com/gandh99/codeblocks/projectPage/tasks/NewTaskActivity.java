@@ -12,11 +12,13 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.authentication.InputValidator;
 import com.gandh99.codeblocks.projectPage.tasks.api.TaskAPIService;
+import com.gandh99.codeblocks.projectPage.tasks.prioritySpinner.PrioritySpinnerAdapter;
 
 import javax.inject.Inject;
 
@@ -31,6 +33,8 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
   private DatePickerDialog datePickerDialog;
   private ImageView buttonDatePicker;
   private EditText editTextTaskTitle, editTextTaskDescription, editTextTaskDeadline;
+  private Spinner prioritySpinner;
+  private PrioritySpinnerAdapter prioritySpinnerAdapter;
   private Button buttonCreateTask;
 
   @Inject
@@ -58,9 +62,16 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
         datePickerDialog.show();
       }
     });
+    prioritySpinner = findViewById(R.id.spinner_priority);
     buttonCreateTask = findViewById(R.id.button_create_task);
 
+    initPrioritySpinner();
     initCreateTaskButton();
+  }
+
+  private void initPrioritySpinner() {
+    prioritySpinnerAdapter = new PrioritySpinnerAdapter(getApplicationContext());
+    prioritySpinner.setAdapter(prioritySpinnerAdapter);
   }
 
   @Override
