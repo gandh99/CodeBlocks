@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -29,10 +30,12 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
   public static final String INTENT_TASK_TITLE = "taskTitle";
   public static final String INTENT_TASK_DESCRIPTION = "taskDescription";
   public static final String INTENT_TASK_DEADLINE = "taskDeadline";
+  public static final String INTENT_TASK_PRIORITY = "taskPriority";
 
   private DatePickerDialog datePickerDialog;
   private ImageView buttonDatePicker;
   private EditText editTextTaskTitle, editTextTaskDescription, editTextTaskDeadline;
+  private String selectedPriority;
   private Spinner prioritySpinner;
   private PrioritySpinnerAdapter prioritySpinnerAdapter;
   private Button buttonCreateTask;
@@ -40,6 +43,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
   @Inject
   InputValidator inputValidator;
 
+  @RequiresApi(api = Build.VERSION_CODES.N)
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -53,14 +57,10 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
     editTextTaskDescription = findViewById(R.id.editText_task_description);
     editTextTaskDeadline = findViewById(R.id.editText_task_deadline);
     buttonDatePicker = findViewById(R.id.button_date_picker);
-    buttonDatePicker.setOnClickListener(new View.OnClickListener() {
-      @RequiresApi(api = Build.VERSION_CODES.N)
-      @Override
-      public void onClick(View view) {
-        datePickerDialog = new DatePickerDialog(NewTaskActivity.this);
-        datePickerDialog.setOnDateSetListener(NewTaskActivity.this);
-        datePickerDialog.show();
-      }
+    buttonDatePicker.setOnClickListener(view -> {
+      datePickerDialog = new DatePickerDialog(NewTaskActivity.this);
+      datePickerDialog.setOnDateSetListener(NewTaskActivity.this);
+      datePickerDialog.show();
     });
     prioritySpinner = findViewById(R.id.spinner_priority);
     buttonCreateTask = findViewById(R.id.button_create_task);
@@ -70,8 +70,20 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
   }
 
   private void initPrioritySpinner() {
+    String[] priority = prioritySpinnerAdapter.getPriorities();
     prioritySpinnerAdapter = new PrioritySpinnerAdapter(getApplicationContext());
     prioritySpinner.setAdapter(prioritySpinnerAdapter);
+    prioritySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+      @Override
+      public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        selectedPriority = priority[i];
+      }
+
+      @Override
+      public void onNothingSelected(AdapterView<?> adapterView) {
+
+      }
+    });
   }
 
   @Override
@@ -91,28 +103,26 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
   }
 
   private void initCreateTaskButton() {
-    buttonCreateTask.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        String taskTitle = editTextTaskTitle.getText().toString();
-        String taskDescription = editTextTaskDescription.getText().toString();
-        String taskDeadline = editTextTaskDeadline.getText().toString();
+    buttonCreateTask.setOnClickListener(view -> {
+      String taskTitle = editTextTaskTitle.getText().toString();
+      String taskDescription = editTextTaskDescription.getText().toString();
+      String taskDeadline = editTextTaskDeadline.getText().toString();
 
-        if (inputValidator.isInvalidInput(taskTitle)
-          || inputValidator.isInvalidInput(taskDescription)
-          || inputValidator.isInvalidInput(taskDeadline)) {
-          Toast.makeText(NewTaskActivity.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
-          return;
-        }
-
-        // If input is valid, return the values
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra(INTENT_TASK_TITLE, taskTitle);
-        returnIntent.putExtra(INTENT_TASK_DESCRIPTION, taskDescription);
-        returnIntent.putExtra(INTENT_TASK_DEADLINE, taskDeadline);
-        setResult(RESULT_OK, returnIntent);
-        finish();
+      if (inputValidator.isInvalidInput(taskTitle)
+        || inputValidator.isInvalidInput(taskDescription)
+        || inputValidator.isInvalidInput(taskDeadline)) {
+        Toast.makeText(NewTaskActivity.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
+        return;
       }
+
+      // If input is valid, return the values
+      Intent returnIntent = new Intent();
+      returnIntent.putExtra(INTENT_TASK_TITLE, taskTitle);
+      returnIntent.putExtra(INTENT_TASK_DESCRIPTION, taskDescription);
+      returnIntent.putExtra(INTENT_TASK_DEADLINE, taskDeadline);
+      returnIntent.putExtra(INTENT_TASK_PRIORITY, selectedPriority);
+      setResult(RESULT_OK, returnIntent);
+      finish();
     });
 
   }

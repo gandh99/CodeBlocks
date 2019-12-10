@@ -20,6 +20,7 @@ public interface TaskAPIService {
     @Field("title") String title,
     @Field("description") String description,
     @Field("dateCreated") String dateCreated,
-    @Field("deadline") String deadline
+    @Field("deadline") String deadline,
+    @Field("priority") String priority
   );
 }

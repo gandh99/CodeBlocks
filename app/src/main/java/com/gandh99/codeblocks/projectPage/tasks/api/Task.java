@@ -6,6 +6,7 @@ public class Task {
   private String description;
   private String dateCreated;
   private String deadline;
+  private String priority;
 
   public int getId() {
     return id;
@@ -27,4 +28,7 @@ public class Task {
     return deadline;
   }
 
+  public String getPriority() {
+    return priority;
+  }
 }

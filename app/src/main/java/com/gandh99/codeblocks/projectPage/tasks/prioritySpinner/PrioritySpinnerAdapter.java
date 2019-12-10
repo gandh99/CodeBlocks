@@ -64,6 +64,10 @@ public class PrioritySpinnerAdapter extends ArrayAdapter {
     return getView(position, convertView, parent);
   }
 
+  public String[] getPriorities() {
+    return priority;
+  }
+
   class PrioritySpinnerViewHolder {
     ImageView imageViewColour;
     TextView textViewPriority;
