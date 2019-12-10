@@ -7,4 +7,5 @@
 <!--    <color name="colorAccent">#2EBAEE</color>-->
     <color name="colorGrey">#727272</color>
     <color name="colorBlack">#000000</color>
+    <color name="colorWhite">#ffffff</color>
 </resources>

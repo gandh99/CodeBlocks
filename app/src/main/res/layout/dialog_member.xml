@@ -19,28 +19,50 @@
             style="@style/DialogHeader"
             />
 
-        <EditText
-            android:id="@+id/dialog_member_username"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInput_member_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Username"
-            style="@style/DialogEditText"
-            />
+            android:theme="@style/TextInputLayout"
+            style="@style/TextInputLayoutStyle"
+            >
 
-        <EditText
-            android:id="@+id/dialog_member_rank"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/dialog_member_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:maxLines="1"
+                android:hint="@string/username"
+                style="@style/TextInputEditTextCreate"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInput_member_rank"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Rank"
-            style="@style/DialogEditText"
-            />
+            android:theme="@style/TextInputLayout"
+            style="@style/TextInputLayoutStyle"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/dialog_member_rank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:maxLines="1"
+                android:hint="Rank"
+                style="@style/TextInputEditTextCreate"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/dialog_member_invite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="15dp"
-            android:text="Invite User"
+            android:layout_marginVertical="28dp"
+            android:text="@string/invite_user"
             style="@style/DialogButton"
             />
 

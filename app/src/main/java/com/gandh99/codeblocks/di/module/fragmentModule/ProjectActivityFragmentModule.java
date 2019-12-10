@@ -3,7 +3,6 @@ package com.gandh99.codeblocks.di.module.fragmentModule;
 import com.gandh99.codeblocks.projectPage.issues.IssuesFragment;
 import com.gandh99.codeblocks.projectPage.members.AddMemberDialog;
 import com.gandh99.codeblocks.projectPage.members.fragment.MembersFragment;
-import com.gandh99.codeblocks.projectPage.tasks.AddTaskDialog;
 import com.gandh99.codeblocks.projectPage.tasks.SortTaskDialog;
 import com.gandh99.codeblocks.projectPage.tasks.fragment.TasksFragment;
 
@@ -21,9 +20,6 @@ public abstract class ProjectActivityFragmentModule {
 
   @ContributesAndroidInjector
   abstract MembersFragment contributeMembersFragment();
-
-  @ContributesAndroidInjector
-  abstract AddTaskDialog contributeAddTaskDialog();
 
   @ContributesAndroidInjector
   abstract AddMemberDialog contributeAddMemberDialog();

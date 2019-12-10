@@ -29,4 +29,6 @@
     <string name="edit_profile">Edit Profile</string>
     <string name="save_profile">Save Profile</string>
     <string name="change_picture">Change Picture</string>
+    <string name="short_description">Short Description</string>
+    <string name="invite_user">Invite User</string>
 </resources>
