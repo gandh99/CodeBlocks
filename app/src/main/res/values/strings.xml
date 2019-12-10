@@ -31,4 +31,10 @@
     <string name="change_picture">Change Picture</string>
     <string name="short_description">Short Description</string>
     <string name="invite_user">Invite User</string>
+    <string name="rank">Rank:</string>
+
+    <string-array name="rank">
+        <item>ADMIN</item>
+        <item>MEMBER</item>
+    </string-array>
 </resources>

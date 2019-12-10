@@ -5,8 +5,10 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,7 +31,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AddMemberDialog extends DialogFragment {
-  private EditText editTextUsername, editTextRank;
+  private EditText editTextUsername;
+  private Spinner spinnerRank;
   private Button buttonInviteUser;
   private MemberViewModel memberViewModel;
 
@@ -56,11 +59,12 @@ public class AddMemberDialog extends DialogFragment {
         .inflate(R.layout.dialog_member, null);
 
     editTextUsername = view.findViewById(R.id.dialog_member_username);
-    editTextRank = view.findViewById(R.id.dialog_member_rank);
+    spinnerRank = view.findViewById(R.id.dialog_member_rank);
     buttonInviteUser = view.findViewById(R.id.dialog_member_invite);
 
     initViewModel();
-    setupInviteButton();
+    initRankSpinner();
+    initInviteButton();
 
     return new AlertDialog.Builder(getActivity())
       .setView(view)
@@ -70,12 +74,20 @@ public class AddMemberDialog extends DialogFragment {
     memberViewModel = ViewModelProviders.of(this, viewModelFactory).get(MemberViewModel.class);
   }
 
-  private void setupInviteButton() {
+  private void initRankSpinner() {
+    ArrayAdapter<CharSequence> adapter =
+      ArrayAdapter.createFromResource(getContext(),
+        R.array.rank, android.R.layout.simple_spinner_item);
+    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    spinnerRank.setAdapter(adapter);
+  }
+
+  private void initInviteButton() {
     buttonInviteUser.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
         String username = editTextUsername.getText().toString();
-        String rank = editTextRank.getText().toString();
+        String rank = spinnerRank.getSelectedItem().toString();
 
         if (inputValidator.isInvalidInput(username)
           || inputValidator.isInvalidInput(rank)) {
