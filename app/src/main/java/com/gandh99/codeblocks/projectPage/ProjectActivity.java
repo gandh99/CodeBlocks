@@ -15,7 +15,7 @@ import com.gandh99.codeblocks.authentication.AuthenticationInterceptor;
 import com.gandh99.codeblocks.homePage.dashboard.api.Project;
 import com.gandh99.codeblocks.homePage.dashboard.fragment.DashboardFragment;
 import com.gandh99.codeblocks.homePage.TabsPagerAdapter;
-import com.gandh99.codeblocks.projectPage.issues.IssuesFragment;
+import com.gandh99.codeblocks.projectPage.completedTasks.CompletedTasksFragment;
 import com.gandh99.codeblocks.projectPage.members.fragment.MembersFragment;
 import com.gandh99.codeblocks.projectPage.tasks.fragment.TasksFragment;
 import com.google.android.material.tabs.TabLayout;
@@ -69,7 +69,7 @@ public class ProjectActivity extends AppCompatActivity {
     // Setup adapter
     tabsPagerAdapter = new TabsPagerAdapter(getSupportFragmentManager());
     tabsPagerAdapter.addFragment(new TasksFragment());
-    tabsPagerAdapter.addFragment(new IssuesFragment());
+    tabsPagerAdapter.addFragment(new CompletedTasksFragment());
     tabsPagerAdapter.addFragment(new MembersFragment());
 
     viewPager.setAdapter(tabsPagerAdapter);
@@ -78,8 +78,9 @@ public class ProjectActivity extends AppCompatActivity {
 
   @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
   private void createTabs() {
-    String[] tabNames = new String[] {"Tasks", "Issues", "Members"};
-    int[] tabIcons = new int[] {R.drawable.ic_task_white, R.drawable.ic_bug_white, R.drawable.ic_members_white};
+    String[] tabNames = new String[] {"Tasks", "Completed", "Members"};
+    int[] tabIcons = new int[] {R.drawable.ic_task_white, R.drawable.ic_task_completed_white_24dp,
+      R.drawable.ic_members_white};
 
     for (int i = 0; i < tabNames.length; i++) {
       TextView textViewTab = (TextView) LayoutInflater.from(this).inflate(R.layout.home_tab, null);

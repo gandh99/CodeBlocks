@@ -1,6 +1,6 @@
 package com.gandh99.codeblocks.di.module.fragmentModule;
 
-import com.gandh99.codeblocks.projectPage.issues.IssuesFragment;
+import com.gandh99.codeblocks.projectPage.completedTasks.CompletedTasksFragment;
 import com.gandh99.codeblocks.projectPage.members.AddMemberDialog;
 import com.gandh99.codeblocks.projectPage.members.fragment.MembersFragment;
 import com.gandh99.codeblocks.projectPage.tasks.SortTaskDialog;
@@ -16,7 +16,7 @@ public abstract class ProjectActivityFragmentModule {
   abstract TasksFragment contributeTasksFragment();
 
   @ContributesAndroidInjector
-  abstract IssuesFragment contributeIssuesFragment();
+  abstract CompletedTasksFragment contributeIssuesFragment();
 
   @ContributesAndroidInjector
   abstract MembersFragment contributeMembersFragment();
