@@ -1,6 +1,7 @@
 package com.gandh99.codeblocks.projectPage.members.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.projectPage.members.AddMemberDialog;
 import com.gandh99.codeblocks.projectPage.members.MemberListAdapter;
+import com.gandh99.codeblocks.projectPage.members.activity.ViewProfileActivity;
 import com.gandh99.codeblocks.projectPage.members.api.ProjectMember;
 import com.gandh99.codeblocks.projectPage.members.viewModel.MemberViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -71,6 +73,9 @@ public class MembersFragment extends Fragment {
     // Setup viewModel
     initViewModel();
 
+    // Allow user profiles to be viewed with a tap
+    initProfileViewer();
+
     return view;
   }
 
@@ -96,6 +101,21 @@ public class MembersFragment extends Fragment {
       public void onChanged(List<ProjectMember> projectMembers) {
         memberListAdapter.submitList(projectMembers);
       }
+    });
+  }
+
+  private void initProfileViewer() {
+    memberListAdapter.setOnMemberSelectedListener(projectMember -> {
+      Intent intent = new Intent(getContext(), ViewProfileActivity.class);
+      intent.putExtra(ViewProfileActivity.USERNAME_INTENT, projectMember.getUsername());
+      intent.putExtra(ViewProfileActivity.PROFILE_PICTURE_INTENT, projectMember.getProfilePicture());
+      intent.putExtra(ViewProfileActivity.LOCATION_INTENT, projectMember.getLocation());
+      intent.putExtra(ViewProfileActivity.COMPANY_INTENT, projectMember.getCompany());
+      intent.putExtra(ViewProfileActivity.JOB_TITLE_INTENT, projectMember.getJobTitle());
+      intent.putExtra(ViewProfileActivity.EMAIL_INTENT, projectMember.getEmail());
+      intent.putExtra(ViewProfileActivity.WEBSITE_INTENT, projectMember.getWebsite());
+      intent.putExtra(ViewProfileActivity.PERSONAL_MESSAGE_INTENT, projectMember.getPersonalMessage());
+      startActivity(intent);
     });
   }
 

@@ -34,5 +34,9 @@ class MemberView(ListAPIView, JSONEncoder):
             picture_image_base64 = ""
         finally:
             # Encode the image file as a base64 string
-            d = {'username': o.user_profile.username, 'profilePicture': picture_image_base64, 'rank': o.rank}
+            user_profile = o.user_profile
+            d = {'username': user_profile.username, 'profilePicture': picture_image_base64, 'rank': o.rank,
+                 'location': user_profile.location, 'company': user_profile.company, 'jobTitle': user_profile.job_title,
+                 'email': user_profile.email, 'website': user_profile.website,
+                 'personalMessage': user_profile.personal_message}
             return d

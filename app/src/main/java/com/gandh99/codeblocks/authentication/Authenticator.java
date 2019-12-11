@@ -42,11 +42,8 @@ public class Authenticator {
       return;
     }
 
-    // TODO: Reinstate this
-    // Encrypt password
-//    String encryptedPassword = Encryptor.hash512(password);
-
-    authAPIService.registerUser(username, password).enqueue(new Callback<User>() {
+    String encryptedPassword = Encryptor.hash512(password);
+    authAPIService.registerUser(username, encryptedPassword).enqueue(new Callback<User>() {
       @Override
       public void onResponse(Call<User> call, Response<User> response) {
         if (response.isSuccessful()) {
@@ -76,10 +73,8 @@ public class Authenticator {
       return;
     }
 
-    //TODO: Reinstate encryption
-//    String encryptedPassword = Encryptor.hash512(password);
-
-    authAPIService.loginUser(username, password).enqueue(new Callback<SessionToken>() {
+    String encryptedPassword = Encryptor.hash512(password);
+    authAPIService.loginUser(username, encryptedPassword).enqueue(new Callback<SessionToken>() {
       @Override
       public void onResponse(Call<SessionToken> call, Response<SessionToken> response) {
         if (response.isSuccessful()) {

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".projectPage.members.activity.ViewProfileActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginVertical="48dp"
+        android:layout_marginHorizontal="60dp"
+        android:orientation="vertical"
+        >
+
+        <ImageView
+            android:id="@+id/member_imageView_profile_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_account_circle_blue_108dp"
+            />
+
+        <TextView
+            android:id="@+id/member_textView_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="@string/username"
+            />
+
+        <TextView
+            android:id="@+id/member_textView_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_location_city_blue"
+            android:text="@string/location"
+            style="@style/UserProfileCompoundDrawable"
+            />
+
+        <TextView
+            android:id="@+id/member_textView_company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_business_blue"
+            android:text="@string/company"
+            style="@style/UserProfileCompoundDrawable"
+            />
+
+        <TextView
+            android:id="@+id/member_textView_job_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_work_blue"
+            android:text="@string/job_title"
+            style="@style/UserProfileCompoundDrawable"
+            />
+
+        <TextView
+            android:id="@+id/member_textView_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_email_blue"
+            android:text="@string/email"
+            style="@style/UserProfileCompoundDrawable"
+            />
+
+        <TextView
+            android:id="@+id/member_textView_website"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_web_blue"
+            android:text="@string/github_personal_website"
+            style="@style/UserProfileCompoundDrawable"
+            />
+
+        <TextView
+            android:id="@+id/member_textView_personal_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_message_blue"
+            android:text="@string/personal_message"
+            style="@style/UserProfileCompoundDrawable"
+            />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

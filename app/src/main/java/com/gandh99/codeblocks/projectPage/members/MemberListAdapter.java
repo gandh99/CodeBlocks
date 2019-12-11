@@ -19,6 +19,7 @@ import com.gandh99.codeblocks.projectPage.members.api.ProjectMember;
 
 public class MemberListAdapter extends ListAdapter<ProjectMember, MemberListAdapter.MemberViewHolder> {
   private Resources resources;
+  private OnMemberSelectedListener onMemberSelectedListener;
 
   public MemberListAdapter() {
     super(DIFF_CALLBACK);
@@ -75,10 +76,27 @@ public class MemberListAdapter extends ListAdapter<ProjectMember, MemberListAdap
       imageViewProfilePicture = itemView.findViewById(R.id.imageView_member_profile_picture);
       textViewUsername = itemView.findViewById(R.id.list_item_member_username);
       textViewRank = itemView.findViewById(R.id.list_item_member_rank);
+
+      itemView.setOnClickListener(view -> {
+        int position = getAdapterPosition();
+
+        if (onMemberSelectedListener != null && position != RecyclerView.NO_POSITION) {
+          onMemberSelectedListener.setOnMemberSelectedListener(getItem(position));
+        }
+      });
     }
   }
 
   public void setResources(Resources resources) {
     this.resources = resources;
   }
+
+  public interface OnMemberSelectedListener {
+    void setOnMemberSelectedListener(ProjectMember projectMember);
+  }
+
+  public void setOnMemberSelectedListener(OnMemberSelectedListener listener) {
+    this.onMemberSelectedListener = listener;
+  }
+
 }

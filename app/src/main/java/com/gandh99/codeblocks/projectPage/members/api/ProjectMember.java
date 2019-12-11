@@ -16,11 +16,37 @@ public class ProjectMember {
   @SerializedName("rank")
   private final String rank;
 
-  public ProjectMember(int pk, String username, String profilePicture, String rank) {
+  @SerializedName("location")
+  private final String location;
+
+  @SerializedName("company")
+  private final String company;
+
+  @SerializedName("jobTitle")
+  private final String jobTitle;
+
+  @SerializedName("email")
+  private final String email;
+
+  @SerializedName("website")
+  private final String website;
+
+  @SerializedName("personalMessage")
+  private final String personalMessage;
+
+  public ProjectMember(int pk, String username, String profilePicture, String rank, String location,
+                       String company, String jobTitle, String email, String website,
+                       String personalMessage) {
     this.pk = pk;
     this.username = username;
     this.profilePicture = profilePicture;
     this.rank = rank;
+    this.location = location;
+    this.company = company;
+    this.jobTitle = jobTitle;
+    this.email = email;
+    this.website = website;
+    this.personalMessage = personalMessage;
   }
 
   public int getPk() {
@@ -37,5 +63,29 @@ public class ProjectMember {
 
   public String getRank() {
     return rank;
+  }
+
+  public String getLocation() {
+    return location;
+  }
+
+  public String getCompany() {
+    return company;
+  }
+
+  public String getJobTitle() {
+    return jobTitle;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public String getWebsite() {
+    return website;
+  }
+
+  public String getPersonalMessage() {
+    return personalMessage;
   }
 }
