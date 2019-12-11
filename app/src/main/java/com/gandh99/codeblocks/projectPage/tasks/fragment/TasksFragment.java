@@ -92,6 +92,7 @@ public class TasksFragment extends Fragment {
     // Setup recyclerView
     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     recyclerView.setAdapter(taskAdapter);
+    taskAdapter.setPriorityTypes(getResources());
 
     initFloatingActionButton();
     initSortButton();

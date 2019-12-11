@@ -1,5 +1,6 @@
 package com.gandh99.codeblocks.projectPage.tasks;
 
+import android.content.res.Resources;
 import android.nfc.FormatException;
 import android.os.Build;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gandh99.codeblocks.R;
@@ -19,11 +21,14 @@ import com.gandh99.codeblocks.common.dateFormatting.DatePortion;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
   private static final String TAG = "TaskAdapter";
   private List<Task> taskList = new ArrayList<>();
+  private Map<String, Integer> priorityMap = new HashMap<>();
 
   public TaskAdapter() {}
 
@@ -34,6 +39,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
       LayoutInflater
         .from(parent.getContext())
         .inflate(R.layout.list_item_task, parent, false);
+
+
 
     return new TaskViewHolder(view);
   }
@@ -54,6 +61,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
       return;
     }
 
+    holder.priorityColour.setBackgroundColor(priorityMap.get(task.getPriority()));
     holder.textViewTitle.setText(task.getTitle());
     holder.textViewDescription.setText(task.getDescription());
     holder.textViewDayCreated.setText(dayCreated);
@@ -73,12 +81,22 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
   public List<Task> getTaskList() { return taskList; }
 
+  public void setPriorityTypes(Resources resources) {
+    String[] priority = resources.getStringArray(R.array.priority);
+    priorityMap.put(priority[0], ResourcesCompat.getColor(resources, R.color.colorWhite, null));
+    priorityMap.put(priority[1], ResourcesCompat.getColor(resources, R.color.colorGreen, null));
+    priorityMap.put(priority[2], ResourcesCompat.getColor(resources, R.color.colorOrange, null));
+    priorityMap.put(priority[3], ResourcesCompat.getColor(resources, R.color.colorRed, null));
+  }
+
   class TaskViewHolder extends RecyclerView.ViewHolder {
+    View priorityColour;
     TextView textViewTitle, textViewDescription, textViewDayCreated, textViewMonthCreated, textViewDeadlineCountdown;
 
     TaskViewHolder(@NonNull View itemView) {
       super(itemView);
 
+      priorityColour = itemView.findViewById(R.id.priority_colour);
       textViewTitle = itemView.findViewById(R.id.list_item_task_title);
       textViewDescription = itemView.findViewById(R.id.list_item_task_description);
       textViewDayCreated = itemView.findViewById(R.id.list_item_task_day_created);
