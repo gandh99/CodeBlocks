@@ -3,6 +3,7 @@ package com.gandh99.codeblocks.di.component;
 import android.app.Application;
 
 import com.gandh99.codeblocks.App;
+import com.gandh99.codeblocks.di.module.CompletedTaskModule;
 import com.gandh99.codeblocks.di.module.InvitationsModule;
 import com.gandh99.codeblocks.di.module.MemberModule;
 import com.gandh99.codeblocks.di.module.UserProfileModule;
@@ -30,6 +31,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
     ActivityModule.class,
 
     DashboardModule.class,
+    CompletedTaskModule.class,
     TaskModule.class,
     MemberModule.class,
     InvitationsModule.class,

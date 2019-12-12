@@ -16,6 +16,7 @@ import android.widget.Button;
 
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.projectPage.completedTasks.CompletedTaskAdapter;
+import com.gandh99.codeblocks.projectPage.completedTasks.api.CompletedTaskAPIService;
 import com.gandh99.codeblocks.projectPage.completedTasks.viewModel.CompletedTaskViewModel;
 import com.gandh99.codeblocks.projectPage.tasks.SortTaskDialog;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
@@ -44,9 +45,6 @@ public class CompletedTasksFragment extends Fragment {
 
   @Inject
   ViewModelProvider.Factory viewModelFactory;
-
-  @Inject
-  TaskAPIService taskAPIService;  //TODO
 
   @Inject
   TaskSorter taskSorter;

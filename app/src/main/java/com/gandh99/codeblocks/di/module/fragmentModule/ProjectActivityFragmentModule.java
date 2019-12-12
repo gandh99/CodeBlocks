@@ -16,7 +16,7 @@ public abstract class ProjectActivityFragmentModule {
   abstract TasksFragment contributeTasksFragment();
 
   @ContributesAndroidInjector
-  abstract CompletedTasksFragment contributeIssuesFragment();
+  abstract CompletedTasksFragment contributeCompletedTasksFragment();
 
   @ContributesAndroidInjector
   abstract MembersFragment contributeMembersFragment();
@@ -25,5 +25,5 @@ public abstract class ProjectActivityFragmentModule {
   abstract AddMemberDialog contributeAddMemberDialog();
 
   @ContributesAndroidInjector
-  abstract SortTaskDialog contributeSortFilterTaskDialog();
+  abstract SortTaskDialog contributeSortTaskDialog();
 }

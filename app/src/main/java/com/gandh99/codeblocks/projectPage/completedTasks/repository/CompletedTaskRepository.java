@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.gandh99.codeblocks.projectPage.completedTasks.api.CompletedTaskAPIService;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 import com.gandh99.codeblocks.projectPage.tasks.api.TaskAPIService;
 
@@ -18,11 +19,11 @@ import retrofit2.Response;
 public class CompletedTaskRepository {
   private static final String TAG = "CompletedTaskRepository";
   private MutableLiveData<List<Task>> taskList = new MutableLiveData<>();
-  private TaskAPIService taskAPIService;  //TODO
+  private CompletedTaskAPIService completedTaskAPIService;
 
   @Inject
-  public CompletedTaskRepository(TaskAPIService taskAPIService) {
-    this.taskAPIService = taskAPIService;
+  public CompletedTaskRepository(CompletedTaskAPIService completedTaskAPIService) {
+    this.completedTaskAPIService = completedTaskAPIService;
   }
 
   public MutableLiveData<List<Task>> getTasks() {
@@ -31,7 +32,7 @@ public class CompletedTaskRepository {
   }
 
   public void refreshTaskList() {
-    taskAPIService.getTasks().enqueue(new Callback<List<Task>>() {
+    completedTaskAPIService.getTasks().enqueue(new Callback<List<Task>>() {
       @Override
       public void onResponse(Call<List<Task>> call, Response<List<Task>> response) {
         if (response.isSuccessful()) {
