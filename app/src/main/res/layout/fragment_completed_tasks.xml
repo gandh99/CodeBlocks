@@ -5,21 +5,42 @@
     android:layout_height="match_parent"
     tools:context=".projectPage.completedTasks.CompletedTasksFragment">
 
+    <LinearLayout
+        android:id="@+id/sort_filter_layer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="horizontal"
+        >
+
+        <Button
+            android:id="@+id/button_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:background="@null"
+            android:drawableLeft="@drawable/ic_filter_list"
+            android:text="@string/filter"
+            />
+
+        <Button
+            android:id="@+id/button_sort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:textSize="12sp"
+            android:background="@null"
+            android:drawableLeft="@drawable/ic_sort"
+            android:text="@string/sort"
+            />
+
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_tasks"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recyclerView_issues"
-        />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_issues"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_add_white"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="25dp"
+        android:layout_below="@+id/sort_filter_layer"
         />
 
 </RelativeLayout>
