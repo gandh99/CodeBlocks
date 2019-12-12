@@ -46,7 +46,7 @@ import static android.app.Activity.RESULT_OK;
  * A simple {@link Fragment} subclass.
  */
 public class TasksFragment extends Fragment {
-  private static int DIALOG_REQUEST_ADD_CODE = 1;
+  private static int DIALOG_REQUEST_SORT_CODE = 1;
   private RecyclerView recyclerView;
   private FloatingActionButton fab;
   private Button buttonSort, buttonFilter;
@@ -120,7 +120,7 @@ public class TasksFragment extends Fragment {
       @Override
       public void onClick(View view) {
         SortTaskDialog dialog = new SortTaskDialog();
-        dialog.setTargetFragment(TasksFragment.this, DIALOG_REQUEST_ADD_CODE);
+        dialog.setTargetFragment(TasksFragment.this, DIALOG_REQUEST_SORT_CODE);
         dialog.show(getActivity().getSupportFragmentManager(), "Sort Task");
       }
     });
