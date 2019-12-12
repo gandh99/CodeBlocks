@@ -18,7 +18,7 @@ class TaskView(ListAPIView, CreateAPIView, JSONEncoder):
         project_id = request.META.get('HTTP_PROJECTID')
 
         # Get list of tasks
-        tasks = list(Task.objects.filter(project_group__pk=project_id))
+        tasks = list(Task.objects.filter(project_group__pk=project_id, completed=False))
         json_data = list([self.encode(task) for task in tasks])
 
         return Response(json_data, status=HTTP_200_OK)

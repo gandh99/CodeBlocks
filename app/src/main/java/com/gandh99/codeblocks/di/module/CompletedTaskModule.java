@@ -26,8 +26,8 @@ public class CompletedTaskModule {
 
   @Provides
   @Singleton
-  CompletedTaskRepository provideCompletedTaskRepository(TaskAPIService taskAPIService) {
-    return new CompletedTaskRepository(taskAPIService);
+  CompletedTaskRepository provideCompletedTaskRepository(CompletedTaskAPIService completedTaskAPIService) {
+    return new CompletedTaskRepository(completedTaskAPIService);
   }
 
   @Provides
@@ -36,7 +36,4 @@ public class CompletedTaskModule {
     return new CompletedTaskAdapter();
   }
 
-  @Provides
-  @Singleton
-  TaskSorter provideTaskSorter() { return new TaskSorter(); }
 }

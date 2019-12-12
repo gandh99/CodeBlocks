@@ -59,6 +59,7 @@ class Task(models.Model):
     ]
 
     priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default=NONE)
+    completed = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title

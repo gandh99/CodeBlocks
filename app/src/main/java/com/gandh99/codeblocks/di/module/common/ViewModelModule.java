@@ -7,6 +7,7 @@ import com.gandh99.codeblocks.common.FactoryViewModel;
 import com.gandh99.codeblocks.homePage.dashboard.viewModel.DashboardViewModel;
 import com.gandh99.codeblocks.di.key.ViewModelKey;
 import com.gandh99.codeblocks.homePage.invitations.viewModel.InvitationsViewModel;
+import com.gandh99.codeblocks.projectPage.completedTasks.viewModel.CompletedTaskViewModel;
 import com.gandh99.codeblocks.projectPage.members.viewModel.MemberViewModel;
 import com.gandh99.codeblocks.projectPage.tasks.viewModel.TaskViewModel;
 
@@ -25,6 +26,11 @@ public abstract class ViewModelModule {
   @IntoMap
   @ViewModelKey(TaskViewModel.class)
   abstract ViewModel bindTaskViewModel(TaskViewModel taskViewModel);
+
+  @Binds
+  @IntoMap
+  @ViewModelKey(CompletedTaskViewModel.class)
+  abstract ViewModel bindCompletedTaskViewModel(CompletedTaskViewModel completedTaskViewModel);
 
   @Binds
   @IntoMap
