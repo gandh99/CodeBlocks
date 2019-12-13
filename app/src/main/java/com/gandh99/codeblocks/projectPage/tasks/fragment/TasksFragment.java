@@ -106,23 +106,17 @@ public class TasksFragment extends Fragment {
   }
 
   private void initFloatingActionButton() {
-    fab.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        Intent intent = new Intent(getContext(), NewTaskActivity.class);
-        startActivityForResult(intent, NewTaskActivity.NEW_TASK_REQUEST_CODE);
-      }
+    fab.setOnClickListener(view -> {
+      Intent intent = new Intent(getContext(), NewTaskActivity.class);
+      startActivityForResult(intent, NewTaskActivity.NEW_TASK_REQUEST_CODE);
     });
   }
 
   private void initSortButton() {
-    buttonSort.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        SortTaskDialog dialog = new SortTaskDialog();
-        dialog.setTargetFragment(TasksFragment.this, DIALOG_REQUEST_SORT_CODE);
-        dialog.show(getActivity().getSupportFragmentManager(), "Sort Task");
-      }
+    buttonSort.setOnClickListener(view -> {
+      SortTaskDialog dialog = new SortTaskDialog();
+      dialog.setTargetFragment(TasksFragment.this, DIALOG_REQUEST_SORT_CODE);
+      dialog.show(getActivity().getSupportFragmentManager(), "Sort Task");
     });
   }
 

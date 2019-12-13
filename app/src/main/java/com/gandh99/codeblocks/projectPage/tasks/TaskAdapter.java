@@ -1,12 +1,17 @@
 package com.gandh99.codeblocks.projectPage.tasks;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.res.Resources;
 import android.nfc.FormatException;
 import android.os.Build;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -90,10 +95,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     priorityMap.put(priority[3], ResourcesCompat.getColor(resources, R.color.colorRed, null));
   }
 
-  class TaskViewHolder extends RecyclerView.ViewHolder {
+  class TaskViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener,
+    MenuItem.OnMenuItemClickListener {
     View priorityColour;
     TextView textViewTitle, textViewDescription, textViewDayCreated, textViewMonthCreated;
     Chip chipDeadlineCountdown;
+    ImageView imageViewActions;
+    MenuItem editTask, commentTask, markAsDoneTask;
 
     TaskViewHolder(@NonNull View itemView) {
       super(itemView);
@@ -104,7 +112,35 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 //      textViewDayCreated = itemView.findViewById(R.id.list_item_task_day_created);
 //      textViewMonthCreated = itemView.findViewById(R.id.list_item_task_month_created);
       chipDeadlineCountdown = itemView.findViewById(R.id.list_item_task_deadline_countdown);
+      imageViewActions = itemView.findViewById(R.id.list_item_task_actions);
+
+      itemView.setOnCreateContextMenuListener(this);
     }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+      contextMenu.setHeaderTitle("Select an option");
+      editTask = contextMenu.add("Edit");
+      commentTask = contextMenu.add("Comment");
+      markAsDoneTask = contextMenu.add("Mark as done");
+      editTask.setOnMenuItemClickListener(this);
+      commentTask.setOnMenuItemClickListener(this);
+      markAsDoneTask.setOnMenuItemClickListener(this);
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem menuItem) {
+      if (menuItem == editTask) {
+        Log.d(TAG, "onMenuItemClick: " + "editTask");
+      } else if (menuItem == commentTask) {
+        Log.d(TAG, "onMenuItemClick: " + "commentTask");
+      } else if (menuItem == markAsDoneTask) {
+        Log.d(TAG, "onMenuItemClick: " + "markAsDoneTask");
+      }
+
+      return false;
+    }
+
   }
 
 }
