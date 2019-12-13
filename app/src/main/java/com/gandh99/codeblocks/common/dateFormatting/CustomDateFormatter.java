@@ -71,4 +71,18 @@ public class CustomDateFormatter {
     return countdown;
   }
 
+  /* Returns date in format: 01 Jan 2020 */
+  public static String getFormattedDate(String deadline) {
+    String day = "", month = "", year = "";
+
+    try {
+      day = getDatePortion(deadline, DatePortion.DAY);
+      month = getShortenedMonthName(deadline);
+      year = getDatePortion(deadline, DatePortion.YEAR);
+    } catch (FormatException e) {
+      e.printStackTrace();
+    }
+
+    return day + " " + month + " " + year;
+  }
 }

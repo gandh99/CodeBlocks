@@ -19,6 +19,7 @@ import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.common.dateFormatting.CustomDateFormatter;
 import com.gandh99.codeblocks.common.dateFormatting.DatePortion;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
+import com.google.android.material.chip.Chip;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,13 +50,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
   @Override
   public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
     Task task = taskList.get(position);
-    String dayCreated, monthCreated, deadlineCountdown;
+    String dayCreated, monthCreated, deadline;
 
     // Format some of the dates to be displayed
     try {
       dayCreated = CustomDateFormatter.getDatePortion(task.getDateCreated(), DatePortion.DAY);
       monthCreated = CustomDateFormatter.getShortenedMonthName(task.getDateCreated());
-      deadlineCountdown = CustomDateFormatter.getRemainingTime(task.getDeadline());
+      deadline = CustomDateFormatter.getFormattedDate(task.getDeadline());
     } catch (FormatException e) {
       Log.d(TAG, "onBindViewHolder: " + e.getMessage());
       return;
@@ -64,9 +65,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     holder.priorityColour.setBackgroundColor(priorityMap.get(task.getPriority()));
     holder.textViewTitle.setText(task.getTitle());
     holder.textViewDescription.setText(task.getDescription());
-    holder.textViewDayCreated.setText(dayCreated);
-    holder.textViewMonthCreated.setText(monthCreated);
-    holder.textViewDeadlineCountdown.setText(deadlineCountdown);
+//    holder.textViewDayCreated.setText(dayCreated);
+//    holder.textViewMonthCreated.setText(monthCreated);
+    holder.chipDeadlineCountdown.setText(deadline);
   }
 
   @Override
@@ -91,7 +92,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
   class TaskViewHolder extends RecyclerView.ViewHolder {
     View priorityColour;
-    TextView textViewTitle, textViewDescription, textViewDayCreated, textViewMonthCreated, textViewDeadlineCountdown;
+    TextView textViewTitle, textViewDescription, textViewDayCreated, textViewMonthCreated;
+    Chip chipDeadlineCountdown;
 
     TaskViewHolder(@NonNull View itemView) {
       super(itemView);
@@ -99,9 +101,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
       priorityColour = itemView.findViewById(R.id.priority_colour);
       textViewTitle = itemView.findViewById(R.id.list_item_task_title);
       textViewDescription = itemView.findViewById(R.id.list_item_task_description);
-      textViewDayCreated = itemView.findViewById(R.id.list_item_task_day_created);
-      textViewMonthCreated = itemView.findViewById(R.id.list_item_task_month_created);
-      textViewDeadlineCountdown = itemView.findViewById(R.id.list_item_task_deadline_countdown);
+//      textViewDayCreated = itemView.findViewById(R.id.list_item_task_day_created);
+//      textViewMonthCreated = itemView.findViewById(R.id.list_item_task_month_created);
+      chipDeadlineCountdown = itemView.findViewById(R.id.list_item_task_deadline_countdown);
     }
   }
 
