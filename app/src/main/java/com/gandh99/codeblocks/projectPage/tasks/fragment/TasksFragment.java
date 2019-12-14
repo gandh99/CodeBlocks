@@ -138,37 +138,9 @@ public class TasksFragment extends Fragment implements Refreshable {
   @RequiresApi(api = Build.VERSION_CODES.O)
   @Override
   public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-    if (requestCode == NewTaskActivity.NEW_TASK_REQUEST_CODE) {
-      if (resultCode == RESULT_OK) {
-        String taskTitle = data.getStringExtra(NewTaskActivity.INTENT_TASK_TITLE);
-        String taskDescription = data.getStringExtra(NewTaskActivity.INTENT_TASK_DESCRIPTION);
-        String taskDateCreated = getCurrentDate();
-        String taskDeadline = data.getStringExtra(NewTaskActivity.INTENT_TASK_DEADLINE);
-        String taskPriority = data.getStringExtra(NewTaskActivity.INTENT_TASK_PRIORITY);
-
-        taskAPIService.createTask(taskTitle, taskDescription, taskDateCreated, taskDeadline, taskPriority)
-          .enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-              if (response.isSuccessful()) {
-                Toast.makeText(getContext(), "Successfully created task", Toast.LENGTH_SHORT).show();
-                refresh();
-              }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-          });
-      }
+    if (requestCode == NewTaskActivity.NEW_TASK_REQUEST_CODE && resultCode == RESULT_OK) {
+      refresh();
     }
-  }
-
-  @RequiresApi(api = Build.VERSION_CODES.O)
-  private String getCurrentDate() {
-    LocalDate localDate = LocalDate.now();
-    return localDate.getYear() + "-" + localDate.getMonth().getValue() + "-" + localDate.getDayOfMonth();
   }
 
   public void refresh() {

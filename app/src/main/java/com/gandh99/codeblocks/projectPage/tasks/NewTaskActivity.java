@@ -13,22 +13,27 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.authentication.InputValidator;
 import com.gandh99.codeblocks.projectPage.members.api.ProjectMember;
 import com.gandh99.codeblocks.projectPage.members.viewModel.MemberViewModel;
-import com.gandh99.codeblocks.projectPage.tasks.prioritySpinner.PrioritySpinnerAdapter;
+import com.gandh99.codeblocks.projectPage.tasks.api.TaskAPIService;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NewTaskActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
   public static final int NEW_TASK_REQUEST_CODE = 100;
@@ -40,7 +45,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
   private DatePickerDialog datePickerDialog;
   private ImageView buttonDatePicker;
   private EditText editTextTaskTitle, editTextTaskDescription, editTextTaskDeadline;
-  private ChipGroup chipGroupMembers, chipGroupTaskPriority;
+  private ChipGroup chipGroupAssignedMembers, chipGroupTaskPriority;
   private Button buttonCreateTask;
   private MemberViewModel memberViewModel;
 
@@ -48,9 +53,12 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
   InputValidator inputValidator;
 
   @Inject
+  TaskAPIService taskAPIService;
+
+  @Inject
   ViewModelProvider.Factory viewModelFactory;
 
-  @RequiresApi(api = Build.VERSION_CODES.N)
+  @RequiresApi(api = Build.VERSION_CODES.O)
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -70,7 +78,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
       datePickerDialog.show();
     });
     chipGroupTaskPriority = findViewById(R.id.chipgroup_task_priority);
-    chipGroupMembers = findViewById(R.id.chipgroup_assign_members);
+    chipGroupAssignedMembers = findViewById(R.id.chipgroup_assign_members);
     buttonCreateTask = findViewById(R.id.button_create_task);
 
     initMemberViewModel();
@@ -88,11 +96,11 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
       for (ProjectMember member : projectMembers) {
         Chip chip =
           (Chip) getLayoutInflater()
-            .inflate(R.layout.chip_checkable, chipGroupMembers, false);
+            .inflate(R.layout.chip_checkable, chipGroupAssignedMembers, false);
         chip.setText(member.getUsername());
         chip.setCheckable(true);
         chip.setCheckedIconVisible(true);
-        chipGroupMembers.addView(chip);
+        chipGroupAssignedMembers.addView(chip);
       }
     });
   }
@@ -131,6 +139,19 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
     return defaultPriority;
   }
 
+  private List<String> getAssignedMembers() {
+    List<String> assignedMembers = new ArrayList<>();
+
+    for (int i = 0; i < chipGroupAssignedMembers.getChildCount(); i++) {
+      Chip chip = (Chip) chipGroupAssignedMembers.getChildAt(i);
+      if (chip.isChecked()) {
+        assignedMembers.add(chip.getText().toString());
+      }
+    }
+
+    return assignedMembers;
+  }
+
   @Override
   public boolean onSupportNavigateUp() {
     finish();
@@ -143,12 +164,15 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
     editTextTaskDeadline.setText(date);
   }
 
+  @RequiresApi(api = Build.VERSION_CODES.O)
   private void initCreateTaskButton() {
     buttonCreateTask.setOnClickListener(view -> {
       String taskTitle = editTextTaskTitle.getText().toString();
       String taskDescription = editTextTaskDescription.getText().toString();
+      String taskDateCreated = getCurrentDate();
       String taskDeadline = editTextTaskDeadline.getText().toString();
-      String selectedPriority = getSelectedPriority();
+      String taskPriority = getSelectedPriority();
+      List<String> assignedMembers = getAssignedMembers();
 
       if (inputValidator.isInvalidInput(taskTitle)
         || inputValidator.isInvalidInput(taskDescription)
@@ -157,15 +181,27 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
         return;
       }
 
-      // If input is valid, return the values
-      Intent returnIntent = new Intent();
-      returnIntent.putExtra(INTENT_TASK_TITLE, taskTitle);
-      returnIntent.putExtra(INTENT_TASK_DESCRIPTION, taskDescription);
-      returnIntent.putExtra(INTENT_TASK_DEADLINE, taskDeadline);
-      returnIntent.putExtra(INTENT_TASK_PRIORITY, selectedPriority);
-      setResult(RESULT_OK, returnIntent);
-      finish();
-    });
+      taskAPIService.createTask(taskTitle, taskDescription, taskDateCreated, taskDeadline, taskPriority)
+        .enqueue(new Callback<ResponseBody>() {
+          @Override
+          public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            if (response.isSuccessful()) {
+              Intent returnIntent = new Intent();
+              setResult(RESULT_OK, returnIntent);
+              NewTaskActivity.this.finish();
+            }
+          }
 
+          @Override
+          public void onFailure(Call<ResponseBody> call, Throwable t) {
+          }
+        });
+    });
+  }
+
+  @RequiresApi(api = Build.VERSION_CODES.O)
+  private String getCurrentDate() {
+    LocalDate localDate = LocalDate.now();
+    return localDate.getYear() + "-" + localDate.getMonth().getValue() + "-" + localDate.getDayOfMonth();
   }
 }
