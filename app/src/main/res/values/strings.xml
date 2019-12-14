@@ -35,6 +35,8 @@
     <string name="edit">Edit</string>
     <string name="comment">Comment</string>
     <string name="done">Done</string>
+    <string name="assign_to">Assign to:</string>
+    <string name="priority">Priority:</string>
 
     <string-array name="rank">
         <item>ADMIN</item>

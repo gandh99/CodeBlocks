@@ -2,6 +2,9 @@ package com.gandh99.codeblocks.projectPage.tasks;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -18,8 +21,13 @@ import android.widget.Toast;
 
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.authentication.InputValidator;
-import com.gandh99.codeblocks.projectPage.tasks.api.TaskAPIService;
+import com.gandh99.codeblocks.projectPage.members.api.ProjectMember;
+import com.gandh99.codeblocks.projectPage.members.viewModel.MemberViewModel;
 import com.gandh99.codeblocks.projectPage.tasks.prioritySpinner.PrioritySpinnerAdapter;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -38,10 +46,16 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
   private String selectedPriority;
   private Spinner prioritySpinner;
   private PrioritySpinnerAdapter prioritySpinnerAdapter;
+  private ChipGroup chipGroupMembers;
   private Button buttonCreateTask;
+  private MemberViewModel memberViewModel;
+  private List<ProjectMember> projectMemberList;
 
   @Inject
   InputValidator inputValidator;
+
+  @Inject
+  ViewModelProvider.Factory viewModelFactory;
 
   @RequiresApi(api = Build.VERSION_CODES.N)
   @Override
@@ -63,10 +77,31 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
       datePickerDialog.show();
     });
     prioritySpinner = findViewById(R.id.spinner_priority);
+    chipGroupMembers = findViewById(R.id.chipgroup_assign_members);
     buttonCreateTask = findViewById(R.id.button_create_task);
 
+    initMemberViewModel();
     initPrioritySpinner();
     initCreateTaskButton();
+  }
+
+  private void configureDagger() {
+    AndroidInjection.inject(this);
+  }
+
+  private void initMemberViewModel() {
+    memberViewModel = ViewModelProviders.of(this, viewModelFactory).get(MemberViewModel.class);
+    memberViewModel.getProjectMembers().observe(this, projectMembers -> {
+      for (ProjectMember member : projectMembers) {
+        Chip chip =
+          (Chip) getLayoutInflater()
+            .inflate(R.layout.chip_project_member, chipGroupMembers, false);
+        chip.setText(member.getUsername());
+        chip.setCheckable(true);
+        chip.setCheckedIconVisible(true);
+        chipGroupMembers.addView(chip);
+      }
+    });
   }
 
   private void initPrioritySpinner() {
@@ -91,10 +126,6 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
   public boolean onSupportNavigateUp() {
     finish();
     return true;
-  }
-
-  private void configureDagger() {
-    AndroidInjection.inject(this);
   }
 
   @Override
