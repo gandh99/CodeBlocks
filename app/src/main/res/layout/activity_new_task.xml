@@ -99,38 +99,30 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:textSize="16sp"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="8dp"
+            android:text="@string/priority"
+            />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipgroup_task_priority"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="16dp"
-            android:orientation="horizontal"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_marginHorizontal="8dp"
-                android:text="@string/priority"
-                />
-
-            <Spinner
-                android:id="@+id/spinner_priority"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:spinnerMode="dropdown"
-                android:layout_marginLeft="20dp"
-                android:textAlignment="center"
-                />
-
-        </LinearLayout>
+            app:singleSelection="true"
+            android:layout_marginVertical="10dp"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:textSize="16sp"
+            android:layout_marginTop="20dp"
             android:layout_marginHorizontal="8dp"
             android:text="@string/assign_to"
             />

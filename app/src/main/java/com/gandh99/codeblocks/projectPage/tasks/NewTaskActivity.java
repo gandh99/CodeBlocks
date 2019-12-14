@@ -2,7 +2,6 @@ package com.gandh99.codeblocks.projectPage.tasks;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -10,8 +9,6 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -43,13 +40,9 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
   private DatePickerDialog datePickerDialog;
   private ImageView buttonDatePicker;
   private EditText editTextTaskTitle, editTextTaskDescription, editTextTaskDeadline;
-  private String selectedPriority;
-  private Spinner prioritySpinner;
-  private PrioritySpinnerAdapter prioritySpinnerAdapter;
-  private ChipGroup chipGroupMembers;
+  private ChipGroup chipGroupMembers, chipGroupTaskPriority;
   private Button buttonCreateTask;
   private MemberViewModel memberViewModel;
-  private List<ProjectMember> projectMemberList;
 
   @Inject
   InputValidator inputValidator;
@@ -76,12 +69,12 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
       datePickerDialog.setOnDateSetListener(NewTaskActivity.this);
       datePickerDialog.show();
     });
-    prioritySpinner = findViewById(R.id.spinner_priority);
+    chipGroupTaskPriority = findViewById(R.id.chipgroup_task_priority);
     chipGroupMembers = findViewById(R.id.chipgroup_assign_members);
     buttonCreateTask = findViewById(R.id.button_create_task);
 
     initMemberViewModel();
-    initPrioritySpinner();
+    initPriorityChipGroup();
     initCreateTaskButton();
   }
 
@@ -95,7 +88,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
       for (ProjectMember member : projectMembers) {
         Chip chip =
           (Chip) getLayoutInflater()
-            .inflate(R.layout.chip_project_member, chipGroupMembers, false);
+            .inflate(R.layout.chip_checkable, chipGroupMembers, false);
         chip.setText(member.getUsername());
         chip.setCheckable(true);
         chip.setCheckedIconVisible(true);
@@ -104,22 +97,38 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
     });
   }
 
-  private void initPrioritySpinner() {
-    prioritySpinnerAdapter = new PrioritySpinnerAdapter(getApplicationContext());
-    prioritySpinner.setAdapter(prioritySpinnerAdapter);
+  private void initPriorityChipGroup() {
+    String[] priorities = getResources().getStringArray(R.array.priority);
+    int[] priorityColours = new int[] {
+      R.color.colorWhite,
+      R.color.colorGreen,
+      R.color.colorOrange,
+      R.color.colorRed
+    };
 
-    String[] priority = prioritySpinnerAdapter.getPriorities();
-    prioritySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-      @Override
-      public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        selectedPriority = priority[i];
+    for (int i = 0; i < priorities.length; i++) {
+      Chip chip =
+        (Chip) getLayoutInflater()
+          .inflate(R.layout.chip_checkable, chipGroupTaskPriority, false);
+      chip.setText(priorities[i]);
+      chip.setCheckable(true);
+      chip.setCheckedIconVisible(true);
+      chip.setChipBackgroundColorResource(priorityColours[i]);
+      chipGroupTaskPriority.addView(chip);
+    }
+  }
+
+  private String getSelectedPriority() {
+    String defaultPriority = "NONE";
+
+    for (int i = 0; i < chipGroupTaskPriority.getChildCount(); i++) {
+      Chip chip = (Chip) chipGroupTaskPriority.getChildAt(i);
+      if (chip.isChecked()) {
+        return chip.getText().toString();
       }
+    }
 
-      @Override
-      public void onNothingSelected(AdapterView<?> adapterView) {
-
-      }
-    });
+    return defaultPriority;
   }
 
   @Override
@@ -139,6 +148,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
       String taskTitle = editTextTaskTitle.getText().toString();
       String taskDescription = editTextTaskDescription.getText().toString();
       String taskDeadline = editTextTaskDeadline.getText().toString();
+      String selectedPriority = getSelectedPriority();
 
       if (inputValidator.isInvalidInput(taskTitle)
         || inputValidator.isInvalidInput(taskDescription)

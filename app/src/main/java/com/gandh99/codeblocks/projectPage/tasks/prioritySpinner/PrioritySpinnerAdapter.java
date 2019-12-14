@@ -15,6 +15,7 @@ import androidx.core.content.res.ResourcesCompat;
 
 import com.gandh99.codeblocks.R;
 
+// Unused class
 public class PrioritySpinnerAdapter extends ArrayAdapter {
   private Context context;
   private int[] priorityColour;
