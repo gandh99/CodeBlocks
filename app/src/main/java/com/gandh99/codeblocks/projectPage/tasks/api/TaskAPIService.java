@@ -22,7 +22,8 @@ public interface TaskAPIService {
     @Field("description") String description,
     @Field("dateCreated") String dateCreated,
     @Field("deadline") String deadline,
-    @Field("priority") String priority
+    @Field("priority") String priority,
+    @Field("assignees") List<String> assignees
   );
 
   @FormUrlEncoded

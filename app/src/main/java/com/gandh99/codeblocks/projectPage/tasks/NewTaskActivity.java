@@ -181,7 +181,8 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
         return;
       }
 
-      taskAPIService.createTask(taskTitle, taskDescription, taskDateCreated, taskDeadline, taskPriority)
+      taskAPIService
+        .createTask(taskTitle, taskDescription, taskDateCreated, taskDeadline, taskPriority, assignedMembers)
         .enqueue(new Callback<ResponseBody>() {
           @Override
           public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
