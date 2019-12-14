@@ -124,7 +124,6 @@ public class ProjectActivity extends AppCompatActivity {
   public boolean onOptionsItemSelected(@NonNull MenuItem item) {
     switch (item.getItemId()) {
       case R.id.action_leave_project:
-        // TODO: To be refactored
         dashboardAPIService.leaveProject().enqueue(new Callback<ResponseBody>() {
           @Override
           public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

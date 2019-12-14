@@ -1,5 +1,6 @@
 package com.gandh99.codeblocks.projectPage.members.api;
 
+import com.gandh99.codeblocks.projectPage.members.Rank;
 import com.google.gson.annotations.SerializedName;
 
 @SuppressWarnings("all")
@@ -87,5 +88,10 @@ public class ProjectMember {
 
   public String getPersonalMessage() {
     return personalMessage;
+  }
+
+  public boolean isAdmin() {
+    String adminName = Rank.ADMIN.getRankName();
+    return rank.toUpperCase().equals(adminName);
   }
 }
