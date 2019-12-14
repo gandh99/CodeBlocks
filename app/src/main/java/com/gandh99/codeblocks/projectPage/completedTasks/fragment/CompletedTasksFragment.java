@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.gandh99.codeblocks.R;
+import com.gandh99.codeblocks.common.Refreshable;
 import com.gandh99.codeblocks.projectPage.completedTasks.CompletedTaskAdapter;
 import com.gandh99.codeblocks.projectPage.completedTasks.api.CompletedTaskAPIService;
 import com.gandh99.codeblocks.projectPage.completedTasks.viewModel.CompletedTaskViewModel;
@@ -33,7 +34,7 @@ import dagger.android.support.AndroidSupportInjection;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CompletedTasksFragment extends Fragment {
+public class CompletedTasksFragment extends Fragment implements Refreshable {
   private static int DIALOG_REQUEST_SORT_CODE = 1;
   private RecyclerView recyclerView;
   private Button buttonSort, buttonFilter;
@@ -107,4 +108,7 @@ public class CompletedTasksFragment extends Fragment {
     });
   }
 
+  public void refresh() {
+    completedTaskViewModel.refreshTaskList();
+  }
 }

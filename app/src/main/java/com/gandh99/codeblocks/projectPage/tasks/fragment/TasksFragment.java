@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.gandh99.codeblocks.R;
+import com.gandh99.codeblocks.common.Refreshable;
 import com.gandh99.codeblocks.projectPage.tasks.NewTaskActivity;
 import com.gandh99.codeblocks.projectPage.tasks.SortTaskDialog;
 import com.gandh99.codeblocks.projectPage.tasks.TaskAdapter;
@@ -45,7 +46,7 @@ import static android.app.Activity.RESULT_OK;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TasksFragment extends Fragment {
+public class TasksFragment extends Fragment implements Refreshable {
   private static int DIALOG_REQUEST_SORT_CODE = 1;
   private RecyclerView recyclerView;
   private FloatingActionButton fab;
@@ -130,12 +131,7 @@ public class TasksFragment extends Fragment {
   }
 
   private void initTaskViewHolderListener() {
-    taskAdapter.setOnContextMenuItemSelectedListener(new TaskAdapter.OnContextMenuItemSelectedListener() {
-      @Override
-      public void onMarkTaskAsDoneSelected(Task task) {
-        taskViewModel.completeTask(task);
-      }
-    });
+    taskAdapter.setOnContextMenuItemSelectedListener(task -> taskViewModel.completeTask(task));
   }
 
   @RequiresApi(api = Build.VERSION_CODES.O)
@@ -155,7 +151,7 @@ public class TasksFragment extends Fragment {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
               if (response.isSuccessful()) {
                 Toast.makeText(getContext(), "Successfully created task", Toast.LENGTH_SHORT).show();
-                refreshTaskList();
+                refresh();
               }
             }
 
@@ -174,7 +170,7 @@ public class TasksFragment extends Fragment {
     return localDate.getYear() + "-" + localDate.getMonth().getValue() + "-" + localDate.getDayOfMonth();
   }
 
-  private void refreshTaskList() {
+  public void refresh() {
     taskViewModel.refreshTaskList();
   }
 

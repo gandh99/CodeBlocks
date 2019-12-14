@@ -1,10 +1,5 @@
 package com.gandh99.codeblocks.projectPage.activity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,13 +8,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.authentication.AuthenticationInterceptor;
+import com.gandh99.codeblocks.common.Refreshable;
+import com.gandh99.codeblocks.homePage.TabsPagerAdapter;
 import com.gandh99.codeblocks.homePage.activity.HomeActivity;
 import com.gandh99.codeblocks.homePage.dashboard.api.DashboardAPIService;
 import com.gandh99.codeblocks.homePage.dashboard.api.Project;
 import com.gandh99.codeblocks.homePage.dashboard.fragment.DashboardFragment;
-import com.gandh99.codeblocks.homePage.TabsPagerAdapter;
 import com.gandh99.codeblocks.projectPage.completedTasks.fragment.CompletedTasksFragment;
 import com.gandh99.codeblocks.projectPage.members.fragment.MembersFragment;
 import com.gandh99.codeblocks.projectPage.tasks.fragment.TasksFragment;
@@ -33,14 +35,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.gandh99.codeblocks.authentication.Authenticator.INTENT_SESSION_TOKEN;
-import static com.gandh99.codeblocks.authentication.Authenticator.INTENT_USERNAME;
-
-public class ProjectActivity extends AppCompatActivity {
+public class ProjectActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
   private ViewPager viewPager;
   private TabLayout tabLayout;
   private TabsPagerAdapter tabsPagerAdapter;
   private Project project;
+  private TasksFragment tasksFragment = new TasksFragment();
+  private CompletedTasksFragment completedTasksFragment = new CompletedTasksFragment();
+  private MembersFragment membersFragment = new MembersFragment();
 
   @Inject
   AuthenticationInterceptor authenticationInterceptor;
@@ -83,10 +85,14 @@ public class ProjectActivity extends AppCompatActivity {
   private void createTabLayout() {
     // Setup adapter
     tabsPagerAdapter = new TabsPagerAdapter(getSupportFragmentManager());
-    tabsPagerAdapter.addFragment(new TasksFragment());
-    tabsPagerAdapter.addFragment(new CompletedTasksFragment());
-    tabsPagerAdapter.addFragment(new MembersFragment());
+    tabsPagerAdapter.addFragment(tasksFragment);
+    tabsPagerAdapter.addFragment(completedTasksFragment);
+    tabsPagerAdapter.addFragment(membersFragment);
 
+    // Setup viewPager
+    viewPager.addOnPageChangeListener(this);
+
+    // Link viewPager, tabLayout and tabsPagerAdapter
     viewPager.setAdapter(tabsPagerAdapter);
     tabLayout.setupWithViewPager(viewPager);
   }
@@ -147,5 +153,24 @@ public class ProjectActivity extends AppCompatActivity {
       default:
         return super.onOptionsItemSelected(item);
     }
+  }
+
+  @Override
+  public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+  }
+
+  @Override
+  public void onPageSelected(int position) {
+    Fragment fragment = tabsPagerAdapter.getItem(position);
+
+    try {
+      ((Refreshable) fragment).refresh();
+    } catch (ClassCastException e) {
+      // Does not matter as the fragment simply doesn't need to refresh
+    }
+  }
+
+  @Override
+  public void onPageScrollStateChanged(int state) {
   }
 }
