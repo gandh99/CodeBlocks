@@ -14,7 +14,7 @@
         <activity android:name=".projectPage.members.activity.ViewProfileActivity"></activity>
         <activity android:name=".homePage.userProfile.activity.EditUserProfileActivity" />
         <activity android:name=".projectPage.tasks.NewTaskActivity" />
-        <activity android:name=".projectPage.ProjectActivity" />
+        <activity android:name=".projectPage.activity.ProjectActivity" />
         <activity android:name=".homePage.activity.HomeActivity" />
         <activity android:name=".authentication.activity.MainActivity">
             <intent-filter>

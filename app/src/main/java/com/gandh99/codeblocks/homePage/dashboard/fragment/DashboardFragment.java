@@ -16,12 +16,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gandh99.codeblocks.R;
-import com.gandh99.codeblocks.authentication.AuthenticationInterceptor;
 import com.gandh99.codeblocks.homePage.dashboard.AddProjectDialog;
 import com.gandh99.codeblocks.homePage.dashboard.DashboardListAdapter;
 import com.gandh99.codeblocks.homePage.dashboard.api.Project;
 import com.gandh99.codeblocks.homePage.dashboard.viewModel.DashboardViewModel;
-import com.gandh99.codeblocks.projectPage.ProjectActivity;
+import com.gandh99.codeblocks.projectPage.activity.ProjectActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;

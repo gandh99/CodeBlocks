@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView, CreateAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView, DestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK
@@ -8,7 +8,7 @@ from authentication.models import ProjectGroup, UserProfile, ProjectGroupMember
 from authentication.serializers import ProjectGroupSerializer
 
 
-class ProjectView(ListAPIView, CreateAPIView, JSONEncoder):
+class ProjectView(ListAPIView, CreateAPIView, DestroyAPIView, JSONEncoder):
     serializer_class = ProjectGroupSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -40,6 +40,26 @@ class ProjectView(ListAPIView, CreateAPIView, JSONEncoder):
                                     rank=ProjectGroupMember.ADMIN)
         member.save()
 
+        response = {"Response": "Success"}
+        return Response(response, status=HTTP_200_OK)
+
+    def delete(self, request, *args, **kwargs):
+        # Get header info
+        username = request.META.get('HTTP_USERNAME')
+        project_id = request.META.get("HTTP_PROJECTID")
+
+        # Get UserProfile and ProjectGroup
+        user_profile = UserProfile.objects.get(username=username)
+        project_group = ProjectGroup.objects.get(pk=project_id)
+
+        # Remove the user from the project
+        project_group.user_profile.remove(user_profile)
+
+        # Delete the related ProjectGroupMember
+        project_group_member = ProjectGroupMember.objects.get(project_group=project_group, user_profile=user_profile)
+        project_group_member.delete()
+
+        # Return response
         response = {"Response": "Success"}
         return Response(response, status=HTTP_200_OK)
 

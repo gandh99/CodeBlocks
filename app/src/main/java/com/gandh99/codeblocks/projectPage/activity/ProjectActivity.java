@@ -1,5 +1,6 @@
-package com.gandh99.codeblocks.projectPage;
+package com.gandh99.codeblocks.projectPage.activity;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -8,10 +9,14 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.authentication.AuthenticationInterceptor;
+import com.gandh99.codeblocks.homePage.activity.HomeActivity;
+import com.gandh99.codeblocks.homePage.dashboard.api.DashboardAPIService;
 import com.gandh99.codeblocks.homePage.dashboard.api.Project;
 import com.gandh99.codeblocks.homePage.dashboard.fragment.DashboardFragment;
 import com.gandh99.codeblocks.homePage.TabsPagerAdapter;
@@ -23,6 +28,13 @@ import com.google.android.material.tabs.TabLayout;
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.gandh99.codeblocks.authentication.Authenticator.INTENT_SESSION_TOKEN;
+import static com.gandh99.codeblocks.authentication.Authenticator.INTENT_USERNAME;
 
 public class ProjectActivity extends AppCompatActivity {
   private ViewPager viewPager;
@@ -32,6 +44,9 @@ public class ProjectActivity extends AppCompatActivity {
 
   @Inject
   AuthenticationInterceptor authenticationInterceptor;
+
+  @Inject
+  DashboardAPIService dashboardAPIService;
 
   @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
   @Override
@@ -96,5 +111,42 @@ public class ProjectActivity extends AppCompatActivity {
   public boolean onSupportNavigateUp() {
     finish();
     return true;
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater()
+      .inflate(R.menu.menu_project_activity, menu);
+    return super.onCreateOptionsMenu(menu);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.action_leave_project:
+        // TODO: To be refactored
+        dashboardAPIService.leaveProject().enqueue(new Callback<ResponseBody>() {
+          @Override
+          public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            if (response.isSuccessful()) {
+              /* Return back to home page and clear the back stack
+              so that the user cannot return back to the project page (IMPORTANT!) */
+              Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+              intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+              startActivity(intent);
+            }
+          }
+
+          @Override
+          public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+          }
+        });
+
+        return true;
+
+      default:
+        return super.onOptionsItemSelected(item);
+    }
   }
 }

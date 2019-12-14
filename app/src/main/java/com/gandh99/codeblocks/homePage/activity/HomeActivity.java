@@ -67,14 +67,24 @@ public class HomeActivity extends AppCompatActivity {
   }
 
   private void receiveSessionToken() {
-    Intent intent = getIntent();
-    sessionToken = (SessionToken) intent.getSerializableExtra(Authenticator.INTENT_SESSION_TOKEN);
-    username = intent.getStringExtra(Authenticator.INTENT_USERNAME);
+    /* Use try-catch because ProjectActivity may start HomeActivity if user leave the project.
+    * In such an instance, there is no point setting the token and username again. */
+    try {
+      Intent intent = getIntent();
+      sessionToken = (SessionToken) intent.getSerializableExtra(Authenticator.INTENT_SESSION_TOKEN);
+      username = intent.getStringExtra(Authenticator.INTENT_USERNAME);
+    } catch (NullPointerException e) {
+    }
   }
 
   private void setupAuthenticationInterceptor() {
-    authenticationInterceptor.setSessionToken(sessionToken.getToken());
-    authenticationInterceptor.setUsername(username);
+    /* Use try-catch because ProjectActivity may start HomeActivity if user leave the project.
+     * In such an instance, there is no point setting the token and username again. */
+    try {
+      authenticationInterceptor.setSessionToken(sessionToken.getToken());
+      authenticationInterceptor.setUsername(username);
+    } catch (NullPointerException e) {
+    }
   }
 
   private void configureViewModel() {
