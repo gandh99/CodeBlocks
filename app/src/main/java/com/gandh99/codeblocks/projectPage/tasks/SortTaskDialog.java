@@ -20,6 +20,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.gandh99.codeblocks.R;
+import com.gandh99.codeblocks.projectPage.completedTasks.CompletedTaskAdapter;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 import com.gandh99.codeblocks.projectPage.tasks.taskSorter.TaskSorter;
 
@@ -46,6 +47,9 @@ public class SortTaskDialog extends DialogFragment {
 
   @Inject
   TaskAdapter taskAdapter;
+
+  @Inject
+  CompletedTaskAdapter completedTaskAdapter;
 
   @Inject
   TaskSorter taskSorter;
@@ -118,6 +122,8 @@ public class SortTaskDialog extends DialogFragment {
   private void sortTasks() {
     List<Task> sortedTaskList = taskSorter.sortTasks(this.getContext(), dialogView, taskAdapter.getTaskList());
     taskAdapter.updateList(sortedTaskList);
+    List<Task> sortedCompletedTaskList = taskSorter.sortTasks(this.getContext(), dialogView, completedTaskAdapter.getTaskList());
+    completedTaskAdapter.updateList(sortedCompletedTaskList);
   }
 
   private void initCancelButton() {
