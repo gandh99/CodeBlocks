@@ -118,6 +118,7 @@ public class TasksFragment extends Fragment implements Refreshable {
     buttonSort.setOnClickListener(view -> {
       SortTaskDialog dialog = new SortTaskDialog();
       dialog.setTargetFragment(TasksFragment.this, DIALOG_REQUEST_SORT_CODE);
+      dialog.setGenericTaskAdapter(taskAdapter);
       dialog.show(getActivity().getSupportFragmentManager(), "Sort Task");
     });
   }

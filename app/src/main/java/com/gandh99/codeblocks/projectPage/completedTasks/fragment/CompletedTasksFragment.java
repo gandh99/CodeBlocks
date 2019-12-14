@@ -89,13 +89,11 @@ public class CompletedTasksFragment extends Fragment implements Refreshable {
   }
 
   private void initSortButton() {
-    buttonSort.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        SortTaskDialog dialog = new SortTaskDialog();
-        dialog.setTargetFragment(CompletedTasksFragment.this, DIALOG_REQUEST_SORT_CODE);
-        dialog.show(getActivity().getSupportFragmentManager(), "Sort Task");
-      }
+    buttonSort.setOnClickListener(view -> {
+      SortTaskDialog dialog = new SortTaskDialog();
+      dialog.setTargetFragment(CompletedTasksFragment.this, DIALOG_REQUEST_SORT_CODE);
+      dialog.setGenericTaskAdapter(completedTaskAdapter);
+      dialog.show(getActivity().getSupportFragmentManager(), "Sort Task");
     });
   }
 

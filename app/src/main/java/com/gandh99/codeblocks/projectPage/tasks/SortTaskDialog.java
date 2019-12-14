@@ -20,6 +20,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.gandh99.codeblocks.R;
+import com.gandh99.codeblocks.projectPage.GenericTaskAdapter;
 import com.gandh99.codeblocks.projectPage.completedTasks.CompletedTaskAdapter;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 import com.gandh99.codeblocks.projectPage.tasks.taskSorter.TaskSorter;
@@ -41,15 +42,10 @@ public class SortTaskDialog extends DialogFragment {
   private RadioGroup radioGroupSortBy, radioGroupOrder;
   private int selectedSortById, selectedOrderId;
   private View dialogView;
+  private GenericTaskAdapter adapter;
 
   @Inject
   ViewModelProvider.Factory viewModelFactory;
-
-  @Inject
-  TaskAdapter taskAdapter;
-
-  @Inject
-  CompletedTaskAdapter completedTaskAdapter;
 
   @Inject
   TaskSorter taskSorter;
@@ -120,10 +116,12 @@ public class SortTaskDialog extends DialogFragment {
   }
 
   private void sortTasks() {
-    List<Task> sortedTaskList = taskSorter.sortTasks(this.getContext(), dialogView, taskAdapter.getTaskList());
-    taskAdapter.updateList(sortedTaskList);
-    List<Task> sortedCompletedTaskList = taskSorter.sortTasks(this.getContext(), dialogView, completedTaskAdapter.getTaskList());
-    completedTaskAdapter.updateList(sortedCompletedTaskList);
+    List<Task> sortedTaskList = taskSorter.sortTasks(this.getContext(), dialogView, adapter.getTaskList());
+    adapter.updateList(sortedTaskList);
+  }
+
+  public void setGenericTaskAdapter(GenericTaskAdapter adapter) {
+    this.adapter = adapter;
   }
 
   private void initCancelButton() {
