@@ -97,6 +97,7 @@ public class TasksFragment extends Fragment {
     initFloatingActionButton();
     initSortButton();
     initViewModel();
+    initTaskViewHolderListener();
 
     return view;
   }
@@ -125,6 +126,15 @@ public class TasksFragment extends Fragment {
     taskViewModel.getTasks().observe(this, tasks -> {
       List<Task> sortedTaskList = taskSorter.sortTasks(TasksFragment.this.getContext(), dialogView, tasks);
       taskAdapter.updateList(sortedTaskList);
+    });
+  }
+
+  private void initTaskViewHolderListener() {
+    taskAdapter.setOnContextMenuItemSelectedListener(new TaskAdapter.OnContextMenuItemSelectedListener() {
+      @Override
+      public void onMarkTaskAsDoneSelected(Task task) {
+        taskViewModel.completeTask(task);
+      }
     });
   }
 

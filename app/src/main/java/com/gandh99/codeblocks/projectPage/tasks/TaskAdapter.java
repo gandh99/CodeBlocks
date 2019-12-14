@@ -18,12 +18,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.common.dateFormatting.CustomDateFormatter;
 import com.gandh99.codeblocks.common.dateFormatting.DatePortion;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
+import com.gandh99.codeblocks.projectPage.tasks.fragment.TasksFragment;
+import com.gandh99.codeblocks.projectPage.tasks.viewModel.TaskViewModel;
 import com.google.android.material.chip.Chip;
 
 import java.util.ArrayList;
@@ -31,10 +35,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
+import dagger.android.support.AndroidSupportInjection;
+
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
   private static final String TAG = "TaskAdapter";
   private List<Task> taskList = new ArrayList<>();
   private Map<String, Integer> priorityMap = new HashMap<>();
+  private OnContextMenuItemSelectedListener listener;
 
   public TaskAdapter() {}
 
@@ -46,8 +55,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         .from(parent.getContext())
         .inflate(R.layout.list_item_task, parent, false);
 
-
-
     return new TaskViewHolder(view);
   }
 
@@ -55,23 +62,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
   @Override
   public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
     Task task = taskList.get(position);
-    String dayCreated, monthCreated, deadline;
+    String deadline;
 
     // Format some of the dates to be displayed
-    try {
-      dayCreated = CustomDateFormatter.getDatePortion(task.getDateCreated(), DatePortion.DAY);
-      monthCreated = CustomDateFormatter.getShortenedMonthName(task.getDateCreated());
-      deadline = CustomDateFormatter.getFormattedDate(task.getDeadline());
-    } catch (FormatException e) {
-      Log.d(TAG, "onBindViewHolder: " + e.getMessage());
-      return;
-    }
+    deadline = CustomDateFormatter.getFormattedDate(task.getDeadline());
 
     holder.priorityColour.setBackgroundColor(priorityMap.get(task.getPriority()));
     holder.textViewTitle.setText(task.getTitle());
     holder.textViewDescription.setText(task.getDescription());
-//    holder.textViewDayCreated.setText(dayCreated);
-//    holder.textViewMonthCreated.setText(monthCreated);
     holder.chipDeadlineCountdown.setText(deadline);
   }
 
@@ -98,7 +96,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
   class TaskViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener,
     MenuItem.OnMenuItemClickListener {
     View priorityColour;
-    TextView textViewTitle, textViewDescription, textViewDayCreated, textViewMonthCreated;
+    TextView textViewTitle, textViewDescription;
     Chip chipDeadlineCountdown;
     ImageView imageViewActions;
     MenuItem editTask, commentTask, markAsDoneTask;
@@ -109,8 +107,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
       priorityColour = itemView.findViewById(R.id.priority_colour);
       textViewTitle = itemView.findViewById(R.id.list_item_task_title);
       textViewDescription = itemView.findViewById(R.id.list_item_task_description);
-//      textViewDayCreated = itemView.findViewById(R.id.list_item_task_day_created);
-//      textViewMonthCreated = itemView.findViewById(R.id.list_item_task_month_created);
       chipDeadlineCountdown = itemView.findViewById(R.id.list_item_task_deadline_countdown);
       imageViewActions = itemView.findViewById(R.id.list_item_task_actions);
 
@@ -130,17 +126,31 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
+      int position = getAdapterPosition();
+
+      // Check for any errors
+      if (listener == null || position == RecyclerView.NO_POSITION) {
+        return false;
+      }
+
       if (menuItem == editTask) {
         Log.d(TAG, "onMenuItemClick: " + "editTask");
       } else if (menuItem == commentTask) {
         Log.d(TAG, "onMenuItemClick: " + "commentTask");
       } else if (menuItem == markAsDoneTask) {
-        Log.d(TAG, "onMenuItemClick: " + "markAsDoneTask");
+        listener.onMarkTaskAsDoneSelected(taskList.get(position));
       }
 
       return false;
     }
+  }
 
+  public interface OnContextMenuItemSelectedListener {
+    void onMarkTaskAsDoneSelected(Task task);
+  }
+
+  public void setOnContextMenuItemSelectedListener(OnContextMenuItemSelectedListener listener) {
+    this.listener = listener;
   }
 
 }

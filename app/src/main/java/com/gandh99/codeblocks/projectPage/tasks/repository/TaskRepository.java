@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,4 +48,29 @@ public class TaskRepository {
     });
   }
 
+  public void completeTask(Task task) {
+    taskAPIService
+      .updateTask(
+        task.getId(),
+        task.getTitle(),
+        task.getDescription(),
+        task.getDateCreated(),
+        task.getDeadline(),
+        task.getPriority(),
+        "True"  // Must be in this format because Django only accepts "True"/"False"
+        )
+      .enqueue(new Callback<ResponseBody>() {
+        @Override
+        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+          if (response.isSuccessful()) {
+            refreshTaskList();
+          }
+        }
+
+        @Override
+        public void onFailure(Call<ResponseBody> call, Throwable t) {
+          Log.d(TAG, "onFailure: " + t.getMessage());
+        }
+      });
+  }
 }

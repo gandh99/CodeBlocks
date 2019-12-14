@@ -26,4 +26,7 @@ public class TaskViewModel extends ViewModel {
     repository.refreshTaskList();
   }
 
+  public void completeTask(Task task) {
+    repository.completeTask(task);
+  }
 }

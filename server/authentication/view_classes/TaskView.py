@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView, CreateAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK
@@ -8,7 +8,7 @@ from authentication.models import Task, ProjectGroup
 from authentication.serializers import TaskSerializer
 
 
-class TaskView(ListAPIView, CreateAPIView, JSONEncoder):
+class TaskView(ListAPIView, CreateAPIView, UpdateAPIView, JSONEncoder):
     serializer_class = TaskSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -36,7 +36,7 @@ class TaskView(ListAPIView, CreateAPIView, JSONEncoder):
         deadline = request.data.get("deadline")
         priority = request.data.get("priority")
 
-    # Create a new task
+        # Create a new task
         task = Task(project_group=project_group, title=title, description=description,
                     date_created=date_created, deadline=deadline, priority=priority)
         task.save()
@@ -44,7 +44,25 @@ class TaskView(ListAPIView, CreateAPIView, JSONEncoder):
         response = {"Response": "Success"}
         return Response(response, status=HTTP_200_OK)
 
+    def put(self, request, *args, **kwargs):
+        # Retrieve the task to be updated
+        task_id = request.data.get("id")
+        task = Task.objects.get(pk=task_id)
+
+        # Update and save the task
+        task.title = request.data.get("title")
+        task.description = request.data.get("description")
+        task.date_created = request.data.get("dateCreated")
+        task.deadline = request.data.get("deadline")
+        task.priority = request.data.get("priority")
+        task.completed = request.data.get("completed")
+        task.save()
+
+        # Return response
+        response = {"Response": "Success"}
+        return Response(response, status=HTTP_200_OK)
+
     def encode(self, o):
         d = {'id': o.pk, 'title': o.title, 'description': o.description, 'dateCreated': o.date_created,
-             'deadline': o.deadline, 'priority': o.priority}
+             'deadline': o.deadline, 'priority': o.priority, 'completed': o.completed}
         return d

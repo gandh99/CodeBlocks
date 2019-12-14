@@ -48,12 +48,10 @@ public class CompletedTaskAdapter extends RecyclerView.Adapter<CompletedTaskAdap
   @Override
   public void onBindViewHolder(@NonNull CompletedTaskViewHolder holder, int position) {
     Task task = taskList.get(position);
-    String dayCreated, monthCreated, deadlineCountdown;
+    String deadlineCountdown;
 
     // Format some of the dates to be displayed
     try {
-      dayCreated = CustomDateFormatter.getDatePortion(task.getDateCreated(), DatePortion.DAY);
-      monthCreated = CustomDateFormatter.getShortenedMonthName(task.getDateCreated());
       deadlineCountdown = CustomDateFormatter.getRemainingTime(task.getDeadline());
     } catch (FormatException e) {
       Log.d(TAG, "onBindViewHolder: " + e.getMessage());
@@ -63,8 +61,6 @@ public class CompletedTaskAdapter extends RecyclerView.Adapter<CompletedTaskAdap
     holder.priorityColour.setBackgroundColor(priorityMap.get(task.getPriority()));
     holder.textViewTitle.setText(task.getTitle());
     holder.textViewDescription.setText(task.getDescription());
-    holder.textViewDayCreated.setText(dayCreated);
-    holder.textViewMonthCreated.setText(monthCreated);
     holder.chipDeadlineCountdown.setText(deadlineCountdown);
   }
 
@@ -90,7 +86,7 @@ public class CompletedTaskAdapter extends RecyclerView.Adapter<CompletedTaskAdap
 
   class CompletedTaskViewHolder extends RecyclerView.ViewHolder {
     View priorityColour;
-    TextView textViewTitle, textViewDescription, textViewDayCreated, textViewMonthCreated;
+    TextView textViewTitle, textViewDescription;
     Chip chipDeadlineCountdown;
 
     CompletedTaskViewHolder(@NonNull View itemView) {
@@ -99,8 +95,6 @@ public class CompletedTaskAdapter extends RecyclerView.Adapter<CompletedTaskAdap
       priorityColour = itemView.findViewById(R.id.priority_colour);
       textViewTitle = itemView.findViewById(R.id.list_item_task_title);
       textViewDescription = itemView.findViewById(R.id.list_item_task_description);
-//      textViewDayCreated = itemView.findViewById(R.id.list_item_task_day_created);
-//      textViewMonthCreated = itemView.findViewById(R.id.list_item_task_month_created);
       chipDeadlineCountdown = itemView.findViewById(R.id.list_item_task_deadline_countdown);
     }
   }

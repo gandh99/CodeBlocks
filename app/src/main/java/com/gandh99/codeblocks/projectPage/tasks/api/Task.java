@@ -7,6 +7,7 @@ public class Task {
   private String dateCreated;
   private String deadline;
   private String priority;
+  private String completed;
 
   public int getId() {
     return id;
@@ -30,5 +31,9 @@ public class Task {
 
   public String getPriority() {
     return priority;
+  }
+
+  public String isCompleted() {
+    return completed;
   }
 }

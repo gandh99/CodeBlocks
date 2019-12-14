@@ -8,6 +8,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 
 public interface TaskAPIService {
 
@@ -22,5 +23,17 @@ public interface TaskAPIService {
     @Field("dateCreated") String dateCreated,
     @Field("deadline") String deadline,
     @Field("priority") String priority
+  );
+
+  @FormUrlEncoded
+  @PUT("tasks")
+  Call<ResponseBody> updateTask(
+    @Field("id") int id,
+    @Field("title") String title,
+    @Field("description") String description,
+    @Field("dateCreated") String dateCreated,
+    @Field("deadline") String deadline,
+    @Field("priority") String priority,
+    @Field("completed") String completed
   );
 }

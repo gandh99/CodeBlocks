@@ -29,7 +29,7 @@ public class TaskModule {
 
   @Provides
   @Singleton
-  TaskAdapter provideTaskListAdapter() {
+  TaskAdapter provideTaskAdapter() {
     return new TaskAdapter();
   }
 
