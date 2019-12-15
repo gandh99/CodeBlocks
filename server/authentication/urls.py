@@ -19,6 +19,6 @@ urlpatterns = [
     path('user/projects/completed_tasks', CompletedTaskView.as_view()),
     path('user/projects/categories', ProjectCategoryView.as_view()),
     path('user/projects/members', MemberView.as_view()),
-    path('user/projects/invite', InvitationView.as_view()),
+    path('invite', InvitationView.as_view()),
     path('invite_response', InvitationResponseView.as_view())
 ]

@@ -35,7 +35,7 @@ class ProjectGroupMemberAdmin(admin.ModelAdmin):
 class ProjectCategoryAdmin(admin.ModelAdmin):
     list_display = ('project_group', 'category')
     fieldsets = [
-        (None,               {'fields': ['project_group', 'category']}),
+        (None,               {'fields': ['project_group']}),
         ('Other information', {'fields': ['category'], 'classes': ['collapse']}),
     ]
 
