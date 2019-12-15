@@ -2,6 +2,7 @@ package com.gandh99.codeblocks.projectPage;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -69,6 +70,7 @@ public abstract class GenericTaskAdapter extends RecyclerView.Adapter<GenericTas
       for (String assignee : task.getAssignees()) {
         Chip chip = new Chip(context);
         chip.setText(assignee);
+        chip.setChipIcon(context.getDrawable(R.drawable.ic_account_circle_blue_60dp));
         holder.chipGroupAssignees.addView(chip);
       }
     } catch (NullPointerException e) {
