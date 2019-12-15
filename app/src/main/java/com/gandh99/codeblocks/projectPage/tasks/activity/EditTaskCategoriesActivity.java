@@ -2,9 +2,9 @@ package com.gandh99.codeblocks.projectPage.tasks.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,6 +15,7 @@ import com.gandh99.codeblocks.projectPage.tasks.api.TaskAPIService;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -26,9 +27,10 @@ import retrofit2.Response;
 
 public class EditTaskCategoriesActivity extends AppCompatActivity {
   private static final String TAG = "EditTaskCategoriesActiv";
+  public static final String TASK_CATEGORIES_LIST_INTENT = "taskCategoriesListIntent";
   private EditText editTextTaskCategory;
   private Button buttonCreateTaskCategory, buttonDone;
-  private ChipGroup chipGroupTaskCategories;
+  private ChipGroup chipGroupSelectedCategories;
 
   @Inject
   InputValidator inputValidator;
@@ -43,13 +45,14 @@ public class EditTaskCategoriesActivity extends AppCompatActivity {
 
     editTextTaskCategory = findViewById(R.id.editText_task_category);
     buttonCreateTaskCategory = findViewById(R.id.button_create_task_category);
-    chipGroupTaskCategories = findViewById(R.id.chipgroup_selected_categories);
+    chipGroupSelectedCategories = findViewById(R.id.chipgroup_selected_categories);
     buttonDone = findViewById(R.id.button_task_category_done);
 
     initDagger();
     initToolbar();
     loadTaskCategories();
     initCreateTaskCategoryButton();
+    initDoneButton();
   }
 
   private void initDagger() {
@@ -99,14 +102,34 @@ public class EditTaskCategoriesActivity extends AppCompatActivity {
     });
   }
 
+  private void initDoneButton() {
+    ArrayList<String> selectedCategories = new ArrayList<>();
+
+    buttonDone.setOnClickListener(view -> {
+      // Retrieve all the selected categories in the ChipGroup
+      for (int i = 0; i < chipGroupSelectedCategories.getChildCount(); i++) {
+        Chip chip = (Chip) chipGroupSelectedCategories.getChildAt(i);
+        if (chip.isChecked()) {
+          selectedCategories.add(chip.getText().toString());
+        }
+      }
+
+      // Return to the original activity
+      Intent returnIntent = new Intent();
+      returnIntent.putStringArrayListExtra(TASK_CATEGORIES_LIST_INTENT, selectedCategories);
+      setResult(RESULT_OK, returnIntent);
+      finish();
+    });
+  }
+
   private void addToChipGroup(String category) {
     Chip chip =
       (Chip) getLayoutInflater()
-        .inflate(R.layout.chip_checkable, chipGroupTaskCategories, false);
+        .inflate(R.layout.chip_checkable, chipGroupSelectedCategories, false);
     chip.setText(category);
     chip.setCheckable(true);
     chip.setCheckedIconVisible(true);
-    chipGroupTaskCategories.addView(chip);
+    chipGroupSelectedCategories.addView(chip);
   }
 
   @Override

@@ -36,6 +36,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.gandh99.codeblocks.projectPage.tasks.activity.EditTaskCategoriesActivity.TASK_CATEGORIES_LIST_INTENT;
+
 public class NewTaskActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
   public static final int NEW_TASK_REQUEST_CODE = 100;
   public static final int EDIT_TASK_CATEGORIES_REQUEST_CODE = 101;
@@ -47,7 +49,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
   private DatePickerDialog datePickerDialog;
   private ImageView buttonDatePicker;
   private EditText editTextTaskTitle, editTextTaskDescription, editTextTaskDeadline;
-  private ChipGroup chipGroupAssignedMembers, chipGroupTaskPriority;
+  private ChipGroup chipGroupAssignedMembers, chipGroupTaskPriority, chipGroupTaskCategories;
   private Chip chipEditTaskCategories;
   private Button buttonCreateTask;
   private MemberViewModel memberViewModel;
@@ -82,6 +84,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
     });
     chipGroupTaskPriority = findViewById(R.id.chipgroup_task_priority);
     chipGroupAssignedMembers = findViewById(R.id.chipgroup_assign_members);
+    chipGroupTaskCategories = findViewById(R.id.chipgroup_task_categories);
     chipEditTaskCategories = findViewById(R.id.chip_edit_categories);
     buttonCreateTask = findViewById(R.id.button_create_task);
 
@@ -219,10 +222,24 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
     return localDate.getYear() + "-" + localDate.getMonth().getValue() + "-" + localDate.getDayOfMonth();
   }
 
-//  @Override
-//  protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//    if (requestCode == EDIT_TASK_CATEGORIES_REQUEST_CODE && resultCode == RESULT_OK) {
-//
-//    }
-//  }
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+
+    if (requestCode == EDIT_TASK_CATEGORIES_REQUEST_CODE && resultCode == RESULT_OK) {
+      try {
+        List<String> selectedCategories = data.getStringArrayListExtra(TASK_CATEGORIES_LIST_INTENT);
+
+        for (String category : selectedCategories) {
+          Chip chip =
+            (Chip) getLayoutInflater()
+              .inflate(R.layout.chip_closable, chipGroupTaskCategories, false);
+          chip.setText(category);
+          chipGroupTaskCategories.addView(chip);
+        }
+      } catch (NullPointerException e) {
+        // Empty
+      }
+    }
+  }
 }
