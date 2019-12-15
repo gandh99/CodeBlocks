@@ -17,30 +17,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.common.Refreshable;
-import com.gandh99.codeblocks.projectPage.tasks.NewTaskActivity;
+import com.gandh99.codeblocks.projectPage.tasks.activity.NewTaskActivity;
 import com.gandh99.codeblocks.projectPage.tasks.SortTaskDialog;
 import com.gandh99.codeblocks.projectPage.tasks.TaskAdapter;
 import com.gandh99.codeblocks.projectPage.tasks.taskSorter.TaskSorter;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 import com.gandh99.codeblocks.projectPage.tasks.api.TaskAPIService;
 import com.gandh99.codeblocks.projectPage.tasks.viewModel.TaskViewModel;
-import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import dagger.android.support.AndroidSupportInjection;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 

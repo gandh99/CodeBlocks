@@ -11,9 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".projectPage.members.activity.ViewProfileActivity"></activity>
+        <activity android:name=".projectPage.tasks.activity.EditTaskCategoriesActivity"></activity>
+        <activity android:name=".projectPage.members.activity.ViewProfileActivity" />
         <activity android:name=".homePage.userProfile.activity.EditUserProfileActivity" />
-        <activity android:name=".projectPage.tasks.NewTaskActivity" />
+        <activity android:name=".projectPage.tasks.activity.NewTaskActivity" />
         <activity android:name=".projectPage.activity.ProjectActivity" />
         <activity android:name=".homePage.activity.HomeActivity" />
         <activity android:name=".authentication.activity.MainActivity">

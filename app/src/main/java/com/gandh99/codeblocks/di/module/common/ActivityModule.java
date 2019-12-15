@@ -7,7 +7,7 @@ import com.gandh99.codeblocks.homePage.activity.HomeActivity;
 import com.gandh99.codeblocks.authentication.activity.MainActivity;
 import com.gandh99.codeblocks.homePage.userProfile.activity.EditUserProfileActivity;
 import com.gandh99.codeblocks.projectPage.activity.ProjectActivity;
-import com.gandh99.codeblocks.projectPage.tasks.NewTaskActivity;
+import com.gandh99.codeblocks.projectPage.tasks.activity.NewTaskActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

@@ -1,5 +1,6 @@
-package com.gandh99.codeblocks.projectPage.tasks;
+package com.gandh99.codeblocks.projectPage.tasks.activity;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -37,6 +38,7 @@ import retrofit2.Response;
 
 public class NewTaskActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
   public static final int NEW_TASK_REQUEST_CODE = 100;
+  public static final int EDIT_TASK_CATEGORIES_REQUEST_CODE = 101;
   public static final String INTENT_TASK_TITLE = "taskTitle";
   public static final String INTENT_TASK_DESCRIPTION = "taskDescription";
   public static final String INTENT_TASK_DEADLINE = "taskDeadline";
@@ -46,6 +48,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
   private ImageView buttonDatePicker;
   private EditText editTextTaskTitle, editTextTaskDescription, editTextTaskDeadline;
   private ChipGroup chipGroupAssignedMembers, chipGroupTaskPriority;
+  private Chip chipEditTaskCategories;
   private Button buttonCreateTask;
   private MemberViewModel memberViewModel;
 
@@ -79,10 +82,12 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
     });
     chipGroupTaskPriority = findViewById(R.id.chipgroup_task_priority);
     chipGroupAssignedMembers = findViewById(R.id.chipgroup_assign_members);
+    chipEditTaskCategories = findViewById(R.id.chip_edit_categories);
     buttonCreateTask = findViewById(R.id.button_create_task);
 
     initMemberViewModel();
     initPriorityChipGroup();
+    initEditTaskCategories();
     initCreateTaskButton();
   }
 
@@ -125,6 +130,13 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
       chip.setChipBackgroundColorResource(priorityColours[i]);
       chipGroupTaskPriority.addView(chip);
     }
+  }
+
+  private void initEditTaskCategories() {
+    chipEditTaskCategories.setOnClickListener(view -> {
+      Intent selectCategoriesIntent = new Intent(getApplicationContext(), EditTaskCategoriesActivity.class);
+      startActivityForResult(selectCategoriesIntent, EDIT_TASK_CATEGORIES_REQUEST_CODE);
+    });
   }
 
   private String getSelectedPriority() {
@@ -206,4 +218,11 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
     LocalDate localDate = LocalDate.now();
     return localDate.getYear() + "-" + localDate.getMonth().getValue() + "-" + localDate.getDayOfMonth();
   }
+
+//  @Override
+//  protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//    if (requestCode == EDIT_TASK_CATEGORIES_REQUEST_CODE && resultCode == RESULT_OK) {
+//
+//    }
+//  }
 }

@@ -37,6 +37,9 @@
     <string name="done">Done</string>
     <string name="assign_to">Assign to:</string>
     <string name="priority">Priority:</string>
+    <string name="categories">Categories:</string>
+    <string name="create_new_category">Create New Category</string>
+    <string name="selected_categories">Selected Categories:</string>
 
     <string-array name="rank">
         <item>ADMIN</item>
