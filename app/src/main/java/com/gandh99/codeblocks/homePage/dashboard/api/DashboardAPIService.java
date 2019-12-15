@@ -12,17 +12,17 @@ import retrofit2.http.POST;
 
 public interface DashboardAPIService {
 
-  @GET("projects")
+  @GET("user/projects")
   Call<List<Project>> getProjects();
 
   @FormUrlEncoded
-  @POST("projects")
+  @POST("user/projects")
   Call<ResponseBody> createProject(
     @Field("title") String title,
     @Field("description") String description
   );
 
-  @DELETE("projects")
+  @DELETE("user/projects")
   Call<ResponseBody> leaveProject(
   );
 
