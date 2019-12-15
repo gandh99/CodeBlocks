@@ -8,7 +8,7 @@ from authentication.models import ProjectGroup, UserProfile, ProjectGroupMember,
 from authentication.serializers import ProjectGroupSerializer
 
 
-class ProjectView(ListAPIView, CreateAPIView, DestroyAPIView, JSONEncoder):
+class ProjectGroupView(ListAPIView, CreateAPIView, DestroyAPIView, JSONEncoder):
     serializer_class = ProjectGroupSerializer
     permission_classes = (IsAuthenticated,)
 
