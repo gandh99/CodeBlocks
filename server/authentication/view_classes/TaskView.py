@@ -72,11 +72,6 @@ class TaskView(ListAPIView, CreateAPIView, UpdateAPIView, JSONEncoder):
         response = {"Response": "Success"}
         return Response(response, status=HTTP_200_OK)
 
-    def encode(self, o):
-        d = {'id': o.pk, 'title': o.title, 'description': o.description, 'dateCreated': o.date_created,
-             'deadline': o.deadline, 'priority': o.priority, 'completed': o.completed}
-        return d
-
     def get_assignees_profile(self, assignees_username):
         profiles = []
         for username in assignees_username:
@@ -87,3 +82,16 @@ class TaskView(ListAPIView, CreateAPIView, UpdateAPIView, JSONEncoder):
     def add_assignees_to_task(self, task, assignees_user_profile):
         for assignee in assignees_user_profile:
             task.assignees.add(assignee)
+
+    def encode(self, o):
+        assignees = self.encode_assignees(list(o.assignees.all()))
+
+        d = {'id': o.pk, 'title': o.title, 'description': o.description, 'dateCreated': o.date_created,
+             'deadline': o.deadline, 'priority': o.priority, 'assignees': assignees, 'completed': o.completed}
+        return d
+
+    def encode_assignees(self, assignees_list):
+        assignees_username = []
+        for assignee in assignees_list:
+            assignees_username.append(assignee.username)
+        return assignees_username

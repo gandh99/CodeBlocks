@@ -28,6 +28,7 @@ import com.gandh99.codeblocks.projectPage.tasks.taskSorter.TaskSorter;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 import com.gandh99.codeblocks.projectPage.tasks.api.TaskAPIService;
 import com.gandh99.codeblocks.projectPage.tasks.viewModel.TaskViewModel;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalDate;
@@ -93,6 +94,7 @@ public class TasksFragment extends Fragment implements Refreshable {
     // Setup recyclerView
     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     recyclerView.setAdapter(taskAdapter);
+    taskAdapter.setContext(getContext());
     taskAdapter.setPriorityTypes(getResources());
 
     initFloatingActionButton();

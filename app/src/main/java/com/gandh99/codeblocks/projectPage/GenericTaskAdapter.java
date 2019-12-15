@@ -1,5 +1,6 @@
 package com.gandh99.codeblocks.projectPage;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.Build;
 import android.util.Log;
@@ -21,6 +22,7 @@ import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.common.dateFormatting.CustomDateFormatter;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,6 +31,7 @@ import java.util.Map;
 
 public abstract class GenericTaskAdapter extends RecyclerView.Adapter<GenericTaskAdapter.GenericTaskViewHolder> {
   private static final String TAG = "GenericTaskAdapter";
+  private Context context;
   private List<Task> taskList = new ArrayList<>();
   private Map<String, Integer> priorityMap = new HashMap<>();
   private OnContextMenuItemSelectedListener listener;
@@ -59,6 +62,18 @@ public abstract class GenericTaskAdapter extends RecyclerView.Adapter<GenericTas
     holder.textViewTitle.setText(task.getTitle());
     holder.textViewDescription.setText(task.getDescription());
     holder.chipDeadlineCountdown.setText(deadline);
+
+    // Display assignees in the ChipGroup. CLEAR CHIPGROUP FIRST!!
+    holder.chipGroupAssignees.removeAllViews();
+    for (String assignee : task.getAssignees()) {
+      Chip chip = new Chip(context);
+      chip.setText(assignee);
+      holder.chipGroupAssignees.addView(chip);
+    }
+  }
+
+  public void setContext(Context context) {
+    this.context = context;
   }
 
   @Override
@@ -86,6 +101,7 @@ public abstract class GenericTaskAdapter extends RecyclerView.Adapter<GenericTas
     View priorityColour;
     TextView textViewTitle, textViewDescription;
     Chip chipDeadlineCountdown;
+    ChipGroup chipGroupAssignees;
     ImageView imageViewActions;
     MenuItem editTask, commentTask, markAsDoneTask;
 
@@ -96,6 +112,7 @@ public abstract class GenericTaskAdapter extends RecyclerView.Adapter<GenericTas
       textViewTitle = itemView.findViewById(R.id.list_item_task_title);
       textViewDescription = itemView.findViewById(R.id.list_item_task_description);
       chipDeadlineCountdown = itemView.findViewById(R.id.list_item_task_deadline_countdown);
+      chipGroupAssignees = itemView.findViewById(R.id.chipgroup_task_assigned_members);
       imageViewActions = itemView.findViewById(R.id.list_item_task_actions);
 
       itemView.setOnCreateContextMenuListener(this);
