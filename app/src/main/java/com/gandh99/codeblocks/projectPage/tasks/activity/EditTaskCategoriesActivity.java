@@ -67,8 +67,13 @@ public class EditTaskCategoriesActivity extends AppCompatActivity {
       public void onResponse(Call<List<String>> call, Response<List<String>> response) {
         if (response.isSuccessful()) {
           List<String> categoryList = response.body();
-          for (String category : categoryList) {
-            addToChipGroup(category);
+
+          try {
+            for (String category : categoryList) {
+              addToChipGroup(category);
+            }
+          } catch (NullPointerException e) {
+            // In case the project has 0 categories
           }
         }
       }

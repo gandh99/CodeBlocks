@@ -40,6 +40,12 @@ class ProjectGroupMember(models.Model):
     rank = models.CharField(max_length=10, choices=RANK_CHOICES, default=MEMBER)
 
 
+# This model lists all the categories available in a particular ProjectGroup
+class ProjectCategory(models.Model):
+    project_group = models.ForeignKey(ProjectGroup, on_delete=models.CASCADE)
+    category = models.CharField(max_length=20)
+
+
 class Task(models.Model):
     project_group = models.ForeignKey(ProjectGroup, on_delete=models.CASCADE)
     title = models.CharField(max_length=20)

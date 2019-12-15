@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import UserProfile, ProjectGroup, Task, ProjectGroupMember, Invitation
+from .models import UserProfile, ProjectGroup, Task, ProjectGroupMember, Invitation, ProjectCategory
 
 
 # Register your models here.
@@ -32,6 +32,14 @@ class ProjectGroupMemberAdmin(admin.ModelAdmin):
     ]
 
 
+class ProjectCategoryAdmin(admin.ModelAdmin):
+    list_display = ('project_group', 'category')
+    fieldsets = [
+        (None,               {'fields': ['project_group', 'category']}),
+        ('Other information', {'fields': ['category'], 'classes': ['collapse']}),
+    ]
+
+
 class TaskAdmin(admin.ModelAdmin):
     list_display = ('project_group', 'title', 'description', 'date_created', 'deadline', 'priority')
     fieldsets = [
@@ -53,5 +61,6 @@ class InvitationAdmin(admin.ModelAdmin):
 admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(ProjectGroup, ProjectGroupAdmin)
 admin.site.register(ProjectGroupMember, ProjectGroupMemberAdmin)
+admin.site.register(ProjectCategory, ProjectCategoryAdmin)
 admin.site.register(Task, TaskAdmin)
 admin.site.register(Invitation, InvitationAdmin)
