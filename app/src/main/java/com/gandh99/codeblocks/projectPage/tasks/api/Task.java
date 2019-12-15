@@ -1,6 +1,8 @@
 package com.gandh99.codeblocks.projectPage.tasks.api;
 
-public class Task {
+import java.io.Serializable;
+
+public class Task implements Serializable {
   private int id;
   private String title;
   private String description;

@@ -167,10 +167,11 @@ public abstract class GenericTaskAdapter extends RecyclerView.Adapter<GenericTas
         return false;
       }
 
+      Task task = taskList.get(position);
       if (menuItem == editTask) {
-        Log.d(TAG, "onMenuItemClick: " + "editTask");
+        listener.onEditTaskSelected(task);
       } else if (menuItem == markAsDoneTask) {
-        listener.onMarkTaskAsDoneSelected(taskList.get(position));
+        listener.onMarkTaskAsDoneSelected(task);
       }
 
       return false;
@@ -178,6 +179,7 @@ public abstract class GenericTaskAdapter extends RecyclerView.Adapter<GenericTas
   }
 
   public interface OnContextMenuItemSelectedListener {
+    void onEditTaskSelected(Task task);
     void onMarkTaskAsDoneSelected(Task task);
   }
 

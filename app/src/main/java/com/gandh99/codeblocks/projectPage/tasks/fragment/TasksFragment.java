@@ -20,6 +20,7 @@ import android.widget.Button;
 
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.common.Refreshable;
+import com.gandh99.codeblocks.projectPage.GenericTaskAdapter;
 import com.gandh99.codeblocks.projectPage.tasks.activity.NewTaskActivity;
 import com.gandh99.codeblocks.projectPage.tasks.SortTaskDialog;
 import com.gandh99.codeblocks.projectPage.tasks.TaskAdapter;
@@ -41,7 +42,8 @@ import static android.app.Activity.RESULT_OK;
  * A simple {@link Fragment} subclass.
  */
 public class TasksFragment extends Fragment implements Refreshable {
-  private static int DIALOG_REQUEST_SORT_CODE = 1;
+  private static final int DIALOG_REQUEST_SORT_CODE = 1;
+  public static final String EDIT_TASK_INTENT = "editTask";
   private RecyclerView recyclerView;
   private FloatingActionButton fab;
   private Button buttonSort, buttonFilter;
@@ -127,7 +129,19 @@ public class TasksFragment extends Fragment implements Refreshable {
   }
 
   private void initTaskViewHolderListener() {
-    taskAdapter.setOnContextMenuItemSelectedListener(task -> taskViewModel.completeTask(task));
+    taskAdapter.setOnContextMenuItemSelectedListener(new GenericTaskAdapter.OnContextMenuItemSelectedListener() {
+      @Override
+      public void onEditTaskSelected(Task task) {
+        Intent editTaskIntent = new Intent(getContext(), NewTaskActivity.class);
+        editTaskIntent.putExtra(EDIT_TASK_INTENT, task);
+        startActivity(editTaskIntent);
+      }
+
+      @Override
+      public void onMarkTaskAsDoneSelected(Task task) {
+        taskViewModel.completeTask(task);
+      }
+    });
   }
 
   @RequiresApi(api = Build.VERSION_CODES.O)

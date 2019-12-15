@@ -1,11 +1,5 @@
 package com.gandh99.codeblocks.projectPage.tasks.activity;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Build;
@@ -16,17 +10,26 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.authentication.InputValidator;
 import com.gandh99.codeblocks.projectPage.members.api.ProjectMember;
 import com.gandh99.codeblocks.projectPage.members.viewModel.MemberViewModel;
+import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 import com.gandh99.codeblocks.projectPage.tasks.api.TaskAPIService;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -37,6 +40,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.gandh99.codeblocks.projectPage.tasks.activity.EditTaskCategoriesActivity.TASK_CATEGORIES_LIST_INTENT;
+import static com.gandh99.codeblocks.projectPage.tasks.fragment.TasksFragment.EDIT_TASK_INTENT;
 
 public class NewTaskActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
   public static final int NEW_TASK_REQUEST_CODE = 100;
@@ -91,6 +95,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
     initMemberViewModel();
     initPriorityChipGroup();
     initEditTaskCategories();
+    loadSavedData();
     initCreateTaskButton();
   }
 
@@ -142,6 +147,42 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
     });
   }
 
+  /* Only works if this activity was started with the intention to edit a Task */
+  private void loadSavedData() {
+    Intent data = getIntent();
+
+    try {
+      Task task = (Task) data.getSerializableExtra(EDIT_TASK_INTENT);
+      editTextTaskTitle.setText(task.getTitle());
+      editTextTaskDescription.setText(task.getDescription());
+      editTextTaskDeadline.setText(task.getDeadline());
+      loadPriority(task.getPriority());
+      loadCategories(task.getTaskCategories());
+    } catch (NullPointerException e) {
+      // Reaches this point if this activity was launched from a fab (i.e. no data to load)
+    }
+  }
+
+  private void loadPriority(String priority) {
+    for (int i = 0; i < chipGroupTaskPriority.getChildCount(); i++) {
+      Chip chip = (Chip) chipGroupTaskPriority.getChildAt(i);
+      if (chip.getText().toString().equals(priority)) {
+        chip.setChecked(true);
+        return;
+      }
+    }
+  }
+
+  private void loadCategories(String[] taskCategories) {
+    for (String category : taskCategories) {
+      Chip chip =
+        (Chip) getLayoutInflater()
+          .inflate(R.layout.chip_closable, chipGroupTaskCategories, false);
+      chip.setText(category);
+      chipGroupTaskCategories.addView(chip);
+    }
+  }
+
   private String getSelectedPriority() {
     String defaultPriority = "NONE";
 
@@ -155,6 +196,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
     return defaultPriority;
   }
 
+  /* Get from a chip group the texts of all the chips that were selected */
   private List<String> getChipGroupCheckedSelection(ChipGroup chipGroup) {
     List<String> selection = new ArrayList<>();
 
@@ -168,6 +210,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
     return selection;
   }
 
+  /* Get from a chip group the texts of all the chips in it */
   private List<String> getChipGroupContents(ChipGroup chipGroup) {
     List<String> selection = new ArrayList<>();
 
