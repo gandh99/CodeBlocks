@@ -3,6 +3,7 @@ package com.gandh99.codeblocks.projectPage.tasks.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,11 +15,17 @@ import com.gandh99.codeblocks.projectPage.tasks.api.TaskAPIService;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class EditTaskCategoriesActivity extends AppCompatActivity {
+  private static final String TAG = "EditTaskCategoriesActiv";
   private EditText editTextTaskCategory;
   private Button buttonCreateTaskCategory, buttonDone;
   private ChipGroup chipGroupTaskCategories;
@@ -55,6 +62,22 @@ public class EditTaskCategoriesActivity extends AppCompatActivity {
   }
 
   private void loadTaskCategories() {
+    taskAPIService.getTaskCategories().enqueue(new Callback<List<String>>() {
+      @Override
+      public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+        if (response.isSuccessful()) {
+          List<String> categoryList = response.body();
+          for (String category : categoryList) {
+            addToChipGroup(category);
+          }
+        }
+      }
+
+      @Override
+      public void onFailure(Call<List<String>> call, Throwable t) {
+        Log.d(TAG, "onFailure: " + t.getMessage());
+      }
+    });
   }
 
   private void initCreateTaskCategoryButton() {
