@@ -155,17 +155,17 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
     return defaultPriority;
   }
 
-  private List<String> getAssignedMembers() {
-    List<String> assignedMembers = new ArrayList<>();
+  private List<String> getChipGroupSelection(ChipGroup chipGroup) {
+    List<String> selection = new ArrayList<>();
 
-    for (int i = 0; i < chipGroupAssignedMembers.getChildCount(); i++) {
-      Chip chip = (Chip) chipGroupAssignedMembers.getChildAt(i);
+    for (int i = 0; i < chipGroup.getChildCount(); i++) {
+      Chip chip = (Chip) chipGroup.getChildAt(i);
       if (chip.isChecked()) {
-        assignedMembers.add(chip.getText().toString());
+        selection.add(chip.getText().toString());
       }
     }
 
-    return assignedMembers;
+    return selection;
   }
 
   @Override
@@ -188,8 +188,10 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
       String taskDateCreated = getCurrentDate();
       String taskDeadline = editTextTaskDeadline.getText().toString();
       String taskPriority = getSelectedPriority();
-      List<String> assignedMembers = getAssignedMembers();
+      List<String> assignedMembers = getChipGroupSelection(chipGroupAssignedMembers);
+      List<String> selectedCategories = getChipGroupSelection(chipGroupTaskCategories);
 
+      // Validate user inputs
       if (inputValidator.isInvalidInput(taskTitle)
         || inputValidator.isInvalidInput(taskDescription)
         || inputValidator.isInvalidInput(taskDeadline)) {
@@ -197,8 +199,10 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
         return;
       }
 
+      // Make the API call to the server to create the task
       taskAPIService
-        .createTask(taskTitle, taskDescription, taskDateCreated, taskDeadline, taskPriority, assignedMembers)
+        .createTask(taskTitle, taskDescription, taskDateCreated, taskDeadline, taskPriority,
+          assignedMembers, selectedCategories)
         .enqueue(new Callback<ResponseBody>() {
           @Override
           public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

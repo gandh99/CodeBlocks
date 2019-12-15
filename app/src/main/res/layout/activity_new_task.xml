@@ -157,7 +157,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 app:chipIcon="@drawable/ic_edit_black_24dp"
-                android:text="Select Categories"
+                android:text="@string/select_categories"
                 />
 
         </LinearLayout>
@@ -177,7 +177,7 @@
             android:layout_marginTop="48dp"
             android:layout_marginBottom="60dp"
             style="@style/CreateButton"
-            android:text="Create Task"
+            android:text="@string/create_task"
             />
 
     </LinearLayout>
