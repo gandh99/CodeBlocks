@@ -133,7 +133,7 @@ public abstract class GenericTaskAdapter extends RecyclerView.Adapter<GenericTas
     Chip chipDeadlineCountdown;
     ChipGroup chipGroupAssignees, chipGroupTaskCategories;
     ImageView imageViewActions;
-    MenuItem editTask, commentTask, markAsDoneTask;
+    MenuItem editTask, markAsDoneTask;
 
     GenericTaskViewHolder(@NonNull View itemView) {
       super(itemView);
@@ -153,10 +153,8 @@ public abstract class GenericTaskAdapter extends RecyclerView.Adapter<GenericTas
     public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
       contextMenu.setHeaderTitle("Select an option");
       editTask = contextMenu.add("Edit");
-      commentTask = contextMenu.add("Comment");
       markAsDoneTask = contextMenu.add("Mark as done");
       editTask.setOnMenuItemClickListener(this);
-      commentTask.setOnMenuItemClickListener(this);
       markAsDoneTask.setOnMenuItemClickListener(this);
     }
 
@@ -171,8 +169,6 @@ public abstract class GenericTaskAdapter extends RecyclerView.Adapter<GenericTas
 
       if (menuItem == editTask) {
         Log.d(TAG, "onMenuItemClick: " + "editTask");
-      } else if (menuItem == commentTask) {
-        Log.d(TAG, "onMenuItemClick: " + "commentTask");
       } else if (menuItem == markAsDoneTask) {
         listener.onMarkTaskAsDoneSelected(taskList.get(position));
       }
