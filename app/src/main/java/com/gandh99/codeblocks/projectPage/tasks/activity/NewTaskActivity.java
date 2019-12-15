@@ -155,7 +155,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
     return defaultPriority;
   }
 
-  private List<String> getChipGroupSelection(ChipGroup chipGroup) {
+  private List<String> getChipGroupCheckedSelection(ChipGroup chipGroup) {
     List<String> selection = new ArrayList<>();
 
     for (int i = 0; i < chipGroup.getChildCount(); i++) {
@@ -163,6 +163,17 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
       if (chip.isChecked()) {
         selection.add(chip.getText().toString());
       }
+    }
+
+    return selection;
+  }
+
+  private List<String> getChipGroupContents(ChipGroup chipGroup) {
+    List<String> selection = new ArrayList<>();
+
+    for (int i = 0; i < chipGroup.getChildCount(); i++) {
+      Chip chip = (Chip) chipGroup.getChildAt(i);
+      selection.add(chip.getText().toString());
     }
 
     return selection;
@@ -188,8 +199,8 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
       String taskDateCreated = getCurrentDate();
       String taskDeadline = editTextTaskDeadline.getText().toString();
       String taskPriority = getSelectedPriority();
-      List<String> assignedMembers = getChipGroupSelection(chipGroupAssignedMembers);
-      List<String> selectedCategories = getChipGroupSelection(chipGroupTaskCategories);
+      List<String> assignedMembers = getChipGroupCheckedSelection(chipGroupAssignedMembers);
+      List<String> selectedCategories = getChipGroupContents(chipGroupTaskCategories);
 
       // Validate user inputs
       if (inputValidator.isInvalidInput(taskTitle)

@@ -41,9 +41,12 @@ class ProjectGroupMember(models.Model):
 
 
 # This model lists all the categories available in a particular ProjectGroup
-class ProjectCategory(models.Model):
+class TaskCategory(models.Model):
     project_group = models.ForeignKey(ProjectGroup, on_delete=models.CASCADE)
     category = models.CharField(max_length=20)
+
+    class Meta:
+        unique_together = ['project_group', 'category']
 
 
 class Task(models.Model):
@@ -66,6 +69,7 @@ class Task(models.Model):
 
     priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default=NONE)
     assignees = models.ManyToManyField(UserProfile)
+    categories = models.ManyToManyField(TaskCategory)
     completed = models.BooleanField(default=False)
 
     def __str__(self):
