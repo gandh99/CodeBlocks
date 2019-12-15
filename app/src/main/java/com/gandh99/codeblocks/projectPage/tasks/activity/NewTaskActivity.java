@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.authentication.InputValidator;
+import com.gandh99.codeblocks.common.dateFormatting.CustomDateFormatter;
 import com.gandh99.codeblocks.projectPage.TaskDataLoader;
 import com.gandh99.codeblocks.projectPage.members.api.ProjectMember;
 import com.gandh99.codeblocks.projectPage.members.viewModel.MemberViewModel;
@@ -230,7 +231,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
     buttonCreateTask.setOnClickListener(view -> {
       String taskTitle = editTextTaskTitle.getText().toString();
       String taskDescription = editTextTaskDescription.getText().toString();
-      String taskDateCreated = getCurrentDate();
+      String taskDateCreated = CustomDateFormatter.getCurrentDate();
       String taskDeadline = editTextTaskDeadline.getText().toString();
       String taskPriority = getSelectedPriority();
       List<String> assignedMembers = getChipGroupCheckedSelection(chipGroupAssignedMembers);
@@ -263,12 +264,6 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
           }
         });
     });
-  }
-
-  @RequiresApi(api = Build.VERSION_CODES.O)
-  private String getCurrentDate() {
-    LocalDate localDate = LocalDate.now();
-    return localDate.getYear() + "-" + localDate.getMonth().getValue() + "-" + localDate.getDayOfMonth();
   }
 
   @Override

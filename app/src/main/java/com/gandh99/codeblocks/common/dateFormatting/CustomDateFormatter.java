@@ -8,6 +8,7 @@ import androidx.annotation.RequiresApi;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -84,5 +85,11 @@ public class CustomDateFormatter {
     }
 
     return day + " " + month + " " + year;
+  }
+
+  @RequiresApi(api = Build.VERSION_CODES.O)
+  public static String getCurrentDate() {
+    LocalDate localDate = LocalDate.now();
+    return localDate.getYear() + "-" + localDate.getMonth().getValue() + "-" + localDate.getDayOfMonth();
   }
 }
