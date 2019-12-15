@@ -29,7 +29,7 @@
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editText_task_description"
+                    android:id="@+id/editText_task_category"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="0dp"
@@ -40,6 +40,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
+                android:id="@+id/button_create_task_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
