@@ -87,8 +87,7 @@
                 android:id="@+id/chipgroup_task_assigned_members"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginVertical="10dp"
                 />
 
         </LinearLayout>

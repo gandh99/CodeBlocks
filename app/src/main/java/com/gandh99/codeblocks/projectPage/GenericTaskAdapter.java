@@ -65,10 +65,14 @@ public abstract class GenericTaskAdapter extends RecyclerView.Adapter<GenericTas
 
     // Display assignees in the ChipGroup. CLEAR CHIPGROUP FIRST!!
     holder.chipGroupAssignees.removeAllViews();
-    for (String assignee : task.getAssignees()) {
-      Chip chip = new Chip(context);
-      chip.setText(assignee);
-      holder.chipGroupAssignees.addView(chip);
+    try {
+      for (String assignee : task.getAssignees()) {
+        Chip chip = new Chip(context);
+        chip.setText(assignee);
+        holder.chipGroupAssignees.addView(chip);
+      }
+    } catch (NullPointerException e) {
+      // This might occur if a task has 0 assignees
     }
   }
 
