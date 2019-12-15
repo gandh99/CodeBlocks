@@ -235,6 +235,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
             (Chip) getLayoutInflater()
               .inflate(R.layout.chip_closable, chipGroupTaskCategories, false);
           chip.setText(category);
+          chip.setOnCloseIconClickListener(view -> chipGroupTaskCategories.removeView(view));
           chipGroupTaskCategories.addView(chip);
         }
       } catch (NullPointerException e) {

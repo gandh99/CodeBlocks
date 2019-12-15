@@ -39,7 +39,7 @@
     <string name="priority">Priority:</string>
     <string name="categories">Categories:</string>
     <string name="create_new_category">Create New Category</string>
-    <string name="selected_categories">Selected Categories:</string>
+    <string name="press_to_select_categories">Press to Select Categories:</string>
 
     <string-array name="rank">
         <item>ADMIN</item>
