@@ -69,12 +69,24 @@ class TaskView(ListAPIView, CreateAPIView, UpdateAPIView, JSONEncoder):
         task = Task.objects.get(pk=task_id)
 
         # Update and save the task
+        project_group = task.project_group
         task.title = request.data.get("title")
         task.description = request.data.get("description")
         task.date_created = request.data.get("dateCreated")
         task.deadline = request.data.get("deadline")
         task.priority = request.data.get("priority")
         task.completed = request.data.get("completed")
+
+        # Get a list of the UserProfiles based on the assignees_username
+        assignees_username_list = request.data.getlist("assignees")
+        assignees_user_profile_list = self.get_assignees_user_profile_list(assignees_username_list)
+        self.update_assignees_in_task(task, assignees_user_profile_list)
+        task.save()
+
+        # Get a list of TaskCategory based on the task_categories_string
+        task_categories_string_list = request.data.getlist("categories")
+        task_categories_list = self.get_task_categories_list(task_categories_string_list, project_group)
+        self.update_task_categories_in_task(task, task_categories_list)
         task.save()
 
         # Return response
@@ -92,6 +104,10 @@ class TaskView(ListAPIView, CreateAPIView, UpdateAPIView, JSONEncoder):
         for assignee in assignees_user_profile:
             task.assignees.add(assignee)
 
+    def update_assignees_in_task(self, task, assignees_user_profile_list):
+        task.assignees.clear()
+        self.add_assignees_to_task(task, assignees_user_profile_list)
+
     def get_task_categories_list(self, task_categories_string, project_group):
         task_categories_list = []
         for task_category_string in task_categories_string:
@@ -108,6 +124,10 @@ class TaskView(ListAPIView, CreateAPIView, UpdateAPIView, JSONEncoder):
     def add_task_categories_to_task(self, task, task_categories_list):
         for task_category in task_categories_list:
             task.categories.add(task_category)
+
+    def update_task_categories_in_task(self, task, task_categories_list):
+        task.categories.clear()
+        self.add_task_categories_to_task(task, task_categories_list)
 
     def encode(self, o):
         assignees = self.encode_assignees(list(o.assignees.all()))
