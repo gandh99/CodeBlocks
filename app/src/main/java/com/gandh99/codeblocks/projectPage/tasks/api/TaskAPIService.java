@@ -37,4 +37,7 @@ public interface TaskAPIService {
     @Field("priority") String priority,
     @Field("completed") String completed
   );
+
+  @GET("projects/categories")
+  Call<List<String>> getTaskCategories();
 }

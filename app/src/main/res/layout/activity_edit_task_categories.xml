@@ -64,6 +64,15 @@
             android:layout_marginTop="10dp"
             />
 
+        <Button
+            android:id="@+id/button_task_category_done"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="@string/done"
+            style="@style/CreateButton"
+            />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

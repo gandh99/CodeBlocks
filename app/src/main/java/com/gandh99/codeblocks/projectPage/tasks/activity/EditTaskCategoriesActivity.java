@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.authentication.InputValidator;
+import com.gandh99.codeblocks.projectPage.tasks.api.TaskAPIService;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
@@ -19,11 +20,14 @@ import dagger.android.AndroidInjection;
 
 public class EditTaskCategoriesActivity extends AppCompatActivity {
   private EditText editTextTaskCategory;
-  private Button buttonCreateTaskCategory;
+  private Button buttonCreateTaskCategory, buttonDone;
   private ChipGroup chipGroupTaskCategories;
 
   @Inject
   InputValidator inputValidator;
+
+  @Inject
+  TaskAPIService taskAPIService;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +37,11 @@ public class EditTaskCategoriesActivity extends AppCompatActivity {
     editTextTaskCategory = findViewById(R.id.editText_task_category);
     buttonCreateTaskCategory = findViewById(R.id.button_create_task_category);
     chipGroupTaskCategories = findViewById(R.id.chipgroup_selected_categories);
+    buttonDone = findViewById(R.id.button_task_category_done);
 
     initDagger();
     initToolbar();
+    loadTaskCategories();
     initCreateTaskCategoryButton();
   }
 
@@ -46,6 +52,9 @@ public class EditTaskCategoriesActivity extends AppCompatActivity {
   private void initToolbar() {
     getSupportActionBar().setTitle("Edit Task Categories");
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+  }
+
+  private void loadTaskCategories() {
   }
 
   private void initCreateTaskCategoryButton() {
