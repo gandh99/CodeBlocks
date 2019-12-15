@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.authentication.InputValidator;
+import com.gandh99.codeblocks.projectPage.TaskDataLoader;
 import com.gandh99.codeblocks.projectPage.members.api.ProjectMember;
 import com.gandh99.codeblocks.projectPage.members.viewModel.MemberViewModel;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
@@ -39,6 +41,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.gandh99.codeblocks.projectPage.TaskDataLoader.CATEGORY;
+import static com.gandh99.codeblocks.projectPage.TaskDataLoader.DEADLINE;
+import static com.gandh99.codeblocks.projectPage.TaskDataLoader.DESCRIPTION;
+import static com.gandh99.codeblocks.projectPage.TaskDataLoader.PRIORITY;
+import static com.gandh99.codeblocks.projectPage.TaskDataLoader.TITLE;
 import static com.gandh99.codeblocks.projectPage.tasks.activity.EditTaskCategoriesActivity.TASK_CATEGORIES_LIST_INTENT;
 import static com.gandh99.codeblocks.projectPage.tasks.fragment.TasksFragment.EDIT_TASK_INTENT;
 
@@ -57,6 +64,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
   private Chip chipEditTaskCategories;
   private Button buttonCreateTask;
   private MemberViewModel memberViewModel;
+  private boolean editMode = false;
 
   @Inject
   InputValidator inputValidator;
@@ -153,33 +161,16 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
 
     try {
       Task task = (Task) data.getSerializableExtra(EDIT_TASK_INTENT);
-      editTextTaskTitle.setText(task.getTitle());
-      editTextTaskDescription.setText(task.getDescription());
-      editTextTaskDeadline.setText(task.getDeadline());
-      loadPriority(task.getPriority());
-      loadCategories(task.getTaskCategories());
+      editMode = true;
+      Map<String, View> stringViewMap = new HashMap<>();
+      stringViewMap.put(TITLE, editTextTaskTitle);
+      stringViewMap.put(DESCRIPTION, editTextTaskDescription);
+      stringViewMap.put(DEADLINE, editTextTaskDeadline);
+      stringViewMap.put(PRIORITY, chipGroupTaskPriority);
+      stringViewMap.put(CATEGORY, chipGroupTaskCategories);
+      TaskDataLoader.loadData(task, stringViewMap, getLayoutInflater());
     } catch (NullPointerException e) {
       // Reaches this point if this activity was launched from a fab (i.e. no data to load)
-    }
-  }
-
-  private void loadPriority(String priority) {
-    for (int i = 0; i < chipGroupTaskPriority.getChildCount(); i++) {
-      Chip chip = (Chip) chipGroupTaskPriority.getChildAt(i);
-      if (chip.getText().toString().equals(priority)) {
-        chip.setChecked(true);
-        return;
-      }
-    }
-  }
-
-  private void loadCategories(String[] taskCategories) {
-    for (String category : taskCategories) {
-      Chip chip =
-        (Chip) getLayoutInflater()
-          .inflate(R.layout.chip_closable, chipGroupTaskCategories, false);
-      chip.setText(category);
-      chipGroupTaskCategories.addView(chip);
     }
   }
 
