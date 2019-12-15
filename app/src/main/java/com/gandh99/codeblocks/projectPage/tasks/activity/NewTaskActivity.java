@@ -53,6 +53,7 @@ import static com.gandh99.codeblocks.projectPage.tasks.fragment.TasksFragment.ED
 public class NewTaskActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
   public static final int NEW_TASK_REQUEST_CODE = 100;
   public static final int EDIT_TASK_CATEGORIES_REQUEST_CODE = 101;
+  public static final int EDIT_TASK_REQUEST_CODE = 102;
   public static final String INTENT_TASK_TITLE = "taskTitle";
   public static final String INTENT_TASK_DESCRIPTION = "taskDescription";
   public static final String INTENT_TASK_DEADLINE = "taskDeadline";
@@ -65,7 +66,10 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
   private Chip chipEditTaskCategories;
   private Button buttonCreateTask;
   private MemberViewModel memberViewModel;
+
+  /* Only for the purpose of editing a Task */
   private boolean editMode = false;
+  private int taskID;
 
   @Inject
   InputValidator inputValidator;
@@ -163,6 +167,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
     try {
       Task task = (Task) data.getSerializableExtra(EDIT_TASK_INTENT);
       editMode = true;
+      taskID = task.getId();
       Map<String, View> stringViewMap = new HashMap<>();
       stringViewMap.put(TITLE, editTextTaskTitle);
       stringViewMap.put(DESCRIPTION, editTextTaskDescription);
@@ -243,6 +248,27 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
         || inputValidator.isInvalidInput(taskDeadline)) {
         Toast.makeText(NewTaskActivity.this, "Please enter all fields", Toast.LENGTH_SHORT).show();
         return;
+      }
+
+      // Make the API call to the server to update the task
+      if (editMode) {
+        taskAPIService
+          .updateTask(taskID, taskTitle, taskDescription, taskDateCreated, taskDeadline, taskPriority,
+            assignedMembers, selectedCategories, "False")
+          .enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+              if (response.isSuccessful()) {
+                Intent returnIntent = new Intent();
+                setResult(RESULT_OK, returnIntent);
+                NewTaskActivity.this.finish();
+              }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            }
+          });
       }
 
       // Make the API call to the server to create the task

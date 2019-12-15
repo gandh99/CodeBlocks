@@ -36,6 +36,8 @@ public interface TaskAPIService {
     @Field("dateCreated") String dateCreated,
     @Field("deadline") String deadline,
     @Field("priority") String priority,
+    @Field("assignees") List<String> assignees,
+    @Field("categories") List<String> categories,
     @Field("completed") String completed
   );
 

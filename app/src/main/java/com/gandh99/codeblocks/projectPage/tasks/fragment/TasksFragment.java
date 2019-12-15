@@ -37,6 +37,8 @@ import javax.inject.Inject;
 import dagger.android.support.AndroidSupportInjection;
 
 import static android.app.Activity.RESULT_OK;
+import static com.gandh99.codeblocks.projectPage.tasks.activity.NewTaskActivity.EDIT_TASK_REQUEST_CODE;
+import static com.gandh99.codeblocks.projectPage.tasks.activity.NewTaskActivity.NEW_TASK_REQUEST_CODE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -107,7 +109,7 @@ public class TasksFragment extends Fragment implements Refreshable {
   private void initFloatingActionButton() {
     fab.setOnClickListener(view -> {
       Intent intent = new Intent(getContext(), NewTaskActivity.class);
-      startActivityForResult(intent, NewTaskActivity.NEW_TASK_REQUEST_CODE);
+      startActivityForResult(intent, NEW_TASK_REQUEST_CODE);
     });
   }
 
@@ -134,7 +136,7 @@ public class TasksFragment extends Fragment implements Refreshable {
       public void onEditTaskSelected(Task task) {
         Intent editTaskIntent = new Intent(getContext(), NewTaskActivity.class);
         editTaskIntent.putExtra(EDIT_TASK_INTENT, task);
-        startActivity(editTaskIntent);
+        startActivityForResult(editTaskIntent, EDIT_TASK_REQUEST_CODE);
       }
 
       @Override
@@ -147,7 +149,9 @@ public class TasksFragment extends Fragment implements Refreshable {
   @RequiresApi(api = Build.VERSION_CODES.O)
   @Override
   public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-    if (requestCode == NewTaskActivity.NEW_TASK_REQUEST_CODE && resultCode == RESULT_OK) {
+    if (requestCode == NEW_TASK_REQUEST_CODE && resultCode == RESULT_OK) {
+      refresh();
+    } else if (requestCode == EDIT_TASK_REQUEST_CODE && resultCode == RESULT_OK) {
       refresh();
     }
   }

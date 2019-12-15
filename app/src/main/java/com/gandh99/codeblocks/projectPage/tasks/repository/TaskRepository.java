@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 import com.gandh99.codeblocks.projectPage.tasks.api.TaskAPIService;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -57,6 +58,8 @@ public class TaskRepository {
         task.getDateCreated(),
         task.getDeadline(),
         task.getPriority(),
+        Arrays.asList(task.getAssignees()),
+        Arrays.asList(task.getTaskCategories()),
         "True"  // Must be in this format because Django only accepts "True"/"False"
         )
       .enqueue(new Callback<ResponseBody>() {
