@@ -13,7 +13,7 @@ import retrofit2.http.POST;
 
 public interface CompletedTaskAPIService {
 
-  @GET("completed_tasks")
+  @GET("user/projects/completed_tasks")
   Call<List<Task>> getTasks();
 
 }

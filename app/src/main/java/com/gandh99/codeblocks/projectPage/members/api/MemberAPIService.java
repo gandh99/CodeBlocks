@@ -10,11 +10,11 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface MemberAPIService {
-  @GET("members")
+  @GET("user/projects/members")
   Call<List<ProjectMember>> getProjectMembers();
 
   @FormUrlEncoded
-  @POST("invite")
+  @POST("user/projects/invite")
   Call<ResponseBody> inviteMember(
     @Field("invitee") String invitee,
     @Field("inviteeRank") String inviteeRank

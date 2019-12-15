@@ -12,11 +12,11 @@ import retrofit2.http.PUT;
 
 public interface TaskAPIService {
 
-  @GET("tasks")
+  @GET("user/projects/tasks")
   Call<List<Task>> getTasks();
 
   @FormUrlEncoded
-  @POST("tasks")
+  @POST("user/projects/tasks")
   Call<ResponseBody> createTask(
     @Field("title") String title,
     @Field("description") String description,
@@ -27,7 +27,7 @@ public interface TaskAPIService {
   );
 
   @FormUrlEncoded
-  @PUT("tasks")
+  @PUT("user/projects/tasks")
   Call<ResponseBody> updateTask(
     @Field("id") int id,
     @Field("title") String title,
@@ -38,6 +38,6 @@ public interface TaskAPIService {
     @Field("completed") String completed
   );
 
-  @GET("projects/categories")
+  @GET("user/projects/categories")
   Call<List<String>> getTaskCategories();
 }

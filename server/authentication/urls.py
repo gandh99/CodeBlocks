@@ -13,10 +13,10 @@ urlpatterns = [
     path('register', register),
     path('login', login),
     path('user_profile', UserProfileView.as_view()),
-    path('projects', ProjectView.as_view()),
-    path('tasks', TaskView.as_view()),
-    path('completed_tasks', CompletedTaskView.as_view()),
-    path('members', MemberView.as_view()),
-    path('invite', InvitationView.as_view()),
+    path('user/projects', ProjectView.as_view()),
+    path('user/projects/tasks', TaskView.as_view()),
+    path('user/projects/completed_tasks', CompletedTaskView.as_view()),
+    path('user/projects/members', MemberView.as_view()),
+    path('user/projects/invite', InvitationView.as_view()),
     path('invite_response', InvitationResponseView.as_view())
 ]
