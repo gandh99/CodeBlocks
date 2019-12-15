@@ -93,6 +93,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
   private void initMemberViewModel() {
     memberViewModel = ViewModelProviders.of(this, viewModelFactory).get(MemberViewModel.class);
     memberViewModel.getProjectMembers().observe(this, projectMembers -> {
+      chipGroupAssignedMembers.removeAllViews();
       for (ProjectMember member : projectMembers) {
         Chip chip =
           (Chip) getLayoutInflater()
