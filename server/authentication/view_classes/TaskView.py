@@ -1,5 +1,4 @@
-from sqlite3 import IntegrityError
-
+from django.db import IntegrityError
 from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response

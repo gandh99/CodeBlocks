@@ -79,6 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
                 app:chipIcon="@drawable/ic_alarm_grey"
                 android:text="Deadline"
                 />
@@ -87,14 +88,14 @@
                 android:id="@+id/chipgroup_task_categories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="10dp"
+                android:layout_marginVertical="5dp"
                 />
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chipgroup_task_assigned_members"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="10dp"
+                android:layout_marginVertical="5dp"
                 />
 
         </LinearLayout>
