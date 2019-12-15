@@ -36,7 +36,8 @@ class TaskAdmin(admin.ModelAdmin):
     list_display = ('project_group', 'title', 'description', 'date_created', 'deadline', 'priority')
     fieldsets = [
         (None,               {'fields': ['project_group']}),
-        ('Other information', {'fields': ['title', 'description', 'date_created', 'deadline', 'priority'],
+        ('Other information', {'fields': ['title', 'description', 'date_created', 'deadline', 'priority', 'assignees',
+                                          'completed'],
                                'classes': ['collapse']}),
     ]
 

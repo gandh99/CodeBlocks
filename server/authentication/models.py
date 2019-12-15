@@ -59,6 +59,7 @@ class Task(models.Model):
     ]
 
     priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default=NONE)
+    assignees = models.ManyToManyField(UserProfile)
     completed = models.BooleanField(default=False)
 
     def __str__(self):

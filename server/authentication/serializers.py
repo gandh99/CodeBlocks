@@ -50,7 +50,9 @@ class TaskSerializer(serializers.ModelSerializer):
             'description',
             'date_created',
             'deadline',
-            'priority'
+            'priority',
+            'assignees',
+            'completed'
         ]
 
 

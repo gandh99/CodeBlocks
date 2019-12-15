@@ -6,6 +6,7 @@ from rest_framework.status import HTTP_200_OK
 from authentication.JSONEncoder import JSONEncoder
 from authentication.models import Task, ProjectGroup
 from authentication.serializers import TaskSerializer
+from authentication.models import UserProfile
 
 
 class TaskView(ListAPIView, CreateAPIView, UpdateAPIView, JSONEncoder):
@@ -35,12 +36,21 @@ class TaskView(ListAPIView, CreateAPIView, UpdateAPIView, JSONEncoder):
         date_created = request.data.get("dateCreated")
         deadline = request.data.get("deadline")
         priority = request.data.get("priority")
+        assignees_username = request.data.getlist("assignees")
+
+        # Get the UserProfile of the assignees_username
+        assignees_user_profile = self.get_assignees_profile(assignees_username)
 
         # Create a new task
         task = Task(project_group=project_group, title=title, description=description,
                     date_created=date_created, deadline=deadline, priority=priority)
         task.save()
 
+        # Add the assignees' user profiles to the task
+        self.add_assignees_to_task(task, assignees_user_profile)
+        task.save()
+
+        # Return response
         response = {"Response": "Success"}
         return Response(response, status=HTTP_200_OK)
 
@@ -66,3 +76,14 @@ class TaskView(ListAPIView, CreateAPIView, UpdateAPIView, JSONEncoder):
         d = {'id': o.pk, 'title': o.title, 'description': o.description, 'dateCreated': o.date_created,
              'deadline': o.deadline, 'priority': o.priority, 'completed': o.completed}
         return d
+
+    def get_assignees_profile(self, assignees_username):
+        profiles = []
+        for username in assignees_username:
+            user_profile = UserProfile.objects.get(username=username)
+            profiles.append(user_profile)
+        return profiles
+
+    def add_assignees_to_task(self, task, assignees_user_profile):
+        for assignee in assignees_user_profile:
+            task.assignees.add(assignee)
