@@ -76,6 +76,18 @@ public abstract class GenericTaskAdapter extends RecyclerView.Adapter<GenericTas
     } catch (NullPointerException e) {
       // This might occur if a task has 0 assignees
     }
+
+    // Display categories in the ChipGroup. CLEAR CHIPGROUP FIRST!!
+    holder.chipGroupTaskCategories.removeAllViews();
+    try {
+      for (String category : task.getTaskCategories()) {
+        Chip chip = new Chip(context);
+        chip.setText(category);
+        holder.chipGroupTaskCategories.addView(chip);
+      }
+    } catch (NullPointerException e) {
+      // This might occur if a task has 0 categories
+    }
   }
 
   public void setContext(Context context) {
@@ -107,7 +119,7 @@ public abstract class GenericTaskAdapter extends RecyclerView.Adapter<GenericTas
     View priorityColour;
     TextView textViewTitle, textViewDescription;
     Chip chipDeadlineCountdown;
-    ChipGroup chipGroupAssignees;
+    ChipGroup chipGroupAssignees, chipGroupTaskCategories;
     ImageView imageViewActions;
     MenuItem editTask, commentTask, markAsDoneTask;
 
@@ -119,6 +131,7 @@ public abstract class GenericTaskAdapter extends RecyclerView.Adapter<GenericTas
       textViewDescription = itemView.findViewById(R.id.list_item_task_description);
       chipDeadlineCountdown = itemView.findViewById(R.id.list_item_task_deadline_countdown);
       chipGroupAssignees = itemView.findViewById(R.id.chipgroup_task_assigned_members);
+      chipGroupTaskCategories = itemView.findViewById(R.id.chipgroup_task_categories);
       imageViewActions = itemView.findViewById(R.id.list_item_task_actions);
 
       itemView.setOnCreateContextMenuListener(this);

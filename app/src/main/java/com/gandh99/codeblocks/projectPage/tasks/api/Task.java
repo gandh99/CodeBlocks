@@ -8,6 +8,7 @@ public class Task {
   private String deadline;
   private String priority;
   private String[] assignees;
+  private String[] categories;
   private String completed;
 
   public int getId() {
@@ -36,6 +37,10 @@ public class Task {
 
   public String[] getAssignees() {
     return assignees;
+  }
+
+  public String[] getTaskCategories() {
+    return categories;
   }
 
   public String isCompleted() {

@@ -1,3 +1,5 @@
+from sqlite3 import IntegrityError
+
 from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -36,14 +38,14 @@ class TaskView(ListAPIView, CreateAPIView, UpdateAPIView, JSONEncoder):
         date_created = request.data.get("dateCreated")
         deadline = request.data.get("deadline")
         priority = request.data.get("priority")
-        assignees_username = request.data.getlist("assignees")
-        task_categories_string = request.data.getlist("categories")
+        assignees_username_list = request.data.getlist("assignees")
+        task_categories_string_list = request.data.getlist("categories")
 
         # Get a list of the UserProfiles based on the assignees_username
-        assignees_user_profile_list = self.get_assignees_profile(assignees_username)
+        assignees_user_profile_list = self.get_assignees_user_profile_list(assignees_username_list)
 
         # Get a list of TaskCategory based on the task_categories_string
-        task_categories_list = self.get_task_categories(task_categories_string, project_group)
+        task_categories_list = self.get_task_categories_list(task_categories_string_list, project_group)
 
         # Create a new task
         task = Task(project_group=project_group, title=title, description=description,
@@ -80,7 +82,7 @@ class TaskView(ListAPIView, CreateAPIView, UpdateAPIView, JSONEncoder):
         response = {"Response": "Success"}
         return Response(response, status=HTTP_200_OK)
 
-    def get_assignees_profile(self, assignees_username):
+    def get_assignees_user_profile_list(self, assignees_username):
         profiles = []
         for username in assignees_username:
             user_profile = UserProfile.objects.get(username=username)
@@ -91,19 +93,16 @@ class TaskView(ListAPIView, CreateAPIView, UpdateAPIView, JSONEncoder):
         for assignee in assignees_user_profile:
             task.assignees.add(assignee)
 
-    def get_task_categories(self, task_categories_string, project_group):
-        # Get all the task categories related to the project
-        all_task_categories_in_project_list = list(TaskCategory.objects.filter(project_group=project_group))
-
-        # Iterate through project_categories and create a new TaskCategory if necessary
-        task_categories_list = self.get_task_categories_list(task_categories_string, project_group)
-        return task_categories_list
-
     def get_task_categories_list(self, task_categories_string, project_group):
         task_categories_list = []
         for task_category_string in task_categories_string:
-            task_category = TaskCategory(project_group=project_group, category=task_category_string)
-            task_category.save()
+            try:
+                # Try to create a new TaskCategory. Only works if it does not already exist
+                task_category = TaskCategory(project_group=project_group, category=task_category_string)
+                task_category.save()
+            except IntegrityError:
+                # If the TaskCategory already exists, then extract it
+                task_category = TaskCategory.objects.get(project_group=project_group, category=task_category_string)
             task_categories_list.append(task_category)
         return task_categories_list
 
@@ -113,9 +112,11 @@ class TaskView(ListAPIView, CreateAPIView, UpdateAPIView, JSONEncoder):
 
     def encode(self, o):
         assignees = self.encode_assignees(list(o.assignees.all()))
+        categories = self.encode_categories(list(o.categories.all()))
 
         d = {'id': o.pk, 'title': o.title, 'description': o.description, 'dateCreated': o.date_created,
-             'deadline': o.deadline, 'priority': o.priority, 'assignees': assignees, 'completed': o.completed}
+             'deadline': o.deadline, 'priority': o.priority, 'assignees': assignees, 'categories': categories,
+             'completed': o.completed}
         return d
 
     def encode_assignees(self, assignees_list):
@@ -123,3 +124,9 @@ class TaskView(ListAPIView, CreateAPIView, UpdateAPIView, JSONEncoder):
         for assignee in assignees_list:
             assignees_username_list.append(assignee.username)
         return assignees_username_list
+
+    def encode_categories(self, categories_list):
+        categories_name_list = []
+        for category in categories_list:
+            categories_name_list.append(category.category)
+        return categories_name_list

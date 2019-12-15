@@ -84,6 +84,13 @@
                 />
 
             <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipgroup_task_categories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                />
+
+            <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chipgroup_task_assigned_members"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
