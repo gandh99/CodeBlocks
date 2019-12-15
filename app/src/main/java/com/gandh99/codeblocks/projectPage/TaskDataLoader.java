@@ -49,6 +49,7 @@ public class TaskDataLoader {
         (Chip) inflater
           .inflate(R.layout.chip_closable, chipGroupTaskCategories, false);
       chip.setText(category);
+      chip.setOnCloseIconClickListener(chipGroupTaskCategories::removeView);
       chipGroupTaskCategories.addView(chip);
     }
   }

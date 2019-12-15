@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.common.Refreshable;
@@ -150,8 +151,10 @@ public class TasksFragment extends Fragment implements Refreshable {
   @Override
   public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
     if (requestCode == NEW_TASK_REQUEST_CODE && resultCode == RESULT_OK) {
+      Toast.makeText(getContext(), "New task created", Toast.LENGTH_SHORT).show();
       refresh();
     } else if (requestCode == EDIT_TASK_REQUEST_CODE && resultCode == RESULT_OK) {
+      Toast.makeText(getContext(), "Task successfully updated", Toast.LENGTH_SHORT).show();
       refresh();
     }
   }
