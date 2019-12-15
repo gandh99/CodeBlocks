@@ -68,7 +68,7 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
   private MemberViewModel memberViewModel;
 
   /* Only for the purpose of editing a Task */
-  private boolean editMode = false;
+  private boolean editMode;
   private int taskID;
 
   @Inject
@@ -166,7 +166,6 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
 
     try {
       Task task = (Task) data.getSerializableExtra(EDIT_TASK_INTENT);
-      editMode = true;
       taskID = task.getId();
       Map<String, View> stringViewMap = new HashMap<>();
       stringViewMap.put(TITLE, editTextTaskTitle);
@@ -175,8 +174,10 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
       stringViewMap.put(PRIORITY, chipGroupTaskPriority);
       stringViewMap.put(CATEGORY, chipGroupTaskCategories);
       TaskDataLoader.loadData(task, stringViewMap, getLayoutInflater());
+      editMode = true;
     } catch (NullPointerException e) {
       // Reaches this point if this activity was launched from a fab (i.e. no data to load)
+      editMode = false;
     }
   }
 
@@ -269,6 +270,8 @@ public class NewTaskActivity extends AppCompatActivity implements DatePickerDial
             public void onFailure(Call<ResponseBody> call, Throwable t) {
             }
           });
+
+        return;
       }
 
       // Make the API call to the server to create the task
