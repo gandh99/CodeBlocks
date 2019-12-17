@@ -24,6 +24,22 @@ class CompletedTaskView(ListAPIView, JSONEncoder):
         return Response(json_data, status=HTTP_200_OK)
 
     def encode(self, o):
+        assignees = self.encode_assignees(list(o.assignees.all()))
+        categories = self.encode_categories(list(o.categories.all()))
+
         d = {'id': o.pk, 'title': o.title, 'description': o.description, 'dateCreated': o.date_created,
-             'deadline': o.deadline, 'priority': o.priority}
+             'deadline': o.deadline, 'priority': o.priority, 'assignees': assignees, 'categories': categories,
+             'completed': o.completed}
         return d
+
+    def encode_assignees(self, assignees_list):
+        assignees_username_list = []
+        for assignee in assignees_list:
+            assignees_username_list.append(assignee.username)
+        return assignees_username_list
+
+    def encode_categories(self, categories_list):
+        categories_name_list = []
+        for category in categories_list:
+            categories_name_list.append(category.category)
+        return categories_name_list

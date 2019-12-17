@@ -76,6 +76,7 @@ public class CompletedTasksFragment extends Fragment implements Refreshable {
     // Setup recyclerView
     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     recyclerView.setAdapter(completedTaskAdapter);
+    completedTaskAdapter.setContext(getContext());
     completedTaskAdapter.setPriorityTypes(getResources());
 
     initSortButton();

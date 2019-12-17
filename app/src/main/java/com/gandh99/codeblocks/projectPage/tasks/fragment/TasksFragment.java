@@ -51,7 +51,7 @@ public class TasksFragment extends Fragment implements Refreshable {
   private FloatingActionButton fab;
   private Button buttonSort, buttonFilter;
   private TaskViewModel taskViewModel;
-  private View dialogView;
+  private View sortTaskDialogView;
 
   @Inject
   TaskAdapter taskAdapter;
@@ -84,7 +84,7 @@ public class TasksFragment extends Fragment implements Refreshable {
     buttonSort = view.findViewById(R.id.button_sort);
 
     // Inflate the SortTaskDialog view so that we can sort the task list later
-    dialogView =
+    sortTaskDialogView =
       LayoutInflater
         .from(getContext())
         .inflate(R.layout.dialog_sort_task, null);
@@ -126,7 +126,7 @@ public class TasksFragment extends Fragment implements Refreshable {
   private void initViewModel() {
     taskViewModel = ViewModelProviders.of(this, viewModelFactory).get(TaskViewModel.class);
     taskViewModel.getTasks().observe(this, tasks -> {
-      List<Task> sortedTaskList = taskSorter.sortTasks(TasksFragment.this.getContext(), dialogView, tasks);
+      List<Task> sortedTaskList = taskSorter.sortTasks(TasksFragment.this.getContext(), sortTaskDialogView, tasks);
       taskAdapter.updateList(sortedTaskList);
     });
   }
