@@ -73,7 +73,7 @@ public class EditTaskCategoriesActivity extends AppCompatActivity {
 
           try {
             for (String category : categoryList) {
-              addToChipGroup(category);
+              addToChipGroup(category, false);
             }
           } catch (NullPointerException e) {
             // In case the project has 0 categories
@@ -97,7 +97,7 @@ public class EditTaskCategoriesActivity extends AppCompatActivity {
         return;
       }
 
-      addToChipGroup(category);
+      addToChipGroup(category, true);
       editTextTaskCategory.setText("");
     });
   }
@@ -122,13 +122,14 @@ public class EditTaskCategoriesActivity extends AppCompatActivity {
     });
   }
 
-  private void addToChipGroup(String category) {
+  private void addToChipGroup(String category, boolean isChecked) {
     Chip chip =
       (Chip) getLayoutInflater()
         .inflate(R.layout.chip_checkable, chipGroupSelectedCategories, false);
     chip.setText(category);
     chip.setCheckable(true);
     chip.setCheckedIconVisible(true);
+    chip.setChecked(isChecked);
     chipGroupSelectedCategories.addView(chip);
   }
 
