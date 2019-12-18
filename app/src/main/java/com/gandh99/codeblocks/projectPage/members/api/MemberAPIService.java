@@ -14,7 +14,7 @@ public interface MemberAPIService {
   Call<List<ProjectMember>> getProjectMembers();
 
   @FormUrlEncoded
-  @POST("user/projects/invite")
+  @POST("invite")
   Call<ResponseBody> inviteMember(
     @Field("invitee") String invitee,
     @Field("inviteeRank") String inviteeRank

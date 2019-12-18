@@ -1,5 +1,6 @@
 package com.gandh99.codeblocks.projectPage;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -17,10 +18,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gandh99.codeblocks.R;
+import com.gandh99.codeblocks.common.Base64EncoderDecoder;
 import com.gandh99.codeblocks.common.dateFormatting.CustomDateFormatter;
+import com.gandh99.codeblocks.projectPage.members.api.ProjectMember;
+import com.gandh99.codeblocks.projectPage.members.viewModel.MemberViewModel;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -30,12 +37,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 public abstract class GenericTaskAdapter extends RecyclerView.Adapter<GenericTaskAdapter.GenericTaskViewHolder> {
   private static final String TAG = "GenericTaskAdapter";
   private Context context;
   private List<Task> taskList = new ArrayList<>();
   private Map<String, Integer> priorityMap = new HashMap<>();
   private OnContextMenuItemSelectedListener listener;
+  private Map<String, String> usernameProfilePictureMap = new HashMap<>();
 
   public GenericTaskAdapter() {}
 
@@ -76,7 +86,17 @@ public abstract class GenericTaskAdapter extends RecyclerView.Adapter<GenericTas
       for (String assignee : task.getAssignees()) {
         Chip chip = new Chip(context);
         chip.setText(assignee);
+
+        // Set the profile picture of the user in the chip icon
+        String profilePicture = usernameProfilePictureMap.get(assignee);
+        if (profilePicture.equals("")) {
         chip.setChipIcon(context.getDrawable(R.drawable.ic_account_circle_blue_60dp));
+        } else {
+          RoundedBitmapDrawable drawable =
+            Base64EncoderDecoder.toRoundedBitmapDrawable(context.getResources(), profilePicture);
+          chip.setChipIcon(drawable);
+        }
+
         holder.chipGroupAssignees.addView(chip);
       }
     } catch (NullPointerException e) {
@@ -99,6 +119,13 @@ public abstract class GenericTaskAdapter extends RecyclerView.Adapter<GenericTas
       }
     } catch (NullPointerException e) {
       // This might occur if a task has 0 categories
+    }
+  }
+
+  public void setProfilePictures(List<ProjectMember> projectMembers) {
+    for (ProjectMember member : projectMembers) {
+      String profilePicture = member.getProfilePicture();
+      usernameProfilePictureMap.put(member.getUsername(), profilePicture);
     }
   }
 
@@ -146,7 +173,7 @@ public abstract class GenericTaskAdapter extends RecyclerView.Adapter<GenericTas
       chipGroupTaskCategories = itemView.findViewById(R.id.chipgroup_task_categories);
       imageViewActions = itemView.findViewById(R.id.list_item_task_actions);
 
-      itemView.setOnCreateContextMenuListener(this);
+      imageViewActions.setOnCreateContextMenuListener(this);
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,6 +23,8 @@ import android.widget.Toast;
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.common.Refreshable;
 import com.gandh99.codeblocks.projectPage.GenericTaskAdapter;
+import com.gandh99.codeblocks.projectPage.members.api.ProjectMember;
+import com.gandh99.codeblocks.projectPage.members.viewModel.MemberViewModel;
 import com.gandh99.codeblocks.projectPage.tasks.activity.NewTaskActivity;
 import com.gandh99.codeblocks.projectPage.tasks.SortTaskDialog;
 import com.gandh99.codeblocks.projectPage.tasks.TaskAdapter;
@@ -52,6 +55,7 @@ public class TasksFragment extends Fragment implements Refreshable {
   private Button buttonSort, buttonFilter;
   private TaskViewModel taskViewModel;
   private View sortTaskDialogView;
+  private MemberViewModel memberViewModel;
 
   @Inject
   TaskAdapter taskAdapter;
@@ -98,6 +102,7 @@ public class TasksFragment extends Fragment implements Refreshable {
     initFloatingActionButton();
     initSortButton();
     initViewModel();
+    getProjectMembers();
     initTaskViewHolderListener();
 
     return view;
@@ -128,6 +133,13 @@ public class TasksFragment extends Fragment implements Refreshable {
     taskViewModel.getTasks().observe(this, tasks -> {
       List<Task> sortedTaskList = taskSorter.sortTasks(TasksFragment.this.getContext(), sortTaskDialogView, tasks);
       taskAdapter.updateList(sortedTaskList);
+    });
+  }
+
+  private void getProjectMembers() {
+    memberViewModel = ViewModelProviders.of(this, viewModelFactory).get(MemberViewModel.class);
+    memberViewModel.getProjectMembers().observe(this, projectMembers -> {
+      taskAdapter.setProfilePictures(projectMembers);
     });
   }
 
