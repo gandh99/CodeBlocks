@@ -1,11 +1,8 @@
 package com.gandh99.codeblocks.projectPage;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -19,15 +16,13 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.common.Base64EncoderDecoder;
+import com.gandh99.codeblocks.common.RandomColourContainer;
 import com.gandh99.codeblocks.common.dateFormatting.CustomDateFormatter;
 import com.gandh99.codeblocks.projectPage.members.api.ProjectMember;
-import com.gandh99.codeblocks.projectPage.members.viewModel.MemberViewModel;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -36,8 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.inject.Inject;
+import java.util.Random;
 
 public abstract class GenericTaskAdapter extends RecyclerView.Adapter<GenericTaskAdapter.GenericTaskViewHolder> {
   private static final String TAG = "GenericTaskAdapter";
@@ -46,6 +40,10 @@ public abstract class GenericTaskAdapter extends RecyclerView.Adapter<GenericTas
   private Map<String, Integer> priorityMap = new HashMap<>();
   private OnContextMenuItemSelectedListener listener;
   private Map<String, String> usernameProfilePictureMap = new HashMap<>();
+
+  // For setting the colour of each category
+  private Map<String, Integer> categoryColourMap = new HashMap<>();
+  private List<Integer> availableColours = new ArrayList<>();
 
   public GenericTaskAdapter() {}
 
@@ -83,6 +81,7 @@ public abstract class GenericTaskAdapter extends RecyclerView.Adapter<GenericTas
         holder.chipGroupAssignees.setVisibility(View.VISIBLE);
       }
 
+      // Set the chips for the assignees
       for (String assignee : task.getAssignees()) {
         Chip chip = new Chip(context);
         chip.setText(assignee);
@@ -112,14 +111,37 @@ public abstract class GenericTaskAdapter extends RecyclerView.Adapter<GenericTas
         holder.chipGroupTaskCategories.setVisibility(View.VISIBLE);
       }
 
+      // Set the chips for the categories
       for (String category : task.getTaskCategories()) {
         Chip chip = new Chip(context);
         chip.setText(category);
+        chip.setChipBackgroundColorResource(getCategoryColour(category));
         holder.chipGroupTaskCategories.addView(chip);
       }
     } catch (NullPointerException e) {
       // This might occur if a task has 0 categories
     }
+  }
+
+  public int getCategoryColour(String category) {
+    // If the category already has a colour assigned, we return that colour
+    if (categoryColourMap.containsKey(category)) {
+      return categoryColourMap.get(category);
+    }
+
+    // Otherwise, randomly select a colour from the list of available colours
+    Random random = new Random();
+    if (availableColours.isEmpty()) {
+      availableColours = RandomColourContainer.getAllColours();
+    }
+    int index = random.nextInt(availableColours.size());
+    int colour = availableColours.get(index);
+    categoryColourMap.put(category, colour);
+
+    // Remove that colour from the list of available colours
+    availableColours.remove(index);
+
+    return colour;
   }
 
   public void setProfilePictures(List<ProjectMember> projectMembers) {

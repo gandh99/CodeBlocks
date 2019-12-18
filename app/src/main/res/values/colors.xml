@@ -8,7 +8,17 @@
     <color name="colorGrey">#727272</color>
     <color name="colorBlack">#000000</color>
     <color name="colorWhite">#ffffff</color>
-    <color name="colorGreen">#4CAF50</color>
-    <color name="colorOrange">#FF9800</color>
     <color name="colorRed">#E91E1E</color>
+    <color name="colorOrange">#FF9800</color>
+    <color name="colorGreen">#4CAF50</color>
+
+    <!-- Additional colours for random selection -->
+    <color name="colorPink">#C2185B</color>
+    <color name="colorYellow">#FFFF00</color>
+    <color name="colorLightGreen">#69F0AE</color>
+    <color name="colorDarkGreen">#00796B</color>
+    <color name="colorLightBlue">#40C4FF</color>
+    <color name="colorLightIndigo">#7C4DFF</color>
+    <color name="colorPurple">#E040FB</color>
+    <color name="colorDarkPurple">#8E24AA</color>
 </resources>
