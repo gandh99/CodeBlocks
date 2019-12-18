@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.common.Base64EncoderDecoder;
-import com.gandh99.codeblocks.common.RandomColourContainer;
+import com.gandh99.codeblocks.common.RandomColourGenerator;
 import com.gandh99.codeblocks.common.dateFormatting.CustomDateFormatter;
 import com.gandh99.codeblocks.projectPage.members.api.ProjectMember;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
@@ -33,6 +33,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.inject.Inject;
+
 public abstract class GenericTaskAdapter extends RecyclerView.Adapter<GenericTaskAdapter.GenericTaskViewHolder> {
   private static final String TAG = "GenericTaskAdapter";
   private Context context;
@@ -40,10 +42,6 @@ public abstract class GenericTaskAdapter extends RecyclerView.Adapter<GenericTas
   private Map<String, Integer> priorityMap = new HashMap<>();
   private OnContextMenuItemSelectedListener listener;
   private Map<String, String> usernameProfilePictureMap = new HashMap<>();
-
-  // For setting the colour of each category
-  private Map<String, Integer> categoryColourMap = new HashMap<>();
-  private List<Integer> availableColours = new ArrayList<>();
 
   public GenericTaskAdapter() {}
 
@@ -115,33 +113,12 @@ public abstract class GenericTaskAdapter extends RecyclerView.Adapter<GenericTas
       for (String category : task.getTaskCategories()) {
         Chip chip = new Chip(context);
         chip.setText(category);
-        chip.setChipBackgroundColorResource(getCategoryColour(category));
+        chip.setChipBackgroundColorResource(RandomColourGenerator.getRandomColour(category));
         holder.chipGroupTaskCategories.addView(chip);
       }
     } catch (NullPointerException e) {
       // This might occur if a task has 0 categories
     }
-  }
-
-  public int getCategoryColour(String category) {
-    // If the category already has a colour assigned, we return that colour
-    if (categoryColourMap.containsKey(category)) {
-      return categoryColourMap.get(category);
-    }
-
-    // Otherwise, randomly select a colour from the list of available colours
-    Random random = new Random();
-    if (availableColours.isEmpty()) {
-      availableColours = RandomColourContainer.getAllColours();
-    }
-    int index = random.nextInt(availableColours.size());
-    int colour = availableColours.get(index);
-    categoryColourMap.put(category, colour);
-
-    // Remove that colour from the list of available colours
-    availableColours.remove(index);
-
-    return colour;
   }
 
   public void setProfilePictures(List<ProjectMember> projectMembers) {

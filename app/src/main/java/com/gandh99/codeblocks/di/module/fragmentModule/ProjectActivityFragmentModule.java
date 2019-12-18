@@ -1,5 +1,6 @@
 package com.gandh99.codeblocks.di.module.fragmentModule;
 
+import com.gandh99.codeblocks.common.RandomColourGenerator;
 import com.gandh99.codeblocks.projectPage.GenericTaskAdapter;
 import com.gandh99.codeblocks.projectPage.completedTasks.fragment.CompletedTasksFragment;
 import com.gandh99.codeblocks.projectPage.members.AddMemberDialog;
