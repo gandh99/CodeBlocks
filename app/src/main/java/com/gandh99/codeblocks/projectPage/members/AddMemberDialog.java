@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,10 +16,13 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.gandh99.codeblocks.App;
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.authentication.InputValidator;
 import com.gandh99.codeblocks.projectPage.members.api.MemberAPIService;
 import com.gandh99.codeblocks.projectPage.members.viewModel.MemberViewModel;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 
 import javax.inject.Inject;
 
@@ -32,7 +34,7 @@ import retrofit2.Response;
 
 public class AddMemberDialog extends DialogFragment {
   private EditText editTextUsername;
-  private Spinner spinnerRank;
+  private ChipGroup chipGroupRank;
   private Button buttonInviteUser;
   private MemberViewModel memberViewModel;
 
@@ -59,11 +61,11 @@ public class AddMemberDialog extends DialogFragment {
         .inflate(R.layout.dialog_member, null);
 
     editTextUsername = view.findViewById(R.id.dialog_member_username);
-    spinnerRank = view.findViewById(R.id.dialog_member_rank);
+    chipGroupRank = view.findViewById(R.id.dialog_member_rank);
     buttonInviteUser = view.findViewById(R.id.dialog_member_invite);
 
     initViewModel();
-    initRankSpinner();
+    initChipGroupRank();
     initInviteButton();
 
     return new AlertDialog.Builder(getActivity())
@@ -74,46 +76,62 @@ public class AddMemberDialog extends DialogFragment {
     memberViewModel = ViewModelProviders.of(this, viewModelFactory).get(MemberViewModel.class);
   }
 
-  private void initRankSpinner() {
-    ArrayAdapter<CharSequence> adapter =
-      ArrayAdapter.createFromResource(getContext(),
-        R.array.rank, android.R.layout.simple_spinner_item);
-    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    spinnerRank.setAdapter(adapter);
+  private void initChipGroupRank() {
+    String[] allRanks = App.getAppResources().getStringArray(R.array.rank);
+    for (String rank : allRanks) {
+      Chip chip =
+        (Chip) getActivity()
+          .getLayoutInflater()
+          .inflate(R.layout.chip_checkable, chipGroupRank, false);
+      chip.setText(rank);
+      chip.setCheckable(true);
+      chip.setCheckedIconVisible(true);
+      chipGroupRank.addView(chip);
+    }
   }
 
   private void initInviteButton() {
-    buttonInviteUser.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        String username = editTextUsername.getText().toString();
-        String rank = spinnerRank.getSelectedItem().toString();
+    buttonInviteUser.setOnClickListener(view -> {
+      String username = editTextUsername.getText().toString();
+      String rank = getSelectedRank();
 
-        if (inputValidator.isInvalidInput(username)
-          || inputValidator.isInvalidInput(rank)) {
-          Toast.makeText(getContext(), "Please fill in all the required information",
-            Toast.LENGTH_SHORT).show();
-          return;
+      if (inputValidator.isInvalidInput(username)
+        || inputValidator.isInvalidInput(rank)) {
+        Toast.makeText(getContext(), "Please fill in all the required information",
+          Toast.LENGTH_SHORT).show();
+        return;
+      }
+
+      memberAPIService.inviteMember(username, rank).enqueue(new Callback<ResponseBody>() {
+        @Override
+        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+          if (response.isSuccessful()) {
+            Toast.makeText(getContext(), "Invitation sent", Toast.LENGTH_SHORT).show();
+            dismiss();
+            return;
+          }
+
+          Toast.makeText(getContext(), "Invitation could not be sent", Toast.LENGTH_SHORT).show();
         }
 
-        memberAPIService.inviteMember(username, rank).enqueue(new Callback<ResponseBody>() {
-          @Override
-          public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-            if (response.isSuccessful()) {
-              Toast.makeText(getContext(), "Invitation sent", Toast.LENGTH_SHORT).show();
-              dismiss();
-              return;
-            }
+        @Override
+        public void onFailure(Call<ResponseBody> call, Throwable t) {
 
-            Toast.makeText(getContext(), "Invitation could not be sent", Toast.LENGTH_SHORT).show();
-          }
-
-          @Override
-          public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-          }
-        });
-      }
+        }
+      });
     });
+  }
+
+  private String getSelectedRank() {
+    String defaultRank = "MEMBER";
+
+    for (int i = 0; i < chipGroupRank.getChildCount(); i++) {
+      Chip chip = (Chip) chipGroupRank.getChildAt(i);
+      if (chip.isChecked()) {
+        return chip.getText().toString();
+      }
+    }
+
+    return defaultRank;
   }
 }
