@@ -92,13 +92,10 @@ public class SortTaskDialog extends DialogFragment {
   }
 
   private void initSaveButton() {
-    buttonSave.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        saveRadioButtons();
-        sortTasks();
-        dismiss();
-      }
+    buttonSave.setOnClickListener(view -> {
+      saveRadioButtons();
+      sortTasks();
+      dismiss();
     });
   }
 

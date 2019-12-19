@@ -46,6 +46,14 @@
             style="@style/SortRadioButton"
             />
 
+        <RadioButton
+            android:id="@+id/radioButton_priority"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/priority2"
+            style="@style/SortRadioButton"
+            />
+
     </RadioGroup>
 
     <TextView

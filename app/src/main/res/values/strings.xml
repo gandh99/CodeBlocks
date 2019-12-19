@@ -42,6 +42,7 @@
     <string name="press_to_select_categories">Press to Select Categories:</string>
     <string name="select_categories">Select Categories</string>
     <string name="create_task">Create Task</string>
+    <string name="priority2">Priority</string>
 
     <string-array name="rank">
         <item>ADMIN</item>

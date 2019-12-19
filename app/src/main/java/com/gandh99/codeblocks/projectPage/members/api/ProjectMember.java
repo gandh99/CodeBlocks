@@ -1,5 +1,7 @@
 package com.gandh99.codeblocks.projectPage.members.api;
 
+import com.gandh99.codeblocks.App;
+import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.projectPage.members.Rank;
 import com.google.gson.annotations.SerializedName;
 
@@ -91,7 +93,8 @@ public class ProjectMember {
   }
 
   public boolean isAdmin() {
-    String adminName = Rank.ADMIN.getRankName();
-    return rank.toUpperCase().equals(adminName);
+    String[] allRanks = App.getAppResources().getStringArray(R.array.rank);
+    String admin = allRanks[0];
+    return rank.equals(admin);
   }
 }

@@ -10,6 +10,7 @@ import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 import com.gandh99.codeblocks.projectPage.tasks.taskSorter.method.SorterByDateCreated;
 import com.gandh99.codeblocks.projectPage.tasks.taskSorter.method.SorterByDeadline;
+import com.gandh99.codeblocks.projectPage.tasks.taskSorter.method.SorterByPriority;
 import com.gandh99.codeblocks.projectPage.tasks.taskSorter.method.TaskSortMethod;
 import com.gandh99.codeblocks.projectPage.tasks.taskSorter.order.AscendingOrder;
 import com.gandh99.codeblocks.projectPage.tasks.taskSorter.order.DescendingOrder;
@@ -28,7 +29,7 @@ import static com.gandh99.codeblocks.projectPage.tasks.SortTaskDialog.SORT_TASK_
 public class TaskSorter {
   private int selectedSortById, selectedOrderId;
   private RadioGroup radioGroupSortBy, radioGroupOrder;
-  private RadioButton dateCreated, deadline, orderAscending, orderDescending;
+  private RadioButton dateCreated, deadline, priority, orderAscending, orderDescending;
   private Map<RadioButton, TaskSortMethod> radioButtonTaskSortMethodMap = new HashMap<>();
   private Map<RadioButton, TaskOrder> radioButtonTaskOrderMap = new HashMap<>();
 
@@ -56,12 +57,14 @@ public class TaskSorter {
     // Get the radio buttons
     dateCreated = view.findViewById(R.id.radioButton_date_created);
     deadline = view.findViewById(R.id.radioButton_deadline);
+    priority = view.findViewById(R.id.radioButton_priority);
     orderAscending = view.findViewById(R.id.radioButton_ascending);
     orderDescending = view.findViewById(R.id.radioButton_descending);
 
     // Map the radio buttons to their sorting functionality
     radioButtonTaskSortMethodMap.put(dateCreated, new SorterByDateCreated());
     radioButtonTaskSortMethodMap.put(deadline, new SorterByDeadline());
+    radioButtonTaskSortMethodMap.put(priority, new SorterByPriority());
 
     // Map the radio buttons to the order in which they should be sorted
     radioButtonTaskOrderMap.put(orderAscending, new AscendingOrder());
