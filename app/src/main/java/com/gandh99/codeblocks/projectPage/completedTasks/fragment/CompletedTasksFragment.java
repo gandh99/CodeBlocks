@@ -17,13 +17,10 @@ import android.widget.Button;
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.common.Refreshable;
 import com.gandh99.codeblocks.projectPage.completedTasks.CompletedTaskAdapter;
-import com.gandh99.codeblocks.projectPage.completedTasks.api.CompletedTaskAPIService;
 import com.gandh99.codeblocks.projectPage.completedTasks.viewModel.CompletedTaskViewModel;
-import com.gandh99.codeblocks.projectPage.tasks.SortTaskDialog;
+import com.gandh99.codeblocks.projectPage.tasks.dialog.SortTaskDialog;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
-import com.gandh99.codeblocks.projectPage.tasks.api.TaskAPIService;
 import com.gandh99.codeblocks.projectPage.tasks.taskSorter.TaskSorter;
-import com.gandh99.codeblocks.projectPage.tasks.viewModel.TaskViewModel;
 
 import java.util.List;
 

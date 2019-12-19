@@ -22,9 +22,9 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import static com.gandh99.codeblocks.projectPage.tasks.SortTaskDialog.ORDER_PREFERENCE;
-import static com.gandh99.codeblocks.projectPage.tasks.SortTaskDialog.SORT_BY_PREFERENCE;
-import static com.gandh99.codeblocks.projectPage.tasks.SortTaskDialog.SORT_TASK_DIALOG_PREFERENCES;
+import static com.gandh99.codeblocks.projectPage.tasks.dialog.SortTaskDialog.ORDER_PREFERENCE;
+import static com.gandh99.codeblocks.projectPage.tasks.dialog.SortTaskDialog.SORT_BY_PREFERENCE;
+import static com.gandh99.codeblocks.projectPage.tasks.dialog.SortTaskDialog.SORT_TASK_DIALOG_PREFERENCES;
 
 public class TaskSorter {
   private int selectedSortById, selectedOrderId;

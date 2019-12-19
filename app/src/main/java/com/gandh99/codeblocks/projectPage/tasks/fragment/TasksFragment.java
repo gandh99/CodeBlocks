@@ -8,7 +8,6 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,10 +22,10 @@ import android.widget.Toast;
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.common.Refreshable;
 import com.gandh99.codeblocks.projectPage.GenericTaskAdapter;
-import com.gandh99.codeblocks.projectPage.members.api.ProjectMember;
 import com.gandh99.codeblocks.projectPage.members.viewModel.MemberViewModel;
 import com.gandh99.codeblocks.projectPage.tasks.activity.NewTaskActivity;
-import com.gandh99.codeblocks.projectPage.tasks.SortTaskDialog;
+import com.gandh99.codeblocks.projectPage.tasks.dialog.FilterTaskDialog;
+import com.gandh99.codeblocks.projectPage.tasks.dialog.SortTaskDialog;
 import com.gandh99.codeblocks.projectPage.tasks.TaskAdapter;
 import com.gandh99.codeblocks.projectPage.tasks.taskSorter.TaskSorter;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
@@ -49,6 +48,7 @@ import static com.gandh99.codeblocks.projectPage.tasks.activity.NewTaskActivity.
  */
 public class TasksFragment extends Fragment implements Refreshable {
   private static final int DIALOG_REQUEST_SORT_CODE = 1;
+  private static final int DIALOG_REQUEST_FILTER_CODE = 2;
   public static final String EDIT_TASK_INTENT = "editTask";
   private RecyclerView recyclerView;
   private FloatingActionButton fab;
@@ -100,6 +100,7 @@ public class TasksFragment extends Fragment implements Refreshable {
     taskAdapter.setPriorityTypes(getResources());
 
     initFloatingActionButton();
+    initFilterButton();
     initSortButton();
     initViewModel();
     getProjectMembers();
@@ -116,6 +117,15 @@ public class TasksFragment extends Fragment implements Refreshable {
     fab.setOnClickListener(view -> {
       Intent intent = new Intent(getContext(), NewTaskActivity.class);
       startActivityForResult(intent, NEW_TASK_REQUEST_CODE);
+    });
+  }
+
+  private void initFilterButton() {
+    buttonFilter.setOnClickListener(view -> {
+      FilterTaskDialog dialog = new FilterTaskDialog();
+      dialog.setTargetFragment(TasksFragment.this, DIALOG_REQUEST_FILTER_CODE);
+      dialog.setGenericTaskAdapter(taskAdapter);
+      dialog.show(getActivity().getSupportFragmentManager(), "Filter Task");
     });
   }
 

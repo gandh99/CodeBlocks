@@ -1,4 +1,4 @@
-package com.gandh99.codeblocks.projectPage.tasks;
+package com.gandh99.codeblocks.projectPage.tasks.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -33,7 +33,7 @@ import dagger.android.support.AndroidSupportInjection;
 
 public class SortTaskDialog extends DialogFragment {
   public static final String SORT_TASK_DIALOG_PREFERENCES =
-    "com.gandh99.codeblocks.projectPage.tasks.SortTaskDialog";
+    "com.gandh99.codeblocks.projectPage.tasks.dialog.SortTaskDialog";
   public static final String SORT_BY_PREFERENCE = "sortBy";
   public static final String ORDER_PREFERENCE = "order";
 
