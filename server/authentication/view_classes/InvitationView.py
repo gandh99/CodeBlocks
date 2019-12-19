@@ -1,7 +1,7 @@
 from rest_framework.generics import ListAPIView, DestroyAPIView, CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.status import HTTP_200_OK
+from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 
 from authentication.JSONEncoder import JSONEncoder
 from authentication.models import Invitation, UserProfile, ProjectGroup
@@ -34,6 +34,11 @@ class InvitationView(ListAPIView, CreateAPIView, JSONEncoder):
         invitee = request.data.get("invitee")
         invitee_profile = UserProfile.objects.get(username=invitee)
         invitee_rank = request.data.get("inviteeRank")
+
+        # Return an error if the invitee is already in the project
+        if ProjectGroup.objects.get(user_profile=invitee_profile) is not None:
+            response = {"Response": "User is already in the Project"}
+            return Response(response, status=HTTP_400_BAD_REQUEST)
 
         # Create a new invite
         invite = Invitation(project_group=project_group, inviter=inviter_profile, invitee=invitee_profile,
