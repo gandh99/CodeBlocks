@@ -21,7 +21,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.projectPage.GenericTaskAdapter;
-import com.gandh99.codeblocks.projectPage.completedTasks.CompletedTaskAdapter;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 import com.gandh99.codeblocks.projectPage.tasks.taskSorter.TaskSorter;
 
@@ -66,8 +65,8 @@ public class SortTaskDialog extends DialogFragment {
     // Get the view items
     radioGroupSortBy = dialogView.findViewById(R.id.radioGroup_sort_by);
     radioGroupOrder = dialogView.findViewById(R.id.radioGroup_order);
-    buttonSave = dialogView.findViewById(R.id.button_sort_task_save);
-    buttonCancel = dialogView.findViewById(R.id.button_sort_task_cancel);
+    buttonSave = dialogView.findViewById(R.id.button_filter_task_save);
+    buttonCancel = dialogView.findViewById(R.id.button_filter_task_cancel);
 
     initRadioButtons();
     initSaveButton();

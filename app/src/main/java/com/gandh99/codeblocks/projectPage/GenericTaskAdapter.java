@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,7 +36,9 @@ import java.util.Random;
 
 import javax.inject.Inject;
 
-public abstract class GenericTaskAdapter extends RecyclerView.Adapter<GenericTaskAdapter.GenericTaskViewHolder> {
+public abstract class GenericTaskAdapter
+  extends RecyclerView.Adapter<GenericTaskAdapter.GenericTaskViewHolder> {
+
   private static final String TAG = "GenericTaskAdapter";
   private Context context;
   private List<Task> taskList = new ArrayList<>();
@@ -87,7 +90,7 @@ public abstract class GenericTaskAdapter extends RecyclerView.Adapter<GenericTas
         // Set the profile picture of the user in the chip icon
         String profilePicture = usernameProfilePictureMap.get(assignee);
         if (profilePicture.equals("")) {
-        chip.setChipIcon(context.getDrawable(R.drawable.ic_account_circle_blue_60dp));
+          chip.setChipIcon(context.getDrawable(R.drawable.ic_account_circle_blue_60dp));
         } else {
           RoundedBitmapDrawable drawable =
             Base64EncoderDecoder.toRoundedBitmapDrawable(context.getResources(), profilePicture);

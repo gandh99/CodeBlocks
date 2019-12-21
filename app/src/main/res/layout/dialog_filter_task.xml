@@ -11,46 +11,38 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:textColor="@color/colorBlack"
-        android:text="@string/sort_tasks"
+        android:text="@string/filter_tasks"
         style="@style/SortFilterTextView"
         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/sort_by"
+        android:text="Assignees:"
         style="@style/SortFilterTextView"
         />
 
     <RadioGroup
-        android:id="@+id/radioGroup_sort_by"
+        android:id="@+id/radioGroup_filter_assignees"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:checkedButton="@id/radioButton_date_created"
+        android:checkedButton="@id/radioButton_filter_assignees_anyone"
         style="@style/SortFilterRadioGroup"
         >
 
         <RadioButton
-            android:id="@+id/radioButton_date_created"
+            android:id="@+id/radioButton_filter_assignees_anyone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/date_created"
+            android:text="@string/filter_assignee_anyone"
             style="@style/SortFilterRadioButton"
             />
 
         <RadioButton
-            android:id="@+id/radioButton_deadline"
+            android:id="@+id/radioButton_filter_assignees_me"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/deadline"
-            style="@style/SortFilterRadioButton"
-            />
-
-        <RadioButton
-            android:id="@+id/radioButton_priority"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/priority2"
+            android:text="@string/filter_assignee_me"
             style="@style/SortFilterRadioButton"
             />
 
@@ -59,32 +51,55 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/order"
+        android:text="Categories:"
+        style="@style/SortFilterTextView"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Deadline:"
         style="@style/SortFilterTextView"
         />
 
     <RadioGroup
-        android:id="@+id/radioGroup_order"
+        android:id="@+id/radioGroup_filter_deadline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:checkedButton="@id/radioButton_descending"
+        android:checkedButton="@id/radioButton_filter_deadline_all_deadlines"
         style="@style/SortFilterRadioGroup"
         >
 
         <RadioButton
-            android:id="@+id/radioButton_ascending"
+            android:id="@+id/radioButton_filter_deadline_all_deadlines"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/SortFilterRadioButton"
-            android:text="@string/ascending"
+            android:text="All Deadlines"
             />
 
         <RadioButton
-            android:id="@+id/radioButton_descending"
+            android:id="@+id/radioButton_filter_deadline_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/SortFilterRadioButton"
-            android:text="@string/descending"
+            android:text="Less than 1 day left"
+            />
+
+        <RadioButton
+            android:id="@+id/radioButton_filter_deadline_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SortFilterRadioButton"
+            android:text="Less than 1 week left"
+            />
+
+        <RadioButton
+            android:id="@+id/radioButton_filter_deadline_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SortFilterRadioButton"
+            android:text="Less than 1 month left"
             />
 
     </RadioGroup>

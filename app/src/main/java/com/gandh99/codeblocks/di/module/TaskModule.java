@@ -1,8 +1,11 @@
 package com.gandh99.codeblocks.di.module;
 
+import com.gandh99.codeblocks.authentication.AuthenticationInterceptor;
 import com.gandh99.codeblocks.common.RandomColourGenerator;
 import com.gandh99.codeblocks.di.module.common.ViewModelModule;
 import com.gandh99.codeblocks.projectPage.tasks.TaskAdapter;
+import com.gandh99.codeblocks.projectPage.tasks.taskFilter.TaskFilter;
+import com.gandh99.codeblocks.projectPage.tasks.taskFilter.assignee.AssigneeMe;
 import com.gandh99.codeblocks.projectPage.tasks.taskSorter.TaskSorter;
 import com.gandh99.codeblocks.projectPage.tasks.api.TaskAPIService;
 import com.gandh99.codeblocks.projectPage.tasks.repository.TaskRepository;
@@ -37,4 +40,16 @@ public class TaskModule {
   @Provides
   @Singleton
   TaskSorter provideTaskSorter() { return new TaskSorter(); }
+
+  @Provides
+  @Singleton
+  TaskFilter provideTaskFilter(AuthenticationInterceptor interceptor) {
+    return new TaskFilter(interceptor);
+  }
+
+  @Provides
+  @Singleton
+  AssigneeMe provideAssigneeMe(AuthenticationInterceptor interceptor) {
+    return new AssigneeMe(interceptor);
+  }
 }

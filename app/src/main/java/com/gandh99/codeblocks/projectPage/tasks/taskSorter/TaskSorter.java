@@ -42,6 +42,23 @@ public class TaskSorter {
     radioGroupSortBy = view.findViewById(R.id.radioGroup_sort_by);
     radioGroupOrder = view.findViewById(R.id.radioGroup_order);
 
+    loadRadioButtonsState(context);
+
+    // Get the radio buttons
+    dateCreated = view.findViewById(R.id.radioButton_date_created);
+    deadline = view.findViewById(R.id.radioButton_deadline);
+    priority = view.findViewById(R.id.radioButton_priority);
+    orderAscending = view.findViewById(R.id.radioButton_ascending);
+    orderDescending = view.findViewById(R.id.radioButton_descending);
+
+    // Map the radio buttons to their sorting functionality
+    initTaskSortMethodMap();
+
+    // Map the radio buttons to the order in which they should be sorted
+    initTaskOrderMethodMap();
+  }
+
+  private void loadRadioButtonsState(Context context) {
     try {
       SharedPreferences sharedPreferences =
         context.getSharedPreferences(SORT_TASK_DIALOG_PREFERENCES, Context.MODE_PRIVATE);
@@ -53,20 +70,15 @@ public class TaskSorter {
       radioGroupOrder.check(selectedOrderId);
     } catch (NullPointerException e) {
     }
+  }
 
-    // Get the radio buttons
-    dateCreated = view.findViewById(R.id.radioButton_date_created);
-    deadline = view.findViewById(R.id.radioButton_deadline);
-    priority = view.findViewById(R.id.radioButton_priority);
-    orderAscending = view.findViewById(R.id.radioButton_ascending);
-    orderDescending = view.findViewById(R.id.radioButton_descending);
-
-    // Map the radio buttons to their sorting functionality
+  private void initTaskSortMethodMap() {
     radioButtonTaskSortMethodMap.put(dateCreated, new SorterByDateCreated());
     radioButtonTaskSortMethodMap.put(deadline, new SorterByDeadline());
     radioButtonTaskSortMethodMap.put(priority, new SorterByPriority());
+  }
 
-    // Map the radio buttons to the order in which they should be sorted
+  private void initTaskOrderMethodMap() {
     radioButtonTaskOrderMap.put(orderAscending, new AscendingOrder());
     radioButtonTaskOrderMap.put(orderDescending, new DescendingOrder());
   }

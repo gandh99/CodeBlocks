@@ -43,6 +43,9 @@
     <string name="select_categories">Select Categories</string>
     <string name="create_task">Create Task</string>
     <string name="priority2">Priority</string>
+    <string name="filter_tasks">Filter Tasks</string>
+    <string name="filter_assignee_anyone">Anyone</string>
+    <string name="filter_assignee_me">Me</string>
 
     <string-array name="rank">
         <item>ADMIN</item>
