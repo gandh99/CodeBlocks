@@ -20,6 +20,7 @@ public class AssigneeMe implements AssigneeCriteria {
   public List<Task> filter(List<Task> taskList) {
     List<Task> filteredTaskList = new ArrayList<>();
 
+    // Add the task to the filteredTaskList if the user's own name is within the array of assignees in that task
     for (Task task : taskList) {
       String[] assignees = task.getAssignees();
 

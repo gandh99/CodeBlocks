@@ -99,6 +99,7 @@ public class FilterTaskDialog extends DialogFragment {
   }
 
   private void filterTasks() {
+    // Filter the task and update the adapter
     List<Task> filteredTaskList = taskFilter.filterTasks(this.getContext(), dialogView, adapter.getListOfAllTasks());
     adapter.updateDisplayTaskList(filteredTaskList);
   }

@@ -1,7 +1,5 @@
 package com.gandh99.codeblocks.projectPage.tasks.taskFilter.assignee;
 
-import android.widget.Filter;
-
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 
 import java.util.List;

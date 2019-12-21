@@ -55,6 +55,7 @@ public class TaskFilter {
   }
 
   private void initRadioGroupTaskFilterCriteriaMap() {
+    // Each radioGroup has a corresponding TaskFilterCriteria object that knows how to filter the task list
     radioGroupTaskFilterCriteriaMap = new HashMap<>();
     radioGroupTaskFilterCriteriaMap.put(radioGroupAssignees, new FilterByAssignee(interceptor));
   }
@@ -62,6 +63,7 @@ public class TaskFilter {
   public List<Task> filterTasks(Context context, View dialogView, List<Task> taskList) {
     init(context, dialogView);
 
+    // Filter the tasks for each and every possible way in the radioGroupTaskFilterCriteriaMap
     for (Map.Entry<RadioGroup, TaskFilterCriteria> entry : radioGroupTaskFilterCriteriaMap.entrySet()) {
       RadioGroup radioGroup = entry.getKey();
       TaskFilterCriteria taskFilterCriteria = entry.getValue();

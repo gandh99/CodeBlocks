@@ -27,6 +27,7 @@ import com.gandh99.codeblocks.projectPage.tasks.activity.NewTaskActivity;
 import com.gandh99.codeblocks.projectPage.tasks.dialog.FilterTaskDialog;
 import com.gandh99.codeblocks.projectPage.tasks.dialog.SortTaskDialog;
 import com.gandh99.codeblocks.projectPage.tasks.TaskAdapter;
+import com.gandh99.codeblocks.projectPage.tasks.taskFilter.TaskFilter;
 import com.gandh99.codeblocks.projectPage.tasks.taskSorter.TaskSorter;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 import com.gandh99.codeblocks.projectPage.tasks.api.TaskAPIService;
@@ -54,7 +55,7 @@ public class TasksFragment extends Fragment implements Refreshable {
   private FloatingActionButton fab;
   private Button buttonSort, buttonFilter;
   private TaskViewModel taskViewModel;
-  private View sortTaskDialogView;
+  private View sortTaskDialogView, filterTaskDialogView;
   private MemberViewModel memberViewModel;
 
   @Inject
@@ -68,6 +69,9 @@ public class TasksFragment extends Fragment implements Refreshable {
 
   @Inject
   TaskSorter taskSorter;
+
+  @Inject
+  TaskFilter taskFilter;
 
   public TasksFragment() {
     // Required empty public constructor
@@ -92,6 +96,12 @@ public class TasksFragment extends Fragment implements Refreshable {
       LayoutInflater
         .from(getContext())
         .inflate(R.layout.dialog_sort_task, null);
+
+    // Inflate the FilterTaskDialog view so that we can filter the task list later
+    filterTaskDialogView =
+      LayoutInflater
+        .from(getContext())
+        .inflate(R.layout.dialog_filter_task, null);
 
     // Setup recyclerView
     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -141,8 +151,15 @@ public class TasksFragment extends Fragment implements Refreshable {
   private void initViewModel() {
     taskViewModel = ViewModelProviders.of(this, viewModelFactory).get(TaskViewModel.class);
     taskViewModel.getTasks().observe(this, tasks -> {
-      List<Task> sortedTaskList = taskSorter.sortTasks(TasksFragment.this.getContext(), sortTaskDialogView, tasks);
-      taskAdapter.updateListOfAllTasks(sortedTaskList);
+      List<Task> displayTaskList = tasks;
+
+      // Filter and sort the task list
+      displayTaskList = taskFilter.filterTasks(TasksFragment.this.getContext(), filterTaskDialogView, displayTaskList);
+      displayTaskList = taskSorter.sortTasks(TasksFragment.this.getContext(), sortTaskDialogView, displayTaskList);
+
+      // Provide the adapter with the list of all tasks, as well as the display list
+      taskAdapter.updateListOfAllTasks(tasks);
+      taskAdapter.updateDisplayTaskList(displayTaskList);
     });
   }
 

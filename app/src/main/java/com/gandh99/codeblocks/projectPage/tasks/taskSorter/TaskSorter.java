@@ -88,16 +88,16 @@ public class TaskSorter {
   public List<Task> sortTasks(Context context, View view, List<Task> taskList) {
     init(context, view);
 
-    // Get the selected radio buttons
-    selectedSortById = radioGroupSortBy.getCheckedRadioButtonId();
-    selectedOrderId = radioGroupOrder.getCheckedRadioButtonId();
-    RadioButton selectedSortingMethod = view.findViewById(selectedSortById);
-    RadioButton selectedOrder = view.findViewById(selectedOrderId);
-
-    // Sort the tasks based on the user's selection
-    TaskOrder order = radioButtonTaskOrderMap.get(selectedOrder);
-    TaskSortMethod taskSortMethod = radioButtonTaskSortMethodMap.get(selectedSortingMethod);
     try {
+      // Get the selected radio buttons
+      selectedSortById = radioGroupSortBy.getCheckedRadioButtonId();
+      selectedOrderId = radioGroupOrder.getCheckedRadioButtonId();
+      RadioButton selectedSortingMethod = view.findViewById(selectedSortById);
+      RadioButton selectedOrder = view.findViewById(selectedOrderId);
+
+      // Sort the tasks based on the user's selection
+      TaskOrder order = radioButtonTaskOrderMap.get(selectedOrder);
+      TaskSortMethod taskSortMethod = radioButtonTaskSortMethodMap.get(selectedSortingMethod);
       taskSortMethod.sortTasks(taskList, order);
     } catch (NullPointerException ignored) {
     }

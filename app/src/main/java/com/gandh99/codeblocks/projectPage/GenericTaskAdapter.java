@@ -71,6 +71,14 @@ public abstract class GenericTaskAdapter
     holder.chipDeadlineCountdown.setText(deadline);
 
     // Display assignees in the ChipGroup. CLEAR CHIPGROUP FIRST!!
+    displayTaskAssignees(holder, task);
+
+    // Display categories in the ChipGroup. CLEAR CHIPGROUP FIRST!!
+    displayTaskCategories(holder, task);
+  }
+
+  @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+  private void displayTaskAssignees(@NonNull GenericTaskViewHolder holder, Task task) {
     holder.chipGroupAssignees.removeAllViews();
     try {
       if (task.getAssignees().length == 0) {
@@ -99,8 +107,9 @@ public abstract class GenericTaskAdapter
     } catch (NullPointerException e) {
       // This might occur if a task has 0 assignees
     }
+  }
 
-    // Display categories in the ChipGroup. CLEAR CHIPGROUP FIRST!!
+  private void displayTaskCategories(@NonNull GenericTaskViewHolder holder, Task task) {
     holder.chipGroupTaskCategories.removeAllViews();
     try {
       if (task.getTaskCategories().length == 0) {
