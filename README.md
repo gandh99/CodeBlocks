@@ -23,13 +23,19 @@ A simple app that allows users to collaboratively build a software project.
 <img src="https://github.com/gandh99/CodeBlocks/blob/master/screenshots/Accept%20Invitation.jpg" alt="alt text" width="30%" height="30%">
 
 7. Create a new task and assign a deadline, assignees and categories.
-<img src="https://github.com/gandh99/CodeBlocks/blob/master/screenshots/Login.jpg" alt="alt text" width="30%" height="30%">
+<img src="https://github.com/gandh99/CodeBlocks/blob/master/screenshots/Create%20New%20Task%201.jpg" alt="alt text" width="30%" height="30%">
+<img src="https://github.com/gandh99/CodeBlocks/blob/master/screenshots/Create%20New%20Task%202.jpg" alt="alt text" width="30%" height="30%">
+<img src="https://github.com/gandh99/CodeBlocks/blob/master/screenshots/Create%20New%20Task%203.jpg" alt="alt text" width="30%" height="30%">
+<img src="https://github.com/gandh99/CodeBlocks/blob/master/screenshots/Create%20New%20Task%204.jpg" alt="alt text" width="30%" height="30%">
+<img src="https://github.com/gandh99/CodeBlocks/blob/master/screenshots/Create%20Task%20Page%201.jpg" alt="alt text" width="30%" height="30%">
+<img src="https://github.com/gandh99/CodeBlocks/blob/master/screenshots/Create%20Task%20Page%202.jpg" alt="alt text" width="30%" height="30%">
 
 8. Filter and sort the tasks to stay on top of the project timeline.
-<img src="https://github.com/gandh99/CodeBlocks/blob/master/screenshots/Login.jpg" alt="alt text" width="30%" height="30%">
+<img src="https://github.com/gandh99/CodeBlocks/blob/master/screenshots/Filter%20Tasks.jpg" alt="alt text" width="30%" height="30%">
+<img src="https://github.com/gandh99/CodeBlocks/blob/master/screenshots/Sort%20Tasks.jpg" alt="alt text" width="30%" height="30%">
 
 9. Mark a task as done when you have completed it.
-<img src="https://github.com/gandh99/CodeBlocks/blob/master/screenshots/Login.jpg" alt="alt text" width="30%" height="30%">
+<img src="https://github.com/gandh99/CodeBlocks/blob/master/screenshots/Select%20Menu%20Option.jpg" alt="alt text" width="30%" height="30%">
 
 
 # Frameworks and Design Concepts
