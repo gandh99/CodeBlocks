@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.projectPage.GenericTaskAdapter;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
+import com.gandh99.codeblocks.projectPage.tasks.taskFilter.TaskFilter;
 import com.gandh99.codeblocks.projectPage.tasks.taskSorter.TaskSorter;
 
 import java.util.List;
@@ -40,11 +41,14 @@ public class SortTaskDialog extends DialogFragment {
   private Button buttonSave, buttonCancel;
   private RadioGroup radioGroupSortBy, radioGroupOrder;
   private int selectedSortById, selectedOrderId;
-  private View dialogView;
+  private View dialogSortTaskView, dialogFilterTaskView;
   private GenericTaskAdapter adapter;
 
   @Inject
   ViewModelProvider.Factory viewModelFactory;
+
+  @Inject
+  TaskFilter taskFilter;
 
   @Inject
   TaskSorter taskSorter;
@@ -57,23 +61,28 @@ public class SortTaskDialog extends DialogFragment {
   public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
     AndroidSupportInjection.inject(this);
 
-    dialogView =
+    dialogSortTaskView =
       LayoutInflater
-      .from(getContext())
-      .inflate(R.layout.dialog_sort_task, null);
+        .from(getContext())
+        .inflate(R.layout.dialog_sort_task, null);
+
+    dialogFilterTaskView =
+      LayoutInflater
+        .from(getContext())
+        .inflate(R.layout.dialog_filter_task, null);
 
     // Get the view items
-    radioGroupSortBy = dialogView.findViewById(R.id.radioGroup_sort_by);
-    radioGroupOrder = dialogView.findViewById(R.id.radioGroup_order);
-    buttonSave = dialogView.findViewById(R.id.button_filter_task_save);
-    buttonCancel = dialogView.findViewById(R.id.button_filter_task_cancel);
+    radioGroupSortBy = dialogSortTaskView.findViewById(R.id.radioGroup_sort_by);
+    radioGroupOrder = dialogSortTaskView.findViewById(R.id.radioGroup_order);
+    buttonSave = dialogSortTaskView.findViewById(R.id.button_filter_task_save);
+    buttonCancel = dialogSortTaskView.findViewById(R.id.button_filter_task_cancel);
 
     initRadioButtons();
     initSaveButton();
     initCancelButton();
 
     return new AlertDialog.Builder(getActivity())
-      .setView(dialogView)
+      .setView(dialogSortTaskView)
       .create();
   }
 
@@ -112,8 +121,9 @@ public class SortTaskDialog extends DialogFragment {
   }
 
   private void sortTasks() {
-    List<Task> sortedTaskList = taskSorter.sortTasks(this.getContext(), dialogView, adapter.getListOfAllTasks());
-    adapter.updateDisplayTaskList(sortedTaskList);
+    List<Task> displayTaskList = taskFilter.filterTasks(this.getContext(), dialogFilterTaskView, adapter.getListOfAllTasks()) ;
+    displayTaskList = taskSorter.sortTasks(this.getContext(), dialogSortTaskView, displayTaskList);
+    adapter.updateDisplayTaskList(displayTaskList);
   }
 
   public void setGenericTaskAdapter(GenericTaskAdapter adapter) {
