@@ -9,6 +9,7 @@ import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.authentication.AuthenticationInterceptor;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 import com.gandh99.codeblocks.projectPage.tasks.taskFilter.assignee.FilterByAssignee;
+import com.gandh99.codeblocks.projectPage.tasks.taskFilter.deadline.FilterByDeadline;
 
 import java.util.HashMap;
 import java.util.List;
@@ -55,9 +56,10 @@ public class TaskFilter {
   }
 
   private void initRadioGroupTaskFilterCriteriaMap() {
-    // Each radioGroup has a corresponding TaskFilterCriteria object that knows how to filter the task list
+    // Assign each radioGroup a TaskFilterCriteria object that knows how to filter the task list
     radioGroupTaskFilterCriteriaMap = new HashMap<>();
     radioGroupTaskFilterCriteriaMap.put(radioGroupAssignees, new FilterByAssignee(interceptor));
+    radioGroupTaskFilterCriteriaMap.put(radioGroupDeadline, new FilterByDeadline());
   }
 
   public List<Task> filterTasks(Context context, View dialogView, List<Task> taskList) {

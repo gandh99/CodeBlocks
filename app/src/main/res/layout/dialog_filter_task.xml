@@ -75,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/SortFilterRadioButton"
-            android:text="All Deadlines"
+            android:text="@string/filter_deadline_all_deadlines"
             />
 
         <RadioButton
@@ -83,7 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/SortFilterRadioButton"
-            android:text="Less than 1 day left"
+            android:text="@string/filter_deadline_less_than_1_day_left"
             />
 
         <RadioButton
@@ -91,7 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/SortFilterRadioButton"
-            android:text="Less than 1 week left"
+            android:text="@string/filter_deadline_less_than_1_week_left"
             />
 
         <RadioButton
@@ -99,7 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/SortFilterRadioButton"
-            android:text="Less than 1 month left"
+            android:text="@string/filter_deadline_less_than_1_month_left"
             />
 
     </RadioGroup>
