@@ -36,7 +36,7 @@ class InvitationView(ListAPIView, CreateAPIView, JSONEncoder):
         invitee_rank = request.data.get("inviteeRank")
 
         # Return an error if the invitee is already in the project
-        if ProjectGroup.objects.get(user_profile=invitee_profile) is not None:
+        if invitee_profile in list(project_group.user_profile.all()):
             response = {"Response": "User is already in the Project"}
             return Response(response, status=HTTP_400_BAD_REQUEST)
 
