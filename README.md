@@ -1,6 +1,11 @@
 # CodeBlocks
 A simple app that allows users to collaboratively build a software project.
 
+# How to Run
+1. Build the App on your Android device using the IDE of your choice. Do not build it on an emulator!
+2. Execute the `runserver.sh` script.
+3. The App and server are now up and running.
+
 # Features
 1. Register an account.
 <img src="https://github.com/gandh99/CodeBlocks/blob/master/screenshots/Register.jpg" alt="alt text" width="30%" height="30%">
