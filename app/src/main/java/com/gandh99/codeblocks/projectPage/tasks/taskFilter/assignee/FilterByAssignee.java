@@ -28,12 +28,12 @@ public class FilterByAssignee implements TaskFilterCriteria {
   @Override
   public List<Task> filterTasks(View view, RadioGroup radioGroup, List<Task> taskList) {
     int selectedAssigneeId = radioGroup.getCheckedRadioButtonId();
-    RadioButton radioButton = view.findViewById(selectedAssigneeId);
+    RadioButton selectedRadioButton = view.findViewById(selectedAssigneeId);
 
     for (Map.Entry<String, AssigneeCriteria> entry : assigneeCriteriaMap.entrySet()) {
       String criteria = entry.getKey();
 
-      if (criteria.equals(radioButton.getText().toString())) {
+      if (criteria.equals(selectedRadioButton.getText().toString())) {
         AssigneeCriteria assigneeCriteria = entry.getValue();
         return assigneeCriteria.filter(taskList);
       }

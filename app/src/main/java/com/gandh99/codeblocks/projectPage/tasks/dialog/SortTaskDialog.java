@@ -112,8 +112,8 @@ public class SortTaskDialog extends DialogFragment {
   }
 
   private void sortTasks() {
-    List<Task> sortedTaskList = taskSorter.sortTasks(this.getContext(), dialogView, adapter.getTaskList());
-    adapter.updateList(sortedTaskList);
+    List<Task> sortedTaskList = taskSorter.sortTasks(this.getContext(), dialogView, adapter.getListOfAllTasks());
+    adapter.updateDisplayTaskList(sortedTaskList);
   }
 
   public void setGenericTaskAdapter(GenericTaskAdapter adapter) {

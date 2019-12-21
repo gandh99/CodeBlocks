@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,16 +31,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-
-import javax.inject.Inject;
 
 public abstract class GenericTaskAdapter
   extends RecyclerView.Adapter<GenericTaskAdapter.GenericTaskViewHolder> {
 
   private static final String TAG = "GenericTaskAdapter";
   private Context context;
-  private List<Task> taskList = new ArrayList<>();
+  private List<Task> listOfAllTasks = new ArrayList<>();
+  private List<Task> displayTaskList = new ArrayList<>();
   private Map<String, Integer> priorityMap = new HashMap<>();
   private OnContextMenuItemSelectedListener listener;
   private Map<String, String> usernameProfilePictureMap = new HashMap<>();
@@ -62,7 +59,7 @@ public abstract class GenericTaskAdapter
   @RequiresApi(api = Build.VERSION_CODES.O)
   @Override
   public void onBindViewHolder(@NonNull GenericTaskViewHolder holder, int position) {
-    Task task = taskList.get(position);
+    Task task = displayTaskList.get(position);
     String deadline;
 
     // Format some of the dates to be displayed
@@ -137,15 +134,20 @@ public abstract class GenericTaskAdapter
 
   @Override
   public int getItemCount() {
-    return taskList.size();
+    return displayTaskList.size();
   }
 
-  public void updateList(@Nullable List<Task> list) {
-    taskList = list;
+  public void updateListOfAllTasks(@Nullable List<Task> taskList) {
+    listOfAllTasks = taskList;
     notifyDataSetChanged();
   }
 
-  public List<Task> getTaskList() { return taskList; }
+  public void updateDisplayTaskList(List<Task> taskList) {
+    displayTaskList = taskList;
+    notifyDataSetChanged();
+  }
+
+  public List<Task> getListOfAllTasks() { return listOfAllTasks; }
 
   public void setPriorityTypes(Resources resources) {
     String[] priority = resources.getStringArray(R.array.priority);
@@ -196,7 +198,7 @@ public abstract class GenericTaskAdapter
         return false;
       }
 
-      Task task = taskList.get(position);
+      Task task = displayTaskList.get(position);
       if (menuItem == editTask) {
         listener.onEditTaskSelected(task);
       } else if (menuItem == markAsDoneTask) {

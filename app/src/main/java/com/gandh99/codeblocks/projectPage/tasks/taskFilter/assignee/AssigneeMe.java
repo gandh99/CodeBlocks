@@ -1,7 +1,5 @@
 package com.gandh99.codeblocks.projectPage.tasks.taskFilter.assignee;
 
-import android.widget.Filter;
-
 import com.gandh99.codeblocks.authentication.AuthenticationInterceptor;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 
@@ -10,7 +8,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class AssigneeMe extends Filter implements AssigneeCriteria {
+public class AssigneeMe implements AssigneeCriteria {
   private String ownUsername;
 
   @Inject
@@ -36,14 +34,4 @@ public class AssigneeMe extends Filter implements AssigneeCriteria {
     return filteredTaskList;
   }
 
-  @Override
-  protected FilterResults performFiltering(CharSequence charSequence) {
-    FilterResults filterResults = new FilterResults();
-    return null;
-  }
-
-  @Override
-  protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-
-  }
 }

@@ -100,7 +100,7 @@ public class CompletedTasksFragment extends Fragment implements Refreshable {
     completedTaskViewModel.getTasks().observe(this, tasks -> {
       List<Task> sortedTaskList = taskSorter.sortTasks(CompletedTasksFragment.this.getContext(),
         sortTaskDialogView, tasks);
-      completedTaskAdapter.updateList(sortedTaskList);
+      completedTaskAdapter.updateListOfAllTasks(sortedTaskList);
     });
   }
 

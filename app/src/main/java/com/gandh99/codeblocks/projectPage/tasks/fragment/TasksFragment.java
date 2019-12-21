@@ -142,7 +142,7 @@ public class TasksFragment extends Fragment implements Refreshable {
     taskViewModel = ViewModelProviders.of(this, viewModelFactory).get(TaskViewModel.class);
     taskViewModel.getTasks().observe(this, tasks -> {
       List<Task> sortedTaskList = taskSorter.sortTasks(TasksFragment.this.getContext(), sortTaskDialogView, tasks);
-      taskAdapter.updateList(sortedTaskList);
+      taskAdapter.updateListOfAllTasks(sortedTaskList);
     });
   }
 

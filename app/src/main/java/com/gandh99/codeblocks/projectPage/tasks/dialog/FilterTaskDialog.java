@@ -99,8 +99,8 @@ public class FilterTaskDialog extends DialogFragment {
   }
 
   private void filterTasks() {
-    List<Task> filteredTaskList = taskFilter.filterTasks(this.getContext(), dialogView, adapter.getTaskList());
-    adapter.updateList(filteredTaskList);
+    List<Task> filteredTaskList = taskFilter.filterTasks(this.getContext(), dialogView, adapter.getListOfAllTasks());
+    adapter.updateDisplayTaskList(filteredTaskList);
   }
 
   private void initCancelButton() {

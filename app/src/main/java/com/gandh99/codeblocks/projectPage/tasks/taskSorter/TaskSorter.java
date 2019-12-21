@@ -30,8 +30,8 @@ public class TaskSorter {
   private int selectedSortById, selectedOrderId;
   private RadioGroup radioGroupSortBy, radioGroupOrder;
   private RadioButton dateCreated, deadline, priority, orderAscending, orderDescending;
-  private Map<RadioButton, TaskSortMethod> radioButtonTaskSortMethodMap = new HashMap<>();
-  private Map<RadioButton, TaskOrder> radioButtonTaskOrderMap = new HashMap<>();
+  private Map<RadioButton, TaskSortMethod> radioButtonTaskSortMethodMap;
+  private Map<RadioButton, TaskOrder> radioButtonTaskOrderMap;
 
   @Inject
   public TaskSorter() {
@@ -73,12 +73,14 @@ public class TaskSorter {
   }
 
   private void initTaskSortMethodMap() {
+    radioButtonTaskSortMethodMap = new HashMap<>();
     radioButtonTaskSortMethodMap.put(dateCreated, new SorterByDateCreated());
     radioButtonTaskSortMethodMap.put(deadline, new SorterByDeadline());
     radioButtonTaskSortMethodMap.put(priority, new SorterByPriority());
   }
 
   private void initTaskOrderMethodMap() {
+    radioButtonTaskOrderMap = new HashMap<>();
     radioButtonTaskOrderMap.put(orderAscending, new AscendingOrder());
     radioButtonTaskOrderMap.put(orderDescending, new DescendingOrder());
   }

@@ -23,7 +23,7 @@ import static com.gandh99.codeblocks.projectPage.tasks.dialog.FilterTaskDialog.F
 public class TaskFilter {
   private int selectedAssigneesId, selectedDeadlineId;
   private RadioGroup radioGroupAssignees, radioGroupDeadline;
-  private Map<RadioGroup, TaskFilterCriteria> radioGroupTaskFilterCriteriaMap = new HashMap<>();
+  private Map<RadioGroup, TaskFilterCriteria> radioGroupTaskFilterCriteriaMap;
   private AuthenticationInterceptor interceptor;
 
   @Inject
@@ -55,6 +55,7 @@ public class TaskFilter {
   }
 
   private void initRadioGroupTaskFilterCriteriaMap() {
+    radioGroupTaskFilterCriteriaMap = new HashMap<>();
     radioGroupTaskFilterCriteriaMap.put(radioGroupAssignees, new FilterByAssignee(interceptor));
   }
 
