@@ -18,6 +18,7 @@ import com.gandh99.codeblocks.R;
 import com.gandh99.codeblocks.common.Refreshable;
 import com.gandh99.codeblocks.projectPage.completedTasks.CompletedTaskAdapter;
 import com.gandh99.codeblocks.projectPage.completedTasks.viewModel.CompletedTaskViewModel;
+import com.gandh99.codeblocks.projectPage.tasks.dialog.FilterTaskDialog;
 import com.gandh99.codeblocks.projectPage.tasks.dialog.SortTaskDialog;
 import com.gandh99.codeblocks.projectPage.tasks.api.Task;
 import com.gandh99.codeblocks.projectPage.tasks.fragment.TasksFragment;
@@ -34,6 +35,7 @@ import dagger.android.support.AndroidSupportInjection;
  */
 public class CompletedTasksFragment extends Fragment implements Refreshable {
   private static int DIALOG_REQUEST_SORT_CODE = 1;
+  private static final int DIALOG_REQUEST_FILTER_CODE = 2;
   private RecyclerView recyclerView;
   private Button buttonSort, buttonFilter;
   private CompletedTaskViewModel completedTaskViewModel;
@@ -83,6 +85,7 @@ public class CompletedTasksFragment extends Fragment implements Refreshable {
     completedTaskAdapter.setContext(getContext());
     completedTaskAdapter.setPriorityTypes(getResources());
 
+    initFilterButton();
     initSortButton();
     initViewModel();
 
@@ -91,6 +94,15 @@ public class CompletedTasksFragment extends Fragment implements Refreshable {
 
   private void configureDagger() {
     AndroidSupportInjection.inject(this);
+  }
+
+  private void initFilterButton() {
+    buttonFilter.setOnClickListener(view -> {
+      FilterTaskDialog dialog = new FilterTaskDialog();
+      dialog.setTargetFragment(CompletedTasksFragment.this, DIALOG_REQUEST_FILTER_CODE);
+      dialog.setGenericTaskAdapter(completedTaskAdapter);
+      dialog.show(getActivity().getSupportFragmentManager(), "Filter Task");
+    });
   }
 
   private void initSortButton() {
